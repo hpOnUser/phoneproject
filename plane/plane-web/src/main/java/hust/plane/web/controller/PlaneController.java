@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import hust.plane.mapper.pojo.Plane;
 import hust.plane.service.interFace.PlaneService;
 import hust.plane.utils.JsonUtils;
 import hust.plane.utils.PointUtil;
+import hust.plane.web.controller.vo.PlaneVo;
 
 @Controller
 public class PlaneController {
@@ -31,27 +33,18 @@ public class PlaneController {
 	}
 
 	@RequestMapping("/planeList")
+	@ResponseBody
 	//获取飞机列表信息
 	//实例解决经纬度路径
-	public String getPlaneList(Model model)
+	public String getPlaneList()
 	{
 		List<Plane> allPlane = planeServiceimpl.getAllPlane();
-		List planeList = new ArrayList<String>();
-		List planeInfoList = new ArrayList<String>();
-		
+		List<PlaneVo> planeList = new ArrayList<PlaneVo>(); 	
 		for(int i=0;i<allPlane.size();i++) {
-			List<Double> p=PointUtil.StringPointToList(allPlane.get(i).getFlongda());
-			String planeitem =JsonUtils.objectToJson(p);
-			Plane plane = allPlane.get(i);
-			plane.setFlongda(null);;
-			String planeinfoitem = JsonUtils.objectToJson(plane);
-			planeList.add(planeitem);
-			planeInfoList.add(planeinfoitem);
-		}
-		
-		model.addAttribute("planeListInfo",planeInfoList.toString());
-		model.addAttribute("planepoints",planeList.toString());	
-		
-		return "planeList";
+			PlaneVo planevo = new PlaneVo(allPlane.get(i)) ;
+			planeList.add(planevo);	
+		}	
+		//System.out.println(planeList.size());
+		return JsonUtils.objectToJson(planeList);
 	}
 }

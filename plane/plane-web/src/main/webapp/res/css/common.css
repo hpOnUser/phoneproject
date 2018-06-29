@@ -1,54 +1,76 @@
-
 html,
-body{
-width:100%;
-height:100%;
-margin:0px;
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
 }
-#outer-box{
-height:100%;
-padding-right:280px;
+
+#outer-box {
+    height: 100%;
+    padding-right: 280px;
 }
-#container{
-height:100%;
-width:100%;
+
+#container {
+    height: 100%;
+    width: 100%;
 }
-#panel{
-position:absolute;
-top:10px;
-right:10px;
-width:260px;
-z-index:999;
+
+#panel {
+    position: absolute;
+    top: 1px;
+    right: 0;
+    width: 260px;
+    z-index: 999;
+    opacity: 0.9;
 }
-#my-list{
-margin:5;
-padding:0;
+
+#my-list {
+    margin: 5;
+    padding: 0;
+
 }
-#my-list li{
-background:#eee;
-margin:5px 0;
-list-style:none;
-padding:5px;
-cursor:pointer;
+
+#seletc-option {
+    z-index: 999;
+    position: absolute;
+    margin-left: 80px;
+    margin-top: 10px;
+    
 }
-#my-list li p{
-margin:5px;
+.sele{
+   
 }
-#my-list li.selected{
-background:#778899;
-color:#fff;
+#my-list li {
+    background: #eee;
+    margin: 5px 0;
+    list-style: none;
+    padding: 5px;
+    cursor: pointer;
 }
-.selected .amap-marker-label{
-background:#ff8040;
-color:#fff;
-border-color:#ccc;
+
+#my-list li p {
+    margin: 5px;
 }
-#panel h3{
-margin:10px 0;
+
+#my-list li.selected {
+    background: #778899;
+    color: #fff;
 }
-#panel dd{
-margin:5px 5px;
+
+.selected .amap-marker-label {
+    background: #ff8040;
+    color: #fff;
+    border-color: #ccc;
 }
-#panel dl{
-margin:7px 0;
+
+#panel h3 {
+    margin: 10px 0;
+}
+
+#panel dd {
+    margin: 5px 5px;
+}
+
+#panel dl {
+    margin: 7px 0;
 }
