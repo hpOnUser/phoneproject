@@ -100,8 +100,8 @@ hr {
 	background: url('../i/logo.png') no-repeat no-repeat 50% 50%;
 	background-size: auto 63px;
 	float: left;
-	margin-left: 20px;
-	margin-top: 10px;
+	margin-left: 7px;
+	margin-top: 6px;
 }
 /*Navbar*/
 .navbar {
@@ -110,14 +110,14 @@ hr {
 	z-index: 20;
 	margin: 0px;
 	padding: 0px;
-	height: 70px;
-	line-height: 70px;
+	height: 60px;
+	line-height: 60px;
 	background: #C1CDCD;
 	border-radius: 0px;
 }
 
 .navbar .navbar-inner {
-	height: 70px;
+	height: 60px;
 	background: #778899;
 	margin: 0px;
 	border: 0px;
