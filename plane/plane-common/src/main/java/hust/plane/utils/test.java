@@ -69,7 +69,7 @@ public class test {
 		routeExcel2.setLatitude(30.99);
 		readExcellist.add(routeExcel2);
 		StringBuffer s=new StringBuffer();
-		s.append("GeomFromText('LineString(");
+		s.append("LineString(");
 		for(int i=0;i<readExcellist.size();i++)
 		{
 			Double a=readExcellist.get(i).getLongitude();
@@ -79,7 +79,7 @@ public class test {
 			
 		}
 		s.deleteCharAt(s.length()-1);
-		s.append(")')");
+		s.append(")");
 		System.out.println(s);
 	}
 

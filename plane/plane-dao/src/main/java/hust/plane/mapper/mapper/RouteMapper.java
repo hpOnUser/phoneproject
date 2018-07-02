@@ -6,5 +6,6 @@ import hust.plane.mapper.pojo.Route;
 
 public interface RouteMapper {
 	List<Route> selectALLRoute();
+	int insert(Route route);
 
 }

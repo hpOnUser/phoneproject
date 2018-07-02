@@ -26,7 +26,7 @@ public class LineUtil {
 	public static String ListToString(List<RouteExcel> readExcellist)
 	{
 		StringBuffer s=new StringBuffer();
-		s.append("GeomFromText('LineString(");
+		s.append("LineString(");
 		for(int i=0;i<readExcellist.size();i++)
 		{
 			Double a=readExcellist.get(i).getLongitude();
@@ -36,7 +36,7 @@ public class LineUtil {
 			
 		}
 		s.deleteCharAt(s.length()-1);
-		s.append(")')");
+		s.append(")");
 		return s.toString();
 	}
 	public static void main(String[] args) {

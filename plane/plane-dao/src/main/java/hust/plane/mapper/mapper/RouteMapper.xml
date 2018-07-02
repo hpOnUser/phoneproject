@@ -8,9 +8,16 @@
     <result column="descripte" property="descripte" jdbcType="VARCHAR" />
     <result column="createtime" property="createTime" jdbcType="TIMESTAMP" />
     <result column="updatetime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
   </resultMap>
 	<select id="selectALLRoute" resultMap="BaseResultMap">
-		select routeid,status,AsText(routepath) as routepath,descripte,createtime,updatetime
+		select routeid,status,AsText(routepath) as routepath,descripte,createtime,updatetime,type
 		from route 
 	</select>
+	
+	<insert id="insert" parameterType="hust.plane.mapper.pojo.Route">
+		insert into route(routeid,status,routepath,descripte,createtime,updatetime,type) values (#{routeId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, GeomFromText(#{routePath,jdbcType=VARCHAR}), 
+      #{descripte,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR})
+
+	</insert>
 </mapper>
