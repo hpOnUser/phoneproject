@@ -2,8 +2,6 @@ package hust.plane.mapper.pojo;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class User {
     private String userid;
 
@@ -12,12 +10,14 @@ public class User {
     private String username;
 
     private String password;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+
     private Date createtime;
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+
     private Date updatetime;
 
     private String descripte;
+
+    private Integer tasknum;
 
     public String getUserid() {
         return userid;
@@ -73,5 +73,13 @@ public class User {
 
     public void setDescripte(String descripte) {
         this.descripte = descripte == null ? null : descripte.trim();
+    }
+
+    public Integer getTasknum() {
+        return tasknum;
+    }
+
+    public void setTasknum(Integer tasknum) {
+        this.tasknum = tasknum;
     }
 }

@@ -574,6 +574,66 @@ public class UserExample {
             addCriterion("descripte not between", value1, value2, "descripte");
             return (Criteria) this;
         }
+
+        public Criteria andTasknumIsNull() {
+            addCriterion("tasknum is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTasknumIsNotNull() {
+            addCriterion("tasknum is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTasknumEqualTo(Integer value) {
+            addCriterion("tasknum =", value, "tasknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andTasknumNotEqualTo(Integer value) {
+            addCriterion("tasknum <>", value, "tasknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andTasknumGreaterThan(Integer value) {
+            addCriterion("tasknum >", value, "tasknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andTasknumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("tasknum >=", value, "tasknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andTasknumLessThan(Integer value) {
+            addCriterion("tasknum <", value, "tasknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andTasknumLessThanOrEqualTo(Integer value) {
+            addCriterion("tasknum <=", value, "tasknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andTasknumIn(List<Integer> values) {
+            addCriterion("tasknum in", values, "tasknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andTasknumNotIn(List<Integer> values) {
+            addCriterion("tasknum not in", values, "tasknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andTasknumBetween(Integer value1, Integer value2) {
+            addCriterion("tasknum between", value1, value2, "tasknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andTasknumNotBetween(Integer value1, Integer value2) {
+            addCriterion("tasknum not between", value1, value2, "tasknum");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
