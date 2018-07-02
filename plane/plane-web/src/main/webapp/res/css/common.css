@@ -37,8 +37,14 @@ body {
     margin-top: 10px;
     
 }
-.sele{
-   
+#intro{
+    
+}
+#pageIndex{
+    margin-left: 15px;
+}
+#planeSelect{
+    margin-left: 15px;
 }
 #my-list li {
     background: #eee;
