@@ -9,6 +9,10 @@
     <link rel="stylesheet" type="text/css" href="../../res/fonts/iconic/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" type="text/css" href="../../res/css/util.css">
     <link rel="stylesheet" type="text/css" href="../../res/css/login.css">
+    <script type="text/javascript" src="../../res/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="../../res/js/jquery.form.js"></script>
+    <script type="text/javascript" src="../../res/js/login.js"></script>
+
 </head>
 
 <body>
@@ -16,7 +20,7 @@
 <div class="limiter">
     <div class="container-login100" style="background-image: url('../../res/images/bg-01.jpg');">
         <div class="wrap-login100">
-            <form class="login100-form validate-form">
+            <form class="login100-form validate-form" id="loginForm" method="post">
                     <span class="login100-form-logo">
 						<i class="zmdi zmdi-landscape"></i>
 					</span>
@@ -43,11 +47,11 @@
                 </div>
 
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn">
+                    <button class="login100-form-btn" id="login">
                         登陆
                     </button>
                 </div>
-
+                <div id="alertDiv"></div>
                 <div class="text-center p-t-90">
                     <a class="txt1" href="register">
                         还没有用户名？点击注册
@@ -57,7 +61,34 @@
         </div>
     </div>
 </div>
-<script src="../../res/js/jquery-1.11.3.min.js"></script>
-<script src="../../res/js/login.js"></script>
+<script type="text/javascript">
+    $("#login").click(function () {
+        $.ajax({
+            type: "post",
+            url: "login",
+            data: $("#loginForm").serialize(),
+            success: function (result) {
+                //alert(JSON.stringify(result));
+                if (result.errcode == 0 && result.message == "success") {
+                    window.location.href = '/index';
+                } else {
+                    showAlert(result.message);
+                }
+            }
+        });
+    })
+
+    $("#register").click(function () {
+        window.location.href = '/admin/register';
+    })
+
+    function showAlert(message) {
+        var alertitem = document.getElementById("alertDiv");
+        var innHTMl = '<div class="alert alert-danger alert-dismissable" id="alerth"><button type="button" class="close" data-dismiss="alert" >&times;</button>' + message + '</div>';
+        alertitem.innerHTML = innHTMl;
+        alertitem.style.display = "block";
+    }
+</script>
+
 </body>
 </html>
