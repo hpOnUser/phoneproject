@@ -1,21 +1,63 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <title>我的登陆</title>
-    <link rel="stylesheet" href="css/login.css" />
+    <title>巡检员登陆</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="../../res/images/icons/favicon.ico"/>
+    <link rel="stylesheet" type="text/css" href="../../res/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../../res/fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="../../res/css/util.css">
+    <link rel="stylesheet" type="text/css" href="../../res/css/login.css">
 </head>
 
 <body>
-    <div class="login">
-        <div class="welcome"><img src="res/images/welcome.png"></div>
-        <div class="login-form">
-            <div class="login-inp"><label>登录</label><input type="text" placeholder=""></div>
-            <div class="login-inp"><label>密码</label><input type="password" placeholder=""></div>
-            <div class="login-inp"><a href="#">立即登录</a></div>
+
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('../../res/images/bg-01.jpg');">
+        <div class="wrap-login100">
+            <form class="login100-form validate-form">
+                    <span class="login100-form-logo">
+						<i class="zmdi zmdi-landscape"></i>
+					</span>
+
+                <span class="login100-form-title p-b-34 p-t-27">
+						巡检员登陆
+					</span>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter username">
+                    <input class="input100" type="text" name="username" placeholder="用户名">
+                    <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter password">
+                    <input class="input100" type="password" name="pass" placeholder="密码">
+                    <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                </div>
+
+                <div class="contact100-form-checkbox">
+                    <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                    <label class="label-checkbox100" for="ckb1">
+                        Remember me
+                    </label>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn">
+                        登陆
+                    </button>
+                </div>
+
+                <div class="text-center p-t-90">
+                    <a class="txt1" href="register">
+                        还没有用户名？点击注册
+                    </a>
+                </div>
+            </form>
         </div>
-        <div class="login-txt"><a href="register.html">立即注册</a>|<a href="#">忘记密码？</a></div>
     </div>
+</div>
+<script src="../../res/js/jquery-1.11.3.min.js"></script>
+<script src="../../res/js/login.js"></script>
 </body>
 </html>
