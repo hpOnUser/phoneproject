@@ -8,4 +8,12 @@
   <groupId>phone-common</groupId>
   <artifactId>phone-common</artifactId>
   <version>1.0</version>
+  <dependencies>
+    <dependency>
+      <groupId>phone-dao</groupId>
+      <artifactId>phone-dao</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
 </project>

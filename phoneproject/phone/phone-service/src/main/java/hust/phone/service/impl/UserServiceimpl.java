@@ -1,21 +1,49 @@
 package hust.phone.service.impl;
 
+import hust.phone.mapper.pojo.UserExample;
+import hust.phone.utils.pojo.PhoneUtils;
+import hust.phone.utils.pojo.TipException;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hust.phone.mapper.mapper.UserMapper;
 import hust.phone.mapper.pojo.User;
 import hust.phone.service.interFace.UserService;
+
+import java.util.List;
+
 @Service
-public class UserServiceimpl  implements UserService{
-	
-	@Autowired
-	private UserMapper userMapper;
+public class UserServiceimpl implements UserService {
 
-	@Override
-	public User getUserById(String userId) {
-		User user = userMapper.selectByPrimaryKey(userId);
-		return user;
-	}
+    @Autowired
+    private UserMapper userMapper;
 
+    @Override
+    public User getUserById(String userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        return user;
+    }
+
+    @Override
+    public User login(String username, String password, String identity) {
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password) || StringUtils.isBlank(identity)) {
+            throw new TipException("用户名、密码和身份不能为空");
+        }
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andUsernameEqualTo(username);
+        criteria.andRoleEqualTo(identity);
+        int count = userMapper.countByExample(example);
+        if (count < 1) {
+            throw new TipException("没有该用户");
+        }
+        String pwd = PhoneUtils.MD5encode(username + password);
+        criteria.andPasswordEqualTo(pwd);
+        List<User> userList = userMapper.selectByExample(example);
+        if (userList.size() != 1) {
+            throw new TipException("用户名密码错误或您没有操作权限");
+        }
+        return userList.get(0);
+    }
 }

@@ -1,12 +1,61 @@
 package hust.phone.web.controller.admin;
 
+import hust.phone.constant.WebConst;
+import hust.phone.mapper.pojo.User;
+import hust.phone.service.interFace.UserService;
+import hust.phone.utils.pojo.JsonView;
+import hust.phone.utils.pojo.MapCache;
+import hust.phone.utils.pojo.PhoneUtils;
+import hust.phone.utils.pojo.TipException;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller(value = "AdminIndexController")
 public class AdminIndexController {
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AdminIndexController.class);
+    private MapCache cache = MapCache.single();
+    @Resource
+    private UserService userService;
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String loginIndex(){
         return "login";
     }
+
+    @RequestMapping(value = "/login",method = RequestMethod.POST,produces="json/application;charset=UTF-8")
+    @ResponseBody
+    public String doLogin(@RequestParam String role,@RequestParam String username,@RequestParam String password,
+                          @RequestParam(required = false) String remeber_me,HttpServletRequest request,HttpServletResponse response){
+        Integer error_count = cache.get("login_error_count");
+        try {
+            User user = userService.login(username,password,role);
+            request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user);
+            if (StringUtils.isNotBlank(remeber_me)) {
+                PhoneUtils.setCookie(response, user.getUserid());
+            }
+        } catch (Exception e) {
+            error_count = null == error_count ? 1 : error_count + 1;
+            if (error_count > 3) {
+                return JsonView.render(1, "您输入密码已经错误超过3次，请10分钟后尝试");
+            }
+            cache.set("login_error_count", error_count, 10 * 60);
+            String msg = "登录失败";
+            if (e instanceof TipException) {
+                msg = e.getMessage();
+            } else {
+                LOGGER.error(msg, e);
+            }
+            return JsonView.render(1, msg);
+        }
+        return JsonView.render("");
+    }
+
 }
