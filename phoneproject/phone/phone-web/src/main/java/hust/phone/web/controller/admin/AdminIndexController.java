@@ -25,18 +25,19 @@ public class AdminIndexController {
     private MapCache cache = MapCache.single();
     @Resource
     private UserService userService;
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String loginIndex(){
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginIndex() {
         return "login";
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST,produces="json/application;charset=UTF-8")
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "json/application;charset=UTF-8")
     @ResponseBody
-    public String doLogin(@RequestParam String role,@RequestParam String username,@RequestParam String password,
-                          @RequestParam(required = false) String remeber_me,HttpServletRequest request,HttpServletResponse response){
+    public String doLogin(@RequestParam String role, @RequestParam String username, @RequestParam String password,
+                          @RequestParam(required = false) String remeber_me, HttpServletRequest request, HttpServletResponse response) {
         Integer error_count = cache.get("login_error_count");
         try {
-            User user = userService.login(username,password,role);
+            User user = userService.login(username, password, role);
             request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user);
             if (StringUtils.isNotBlank(remeber_me)) {
                 PhoneUtils.setCookie(response, user.getUserid());
@@ -58,4 +59,8 @@ public class AdminIndexController {
         return JsonView.render("");
     }
 
+    @RequestMapping(value = "admin/register", method = RequestMethod.GET)
+    public String getRegister() {
+        return "register";
+    }
 }
