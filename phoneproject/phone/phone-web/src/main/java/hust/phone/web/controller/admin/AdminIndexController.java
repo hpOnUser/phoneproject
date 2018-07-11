@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.TileObserver;
 
 @Controller(value = "AdminIndexController")
 public class AdminIndexController {
@@ -31,7 +32,7 @@ public class AdminIndexController {
         return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "json/application;charset=UTF-8")
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String doLogin(@RequestParam String role, @RequestParam String username, @RequestParam String password,
                           @RequestParam(required = false) String remeber_me, HttpServletRequest request, HttpServletResponse response) {
@@ -62,5 +63,29 @@ public class AdminIndexController {
     @RequestMapping(value = "admin/register", method = RequestMethod.GET)
     public String getRegister() {
         return "register";
+    }
+
+    @RequestMapping(value = "admin/register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String doRegister(@RequestParam String role, @RequestParam String username, @RequestParam String password
+            , @RequestParam(required = false) String agree_me) {
+        try {
+            if (StringUtils.isBlank(agree_me)) {
+                throw new TipException("请同意注册条款");
+            }
+            int count = userService.register(username, password, role);
+            if (count < 0){
+                return JsonView.render(1,"注册失败，请重新注册");
+            }
+        } catch (Exception e) {
+            String msg = "注册失败";
+            if(e instanceof TipException){
+                msg = e.getMessage();
+            }else{
+                LOGGER.error(msg,e);
+            }
+            return JsonView.render(1,msg);
+        }
+        return JsonView.render(0,"注册成功,请返回登陆页面登陆");
     }
 }

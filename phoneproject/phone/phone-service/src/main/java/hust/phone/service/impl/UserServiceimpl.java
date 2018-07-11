@@ -1,6 +1,8 @@
 package hust.phone.service.impl;
 
 import hust.phone.mapper.pojo.UserExample;
+import hust.phone.utils.DateKit;
+import hust.phone.utils.UUID;
 import hust.phone.utils.pojo.PhoneUtils;
 import hust.phone.utils.pojo.TipException;
 import org.apache.commons.lang.StringUtils;
@@ -11,6 +13,7 @@ import hust.phone.mapper.mapper.UserMapper;
 import hust.phone.mapper.pojo.User;
 import hust.phone.service.interFace.UserService;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -45,5 +48,26 @@ public class UserServiceimpl implements UserService {
             throw new TipException("用户名密码错误或您没有操作权限");
         }
         return userList.get(0);
+    }
+
+    @Override
+    public int register(String username, String password, String role) {
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password) || StringUtils.isBlank(role)) {
+            throw new TipException("用户名、密码和身份不能为空");
+        }
+        int userCount = userMapper.selectByUsernameAndRole(username, role);
+        if(userCount==1){
+            throw new TipException("该用户已经存在");
+        }
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(PhoneUtils.MD5encode(username+password));
+        user.setRole(role);
+        user.setCreatetime(DateKit.getNowTime());
+        String description = role.equals("1")?"起飞员":"降落员";
+        user.setDescripte(description);
+        user.setUserid(UUID.UU32());
+        int count = userMapper.insertSelective(user);
+        return count;
     }
 }
