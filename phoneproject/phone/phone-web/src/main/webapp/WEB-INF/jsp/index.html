@@ -460,66 +460,53 @@
             <div class="firstBlock">
                 <div class="userImg"></div>
                 <div class="usertop">
-                    <span class="username"><b>杨瑞丰</b></span>
+                    <span class="username"><b><#if Session["login_user"]?exists>
+                            ${Session["login_user"].username}</#if></b></span>
                 </div>
 
                 <div class="usertop">
-                    <span class="userRole"><b>用户类别：操作员</b></span>
+                    <span class="userRole"><b>用户类别：<#if Session["login_user"]?exists>
+                            ${Session["login_user"].descripte}</#if></b></span>
                 </div>
             </div>
 
             <div class="secondBlock">
                 <div class="taskImg"></div>
                 <span class="taskSpan"><b>我的工单</b></span>
-                <a href="index.html">
-                    <div class="rightArr"></div>
-                </a>
+                <div class="rightArr"></div>
             </div>
 
             <div class="thirdBlock">
                 <div class="thirdSpan1">
                     <img class="taskImg1" src="../../res/img/fly.png">
                     <span class="taskSpan1"><b>无人机起飞</b></span>
-                    <a href="index.html">
-                        <div class="rightArr1"></div>
-                    </a>
-
+                    <div class="rightArr1"></div>
                 </div>
 
                 <div class="thirdSpan2">
                     <img class="taskImg2" src="../../res/img/down.png">
                     <span class="taskSpan2"><b>紧急迫降</b></span>
-                    <a href="index.html">
-                        <div class="rightArr2"></div>
-                    </a>
+                    <div class="rightArr2"></div>
                 </div>
                 <div class="thirdSpan3">
                     <img class="taskImg3" src="../../res/img/disconnect.png">
                     <span class="taskSpan3"><b>报告失联</b></span>
-                    <a href="index.html">
-                        <div class="rightArr3"></div>
-                    </a>
+                    <div class="rightArr3"></div>
                 </div>
                 <div class="thirdSpan4">
                     <img class="taskImg4" src="../../res/img/video.png">
                     <span class="taskSpan4"><b>实时影像</b></span>
-                    <a href="index.html">
-                        <div class="rightArr4"></div>
-                    </a>
+                    <div class="rightArr4"></div>
                 </div>
                 <div class="thirdSpan5">
                     <img src="../../res/img/location.png" class="taskImg5">
                     <span class="taskSpan5"><b>实时位置</b></span>
-                    <a href="index.html">
-                        <div class="rightArr5"></div>
-                    </a>
+                    <div class="rightArr5"></div>
                 </div>
                 <div>
                     <img src="../../res/img/voyage.png" class="taskImg6"></src>
                     <span class="taskSpan6"><b>紧急返航</b></span>
-                    <a href="index.html">
                         <div class="rightArr6"></div>
-                    </a>
                 </div>
             </div>
 
@@ -539,6 +526,33 @@
         charset='utf-8'></script>
 <script src="http://code.jquery.com/jquery-1.8.0.min.js" charset='utf-8'></script>
 
+
+<script type="text/javascript">
+    $(".userLogout").click(function () {
+        window.location.href = "logout";
+    });
+    $(".secondBlock").click(function () {
+        window.location.href = "toTask";
+    });
+    $(".thirdSpan1").click(function () {
+        window.location.href = "toPlane";
+    });
+    $(".thirdSpan2").click(function () {
+        window.location.href = "toPlane";
+    });
+    $(".thirdSpan3").click(function () {
+        window.location.href = "toPlane";
+    });
+    $(".thirdSpan4").click(function () {
+        window.location.href = "toPlane";
+    });
+    $(".thirdSpan5").click(function () {
+        window.location.href = "toPlane";
+    });
+    $(".thirdSpan6").click(function () {
+        window.location.href = "toPlane";
+    });
+</script>
 </body>
 
 </html>
