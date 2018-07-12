@@ -249,7 +249,7 @@
             data: $("#loginForm").serialize(),
             success: function (result) {
                 if (result.errcode == 0 && result.message == "success") {
-                    window.location.href = '/myIndex';
+                    window.location.href = '/myindex';
                 } else {
                     showAlert(result.message);
                 }

@@ -2,117 +2,542 @@
 <html>
 
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>无人机指派系统</title>
-<meta name="viewport" content="initial-scale=1, maximum-scale=1">
-<link rel="shortcut icon" href="/favicon.ico">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="stylesheet"
-	href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
-<link rel="stylesheet" href="light7/css/light7.min.css">
-<link rel="stylesheet" href="light7/css/light7-swiper.min.css">
-<script type='text/javascript' src='js/jquery-3.3.1.min.js'></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>无人机指派系统</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="../../res/images/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet"
+          href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <link rel="stylesheet" href="../../res/light7/css/light7.min.css">
+    <link rel="stylesheet" href="../../res/light7/css/light7-swiper.min.css">
+    <script type='text/javascript' src='../../res/js/jquery-3.3.1.min.js'></script>
 </head>
+<style>
+    .userTitle {
+        position: absolute;
+        display: block;
+        width: 100%;
+        padding: 0;
+        margin: 0 -.5rem;
+        font-size: .85rem;
+        font-weight: 500;
+        line-height: 2.2rem;
+        color: #fff;
+        background-color: #00A083;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .userImg {
+        position: absolute;
+        top: 13px;
+        left: 7px;
+        height: 100px;
+        width: 100px;
+        background-image: url(../../res/img/user.jpg);
+        background-color: aliceblue;
+        border-radius: 9px;
+    }
+
+    .taskImg {
+        position: absolute;
+        left: 0px;
+        height: 36px;
+        width: 36px;
+        background-image: url(../../res/img/task.jpg);
+    }
+
+    .firstBlock {
+        position: absolute;
+        top: 10px;
+        left: 0px;
+        height: 130px;
+        width: 100%;
+        background-color: #fff;
+    }
+
+    .usertop {
+        padding: 20px;
+    }
+
+    .username {
+        position: absolute;
+        display: inline-block;
+        top: 30px;
+        /*偏移*/
+        left: 45%;
+        /*偏移*/
+        font-size: 20px;
+    }
+
+    .userRole {
+        position: absolute;
+        display: inline-block;
+        top: 70px;
+        left: 45%;
+        font-size: 10px;
+    }
+
+    .secondBlock {
+        position: absolute;
+        top: 160px;
+        left: 0px;
+        height: 35px;
+        width: 100%;
+        background: #fff;
+    }
+
+    .taskSpan {
+        position: absolute;
+        left: 60px;
+        font-size: 17px;
+        margin-top: 4px;
+    }
+
+    .rightArr {
+        position: absolute;
+        left: 220px;
+        height: 36px;
+        width: 36px;
+        background-image: url(../../res/img/right.png);
+    }
+
+    .thirdBlock {
+        position: absolute;
+        top: 220px;
+        left: 0px;
+        height: 210px;
+        width: 100%;
+        background: #fff;
+    }
+
+    .taskImg1 {
+        position: absolute;
+        left: 0px;
+        height: 36px;
+        width: 36px;
+    }
+
+    .taskImg2 {
+        position: absolute;
+        left: 0px;
+        top: 35px;
+        height: 36px;
+        width: 36px;
+    }
+
+    .taskImg3 {
+        position: absolute;
+        top: 70px;
+        left: 0px;
+        height: 32px;
+        width: 32px;
+    }
+
+    .taskImg4 {
+        position: absolute;
+        top: 110px;
+        left: 0px;
+        height: 32px;
+        width: 32px;
+    }
+
+    .taskImg5 {
+        position: absolute;
+        left: 0px;
+        top: 145px;
+        height: 36px;
+        width: 36px;
+    }
+
+    .taskImg6 {
+        position: absolute;
+        left: 0px;
+        height: 32px;
+        width: 32px;
+        top: 180px;
+    }
+
+    .thirdBlock .rightArr1 {
+        position: absolute;
+        left: 220px;
+        height: 36px;
+        width: 36px;
+        background-image: url(../../res/img/right.png);
+    }
+
+    .thirdBlock .rightArr2 {
+        position: absolute;
+        top: 35px;
+        left: 220px;
+        height: 36px;
+        width: 36px;
+        background-image: url(../../res/img/right.png);
+    }
+
+    .thirdBlock .rightArr3 {
+        position: absolute;
+        top: 70px;
+        left: 220px;
+        height: 36px;
+        width: 36px;
+        background-image: url(../../res/img/right.png);
+    }
+
+    .thirdBlock .rightArr4 {
+        position: absolute;
+        top: 105px;
+        left: 220px;
+        height: 36px;
+        width: 36px;
+        background-image: url(../../res/img/right.png);
+    }
+
+    .thirdBlock .rightArr5 {
+        position: absolute;
+        top: 140px;
+        left: 220px;
+        height: 36px;
+        width: 36px;
+        background-image: url(../../res/img/right.png);
+    }
+
+    .thirdBlock .rightArr6 {
+        position: absolute;
+        top: 175px;
+        left: 220px;
+        height: 36px;
+        width: 36px;
+        background-image: url(../../res/img/right.png);
+    }
+
+    .thirdBlock .thirdSpan1 {
+        position: absolute;
+        height: 35px;
+        width: 100%;
+        border-bottom-style: solid;
+        border-bottom-color: #EFF0FF;
+        border-bottom-width: 1px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .thirdBlock .thirdSpan2 {
+        position: absolute;
+        height: 70px;
+        width: 100%;
+        border-bottom-style: solid;
+        border-bottom-color: #EFF0FF;
+        border-bottom-width: 1px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .thirdBlock .thirdSpan3 {
+        position: absolute;
+        height: 105px;
+        width: 100%;
+        border-bottom-style: solid;
+        border-bottom-color: #EFF0FF;
+        border-bottom-width: 1px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .thirdBlock .thirdSpan4 {
+        position: absolute;
+        height: 140px;
+        width: 100%;
+        border-bottom-style: solid;
+        border-bottom-color: #EFF0FF;
+        border-bottom-width: 1px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .thirdBlock .thirdSpan5 {
+        position: absolute;
+        height: 170px;
+        width: 100%;
+        border-bottom-style: solid;
+        border-bottom-color: #EFF0FF;
+        border-bottom-width: 1px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+    }
+
+    .thirdBlock .taskSpan1 {
+        position: absolute;
+        height: 35px;
+        left: 60px;
+        font-size: 17px;
+        margin-top: 4px;
+    }
+
+    .thirdBlock .taskSpan2 {
+        position: absolute;
+        top: 35px;
+        height: 35px;
+        left: 60px;
+        font-size: 17px;
+        margin-top: 4px;
+    }
+
+    .thirdBlock .taskSpan3 {
+        position: absolute;
+        top: 70px;
+        height: 35px;
+        left: 60px;
+        font-size: 17px;
+        margin-top: 4px;
+    }
+
+    .thirdBlock .taskSpan4 {
+        position: absolute;
+        top: 105px;
+        height: 35px;
+        left: 60px;
+        font-size: 17px;
+        margin-top: 4px;
+    }
+
+    .thirdBlock .taskSpan5 {
+        position: absolute;
+        top: 140px;
+        height: 35px;
+        left: 60px;
+        font-size: 17px;
+        margin-top: 4px;
+    }
+
+    .thirdBlock .taskSpan6 {
+        position: absolute;
+        top: 175px;
+        height: 35px;
+        left: 60px;
+        font-size: 17px;
+        margin-top: 4px;
+    }
+
+    .logout {
+        position: absolute;
+        top: 460px;
+        left: 0px;
+        height: 40px;
+        width: 100%;
+        background: #fff;
+    }
+
+    .userLogout {
+        font-size: .85rem;
+        background-color: red;
+        color: #fff;
+        width: 100%;
+        height: 40px;
+        justify-content: center;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .userFooter {
+        position: absolute;
+        top: 633px;
+        left: 0px;
+        height: 54px;
+        width: 100%;
+        background: #00A083;
+        color: #fff;
+        font-family: fantasy;
+        text-align: center;
+        font-size: .85rem;
+        padding-top: 10px;
+        display: block;
+    }
+</style>
 <script>
- 	setTimeout(function() {
-		push();
-	}, 400);
-	setInterval(function() {
-		push();
-	}, 2000);
-	function push() {
-		$.ajax({
-			type:"post",
-			url:"${s.base}/getTaskNumber.action",
-			data:{
-				"userid":'1',
-			},
-			success:function(data){
-				var str='<span class="badge" >'+data.tasknum+'</span>';
-				//$("#waittasknum").appendChild(str);
-			}
-		});
-	} 
+    setTimeout(function () {
+        push();
+    }, 400);
+    setInterval(function () {
+        push();
+    }, 2000);
+
+    function push() {
+        $.ajax({
+            type: "post",
+            url: "${s.base}/getTaskNumber.action",
+            data: {
+                "userid": '1',
+            },
+            success: function (data) {
+                var str = '<span class="badge" >' + data.tasknum + '</span>';
+                //$("#waittasknum").appendChild(str);
+            }
+        });
+    }
 </script>
 
 <body>
-	<div class="page-group">
+<div class="page-group">
 
-		<!-- 你的html代码 -->
-		<div class="page">
-			<header class="bar bar-nav">
-				<h1 class="title">我的首页</h1>
-			</header>
-			<div class="bar bar-header-secondary">
-				<div class="searchbar">
-					<a class="searchbar-cancel">取消</a>
-					<div class="search-input">
-						<label class="icon icon-search" for="search"></label> <input
-							type="search" id='search' placeholder='输入关键字...' />
-					</div>
-				</div>
-			</div>
-			<nav class="bar bar-tab">
-				<a class="tab-item active" href="#"> <span
-					class="icon icon-home"></span> <span class="tab-label">首页</span>
-				</a>
-				 <a class="tab-item external" href="${s.base}/toTask.action" id="waittasknum"><span
-					class="icon icon-menu "></span> <span class="tab-label">工单处理</span>
-					
-				</a> <a class="tab-item external" href="${s.base}/toPlane.action"> <span
-					class="icon icon-app "></span> <span class="tab-label">无人机操控</span>
-				</a> <a class="tab-item external" href="user.html"> <span
-					class="icon icon-me"></span> <span class="tab-label">我的</span>
-				</a>
-			</nav>
-			<div class="content">
-				<div class="content-block-title">无人机危险检测</div>
-				<div class="card">
-					<div class="card-content">
-						<div class="card-content-inner">无人机，就是无人驾驶飞机，他们一般个子较小，经常被用作一些危险、愚钝的工作。无人机的应用广泛，最早被用于军事领域，慢慢的演变为各行各业，例如：警用、城市管理、农业、气象、电力、抢险救灾、视频拍摄等行业。。</div>
-					</div>
-				</div>
-				<div class="card">
-					<div class="card-header">巡检员任务</div>
-					<div class="card-content">
-						<div class="card-content-inner">巡检员需要接受任务去巡检相关的路段。确保光缆的安全。</div>
-					</div>
-					<div class="card-footer">防范于未然，要有危机意识</div>
-				</div>
-				<div class="card">
-					<div class="card-content">
-						<div class="card-content-inner">居安思危，做好光缆的寻访任务</div>
-					</div>
-				</div>
-				<div class="content-block-title">危险图示</div>
-				<div class="card demo-card-header-pic">
-					<div valign="bottom"
-						class="card-header color-white no-border no-padding">
-						<img class='card-cover'
-							src="http://s7d2.scene7.com/is/image/Caterpillar/C10602924?$cc-s$"
-							alt="">
-					</div>
-					<div class="card-content">
-						<div class="card-content-inner">
-							<p class="color-gray">发表于 2015/01/15</p>
-							<p>挖掘机威胁图示</p>
-						</div>
-					</div>
+    <!-- 你的html代码 -->
+    <div class="page">
+        <header class="bar bar-nav">
+            <a class="icon icon-me pull-left open-panel"></a>
+            <h1 class="title">我的首页</h1>
+        </header>
+        <div class="bar bar-header-secondary">
+            <div class="searchbar">
+                <a class="searchbar-cancel">取消</a>
+                <div class="search-input">
+                    <label class="icon icon-search" for="search"></label> <input
+                        type="search" id='search' placeholder='输入关键字...'/>
+                </div>
+            </div>
+        </div>
+        <nav class="bar bar-tab">
+            <a class="tab-item active" href="#"> <span
+                    class="icon icon-home"></span> <span class="tab-label">首页</span>
+            </a>
+            <a class="tab-item external" href="${s.base}/toTask.action" id="waittasknum"><span
+                    class="icon icon-menu "></span> <span class="tab-label">工单处理</span>
 
-				</div>
+            </a> <a class="tab-item external" href="${s.base}/toPlane.action"> <span
+                class="icon icon-app "></span> <span class="tab-label">无人机操控</span>
+        </a>
+        </nav>
+        <div class="content">
+            <div class="content-block-title">无人机危险检测</div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-content-inner">
+                        无人机，就是无人驾驶飞机，他们一般个子较小，经常被用作一些危险、愚钝的工作。无人机的应用广泛，最早被用于军事领域，慢慢的演变为各行各业，例如：警用、城市管理、农业、气象、电力、抢险救灾、视频拍摄等行业。。
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">巡检员任务</div>
+                <div class="card-content">
+                    <div class="card-content-inner">巡检员需要接受任务去巡检相关的路段。确保光缆的安全。</div>
+                </div>
+                <div class="card-footer">防范于未然，要有危机意识</div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-content-inner">居安思危，做好光缆的寻访任务</div>
+                </div>
+            </div>
+            <div class="content-block-title">危险图示</div>
+            <div class="card demo-card-header-pic">
+                <div valign="bottom"
+                     class="card-header color-white no-border no-padding">
+                    <img class='card-cover'
+                         src="http://s7d2.scene7.com/is/image/Caterpillar/C10602924?$cc-s$"
+                         alt="">
+                </div>
+                <div class="card-content">
+                    <div class="card-content-inner">
+                        <p class="color-gray">发表于 2015/01/15</p>
+                        <p>挖掘机威胁图示</p>
+                    </div>
+                </div>
+
+            </div>
 
 
-			</div>
-		</div>
+        </div>
+    </div>
 
-	</div>
+    <div class="panel panel-left panel-reveal">
+        <header class="bar bar-nav">
+            <h2 class="userTitle">用户中心</h2>
+        </header>
 
-	<script type='text/javascript' src='light7/js/light7.js'
-		charset='utf-8'></script>
-	<script type='text/javascript' src='light7/js/light7-swiper.js'
-		charset='utf-8'></script>
+        <div class="content">
+            <div class="firstBlock">
+                <div class="userImg"></div>
+                <div class="usertop">
+                    <span class="username"><b>杨瑞丰</b></span>
+                </div>
+
+                <div class="usertop">
+                    <span class="userRole"><b>用户类别：操作员</b></span>
+                </div>
+            </div>
+
+            <div class="secondBlock">
+                <div class="taskImg"></div>
+                <span class="taskSpan"><b>我的工单</b></span>
+                <a href="index.html">
+                    <div class="rightArr"></div>
+                </a>
+            </div>
+
+            <div class="thirdBlock">
+                <div class="thirdSpan1">
+                    <img class="taskImg1" src="../../res/img/fly.png">
+                    <span class="taskSpan1"><b>无人机起飞</b></span>
+                    <a href="index.html">
+                        <div class="rightArr1"></div>
+                    </a>
+
+                </div>
+
+                <div class="thirdSpan2">
+                    <img class="taskImg2" src="../../res/img/down.png">
+                    <span class="taskSpan2"><b>紧急迫降</b></span>
+                    <a href="index.html">
+                        <div class="rightArr2"></div>
+                    </a>
+                </div>
+                <div class="thirdSpan3">
+                    <img class="taskImg3" src="../../res/img/disconnect.png">
+                    <span class="taskSpan3"><b>报告失联</b></span>
+                    <a href="index.html">
+                        <div class="rightArr3"></div>
+                    </a>
+                </div>
+                <div class="thirdSpan4">
+                    <img class="taskImg4" src="../../res/img/video.png">
+                    <span class="taskSpan4"><b>实时影像</b></span>
+                    <a href="index.html">
+                        <div class="rightArr4"></div>
+                    </a>
+                </div>
+                <div class="thirdSpan5">
+                    <img src="../../res/img/location.png" class="taskImg5">
+                    <span class="taskSpan5"><b>实时位置</b></span>
+                    <a href="index.html">
+                        <div class="rightArr5"></div>
+                    </a>
+                </div>
+                <div>
+                    <img src="../../res/img/voyage.png" class="taskImg6"></src>
+                    <span class="taskSpan6"><b>紧急返航</b></span>
+                    <a href="index.html">
+                        <div class="rightArr6"></div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="logout">
+                <input type="button" class="userLogout" value="退出当前账号"/>
+            </div>
+
+            <div class="userFooter">岂曰无衣 与子同袍</div>
+        </div>
+
+    </div>
+</div>
+
+<script type='text/javascript' src='../../res/light7/js/light7.min.js'
+        charset='utf-8'></script>
+<script type='text/javascript' src='../../res/light7/js/light7-swiper.min.js'
+        charset='utf-8'></script>
+<script src="http://code.jquery.com/jquery-1.8.0.min.js" charset='utf-8'></script>
 
 </body>
 
