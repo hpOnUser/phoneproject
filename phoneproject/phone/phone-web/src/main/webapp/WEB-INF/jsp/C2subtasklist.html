@@ -1,0 +1,32 @@
+<!-- 这是C2 接收者的任务列表  -->
+<#if taskList??>
+    <#list taskList as tesk>
+        <div class="card">
+            <div class="card-header">
+            <span>飞行任务编号：${tesk.taskid!}</span>&nbsp;&nbsp;
+            	<#if tesk.finishstatus=='0'><div >状态：未完成</div>
+				<#elseif tesk.finishstatus=='1'><div >状态：已完成</div>
+				</#if>
+            </div>
+            <div class="card-content">
+                <div class="card-content-inner">
+                    	   起飞员编号：${tesk.userbid!}
+                    <br> 降落员编号：${tesk.usercid!}
+                    <br> 飞机编号：${tesk.planeid!}
+                    <br> 飞行路径编号：${tesk.planepathid!}
+                    <br> 计划时间：${tesk.plantime?date!}
+                   	<br> 完成时间：${tesk.realtime?date!}
+                </div>
+            </div>
+            <div class="card-footer">
+            	<#if tesk.status=='2' ><div class="right-fl"><a href="#" class="button button-fill">确认任务</a>
+            	</div>
+				<#elseif tesk.status=='4'><div class="right-fl"><a href="#" class="button button-fill button-warning" href='${s.base}/fight.action'>执行任务</a>
+				</div>
+				</#if>
+            	
+            </div>
+        </div>
+    </#list>
+</#if>
+
