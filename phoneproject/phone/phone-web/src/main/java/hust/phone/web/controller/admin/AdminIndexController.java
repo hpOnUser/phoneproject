@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.image.TileObserver;
+import java.io.IOException;
 
 @Controller(value = "AdminIndexController")
 public class AdminIndexController {
@@ -87,5 +90,22 @@ public class AdminIndexController {
             return JsonView.render(1,msg);
         }
         return JsonView.render(0,"注册成功,请返回登陆页面登陆");
+    }
+
+
+    @RequestMapping(value = "logout",method = RequestMethod.GET)
+    public void logout(HttpSession session, HttpServletResponse response, HttpServletRequest request) {
+        session.removeAttribute(WebConst.LOGIN_SESSION_KEY);
+        Cookie cookie = new Cookie(WebConst.USER_IN_COOKIE, "");
+        cookie.setValue(null);
+        cookie.setMaxAge(0);// 立即销毁cookie
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        try {
+            response.sendRedirect("login");
+        } catch (IOException e) {
+            e.printStackTrace();
+            LOGGER.error("注销失败", e);
+        }
     }
 }

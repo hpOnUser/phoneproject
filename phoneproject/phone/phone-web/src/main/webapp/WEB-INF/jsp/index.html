@@ -471,7 +471,7 @@
             <div class="secondBlock">
                 <div class="taskImg"></div>
                 <span class="taskSpan"><b>我的工单</b></span>
-                <a href="index.html">
+                <a href="${s.base}/toTask.action">
                     <div class="rightArr"></div>
                 </a>
             </div>
@@ -524,7 +524,7 @@
             </div>
 
             <div class="logout">
-                <input type="button" class="userLogout" value="退出当前账号"/>
+                <input type="button" class="userLogout" value="退出当前账号" />
             </div>
 
             <div class="userFooter">岂曰无衣 与子同袍</div>
@@ -539,6 +539,12 @@
         charset='utf-8'></script>
 <script src="http://code.jquery.com/jquery-1.8.0.min.js" charset='utf-8'></script>
 
+
+<script type="text/javascript">
+$(".userLogout").click(function(){
+    window.location.href="logout";
+})
+</script>
 </body>
 
 </html>
