@@ -32,15 +32,15 @@
 			</a>
 			<h1 class='title'>我的工单</h1>
 		</header>
-		<div class="content">
-			<div class="buttons-tab fixed-tab">
+		<div class="bar bar-header-secondary buttons-tab">	
 				<li class="tab-link button active" id="tab00" onclick="exData(2)"><a
 					href="#tab0">全部</a></li>
 				<li class="tab-link button" id="tab01" onclick="exData(0)"><a
 					href="#tab1">待完成</a></li>
 				<li class="tab-link button" id="tab02" onclick="exData(1)"><a
-					href="#tab2">已完成</a></li>
-			</div>
+					href="#tab2">已完成</a></li>		
+		</div>
+		<div class="content">	
 			<div class="content-block">
 				<div class="tabs">
 					<div id="tab0" class="tab active"></div>
@@ -51,6 +51,7 @@
 		</div>
 	</div>
 	<script>
+	
 	function exData(flag) {
 		var url = '${s.base}/taskList.action';
 		$('.tab').removeClass('active');
@@ -80,8 +81,9 @@
 			});
 		}
 	}
-	
-	
+	window.onload=function(){
+		 exData(2);
+	}
 </script>
 </body>
 </html>
