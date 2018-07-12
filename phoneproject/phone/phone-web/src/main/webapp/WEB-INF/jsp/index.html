@@ -358,26 +358,26 @@
     }
 </style>
 <script>
-    setTimeout(function () {
-        push();
-    }, 400);
-    setInterval(function () {
-        push();
-    }, 2000);
-
-    function push() {
-        $.ajax({
-            type: "post",
-            url: "${s.base}/getTaskNumber.action",
-            data: {
-                "userid": '1',
-            },
-            success: function (data) {
-                var str = '<span class="badge" >' + data.tasknum + '</span>';
-                //$("#waittasknum").appendChild(str);
-            }
-        });
-    }
+    // setTimeout(function () {
+    //     push();
+    // }, 400);
+    // setInterval(function () {
+    //     push();
+    // }, 2000);
+    //
+    // function push() {
+    //     $.ajax({
+    //         type: "post",
+    //         url: "${s.base}/getTaskNumber.action",
+    //         data: {
+    //             "userid": '1',
+    //         },
+    //         success: function (data) {
+    //             var str = '<span class="badge" >' + data.tasknum + '</span>';
+    //             //$("#waittasknum").appendChild(str);
+    //         }
+    //     });
+    // }
 </script>
 
 <body>
@@ -460,11 +460,13 @@
             <div class="firstBlock">
                 <div class="userImg"></div>
                 <div class="usertop">
-                    <span class="username"><b>杨瑞丰</b></span>
+                    <span class="username"><b><#if Session["login_user"]?exists>
+                            ${Session["login_user"].username}</#if></b></span>
                 </div>
 
                 <div class="usertop">
-                    <span class="userRole"><b>用户类别：操作员</b></span>
+                    <span class="userRole"><b>用户类别：<#if Session["login_user"]?exists>
+                            ${Session["login_user"].descripte}</#if></b></span>
                 </div>
             </div>
 
