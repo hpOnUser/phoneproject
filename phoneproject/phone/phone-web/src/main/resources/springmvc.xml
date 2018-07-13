@@ -15,6 +15,14 @@
 
 	<!-- 使用注解开发，不用配置controller，需要配置一个组件扫描器 -->
 	<context:component-scan base-package="hust.phone.web.controller" />
+	<mvc:interceptors>  
+	 <!-- 配置登陆拦截器   --> 
+	  <mvc:interceptor>  
+	      <mvc:mapping path="/myindex"/>  
+	      <bean class="hust.phone.web.interceptor.SessionHandlerInterceptor"></bean>  
+	  </mvc:interceptor>  
+ 	</mvc:interceptors> 
+	
 	
 	<!-- 配置注解驱动 -->
 	<mvc:annotation-driven />

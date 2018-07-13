@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import hust.phone.mapper.pojo.User;
+
 /**
  * 系统登录验证
  * 
@@ -17,7 +19,7 @@ public class SessionHandlerInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		Object userId = request.getSession().getAttribute("userId");
+		Object userId =request.getSession().getAttribute("login_user");
 		if (userId != null) {
 			return true;
 		}
@@ -26,7 +28,7 @@ public class SessionHandlerInterceptor extends HandlerInterceptorAdapter {
 			response.sendError(HttpStatus.UNAUTHORIZED.value(), "您已经太长时间没有操作,请刷新页面");
 			return false;
 		}
-		response.sendRedirect(request.getContextPath() + "/loginPage");
+		response.sendRedirect(request.getContextPath() + "/login");
 		return false;
 	}
 
