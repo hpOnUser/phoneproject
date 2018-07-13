@@ -19,6 +19,7 @@
     }
 </style>
 <script type='text/javascript' src='js/jquery-3.3.1.min.js'></script>
+
 <script type='text/javascript' src='light7/js/light7.js' charset='utf-8'></script>
 <script type='text/javascript' src='light7/js/light7-swiper.js'	charset='utf-8'></script>
 
@@ -33,11 +34,11 @@
 			<h1 class='title'>我的工单</h1>
 		</header>
 		<div class="bar bar-header-secondary buttons-tab">	
-				<li class="tab-link button active" id="tab00" onclick="exData(2)"><a
+				<li class="tab-link button col-33 active" id="tab00" onclick="exData(2)"><a
 					href="#tab0">全部</a></li>
-				<li class="tab-link button" id="tab01" onclick="exData(0)"><a
+				<li class="tab-link button col-33" id="tab01" onclick="exData(0)"><a
 					href="#tab1">待完成</a></li>
-				<li class="tab-link button" id="tab02" onclick="exData(1)"><a
+				<li class="tab-link button col-33" id="tab02" onclick="exData(1)"><a
 					href="#tab2">已完成</a></li>		
 		</div>
 		<div class="content">	
@@ -50,8 +51,8 @@
 			</div>
 		</div>
 	</div>
-	<script>
 	
+	<script>
 	function exData(flag) {
 		var url = '${s.base}/taskList.action';
 		$('.tab').removeClass('active');
@@ -84,6 +85,21 @@
 	window.onload=function(){
 		 exData(2);
 	}
+
+	function ensureTask(TaskId){	
+		$.confirm('是否确认任务？', function () {
+	 	      //给后台发送请求
+		/* 	 $.ajax({
+		            type: "post",
+		            url: "${s.base}/ensureTask",
+		            data: {'taskid':TaskId,},
+		            success: function (result) {
+		               //
+		            }
+		      });	 */			
+	 	});
+	} 
+			
 </script>
 </body>
 </html>

@@ -19,12 +19,11 @@
                 </div>
             </div>
             <div class="card-footer">
-            	<#if tesk.status=='1' ><div class="right-fl"><a href="#" class="button button-fill button-warning">确认任务</a></div>
-				<#elseif tesk.status=='3'><div class="right-fl"><a  class="button button-fill button-warning" href='${s.base}/toPlane.action'>执行任务</a></div>
+            	<#if tesk.status=='1' ><div class="right-fl"><a class="button button-fill button-warning " id="${tesk.taskid!}" onclick="ensureTask(${tesk.taskid!})">确认任务</a></div>
+				<#elseif tesk.status=='3'><div class="right-fl"><a  class="button button-fill button-warning external" href='${s.base}/toPlane.action'>执行任务</a></div>
 				</#if>
             	
             </div>
         </div>
     </#list>
-</#if>
-
+</#if> 
