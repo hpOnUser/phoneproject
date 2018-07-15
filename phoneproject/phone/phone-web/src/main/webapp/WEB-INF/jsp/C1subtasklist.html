@@ -4,8 +4,8 @@
         <div class="card">
             <div class="card-header">
             <span>飞行任务编号：${tesk.taskid!}</span>&nbsp;&nbsp;
-            	<#if tesk.finishstatus=='0'><div >状态：未完成</div>
-				<#elseif tesk.finishstatus=='1'><div >状态：已完成</div>
+            	<#if tesk.finishstatus=='0'><div style="background-color:crimson;color: #FFFFFF;">状态：未完成</div>
+				<#elseif tesk.finishstatus=='1'><div style="background-color: green;color: #FFFFFF">状态：已完成</div>
 				</#if>
             </div>
             <div class="card-content">
