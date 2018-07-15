@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta http-equiv="refresh" content="4;URL=${s.base/login.html">
+    <meta http-equiv="refresh" content="4;URL=${s.base}/myindex">
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <style>
         html,body {
@@ -32,17 +32,17 @@
 </head>
 
 <body>
-    <button id="timecount"><span id="displayu">3</span></button>
+    <button id="timecount"><span id="displayu">2</span></button>
     <script>
         $(function() {
-            var wait = 3;
+            var wait = 2;
             time(wait);
         });
         function time(wait) {
             $("#displayu").html(wait);
             wait--;
             if (wait <= 0) {
-                window.location = "${s.base/login.html}";
+                window.location = "${s.base}/myindex";
             } else {
                 setTimeout(function() {
                     time(wait);

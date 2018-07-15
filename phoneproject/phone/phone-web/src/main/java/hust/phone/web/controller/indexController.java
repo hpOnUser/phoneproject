@@ -19,10 +19,10 @@ public class indexController {
 		return "fight";
 	}
 	
-	@RequestMapping("/webtest")
+	@RequestMapping("/welcome")
 	public String webtest(Model model)
 	{
-		return "webtest";
+		return "welcome";
 	}
 
 
