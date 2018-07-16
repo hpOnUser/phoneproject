@@ -5,6 +5,13 @@ import java.util.List;
 import hust.phone.mapper.pojo.Task;
 
 public interface taskService {
-	public List<Task> getAllTask(Task task);
+	
+	List<Task> selectAllByTask(Task task);
+
+	Task getTaskByTask(Task task);
+
+	boolean rollbackTaskByTask(Task task,String status);
+
+	boolean ensureTaskByTask(Task task, String string);
 
 }

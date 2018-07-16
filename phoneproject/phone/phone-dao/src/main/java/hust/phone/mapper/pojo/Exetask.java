@@ -8,9 +8,6 @@ public class Exetask {
 	
 	private String status;
 	
-	//飞机的位置
-	private String flongda;
-
 	public String getExeid() {
 		return exeid;
 	}

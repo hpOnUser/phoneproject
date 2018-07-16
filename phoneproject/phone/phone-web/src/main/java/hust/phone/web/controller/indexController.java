@@ -13,11 +13,6 @@ public class indexController {
 		return "index";
 	}
 	
-	@RequestMapping("/toPlane")
-	public String toPlane()
-	{
-		return "fight";
-	}
 	
 	@RequestMapping("/welcome")
 	public String webtest(Model model)

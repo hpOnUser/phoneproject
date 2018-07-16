@@ -320,4 +320,16 @@
       finishstatus = #{finishstatus,jdbcType=VARCHAR}
     where taskid = #{taskid,jdbcType=VARCHAR}
   </update>
+  
+    <select id="selectByTask" parameterType="hust.phone.mapper.pojo.Task" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM task
+		WHERE 1=1 
+		<if test="finishstatus != null">
+		and finishstatus = #{finishstatus}
+		</if>	
+		and (userBid = #{userbid} or userCid = #{usercid})	
+	</select>
+  
 </mapper>

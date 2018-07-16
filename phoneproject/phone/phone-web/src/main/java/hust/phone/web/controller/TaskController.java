@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,24 +40,55 @@ public class TaskController {
 	@ResponseBody
 	public String ensureTask(Task task,HttpServletRequest request) {
 		
-		User user = PhoneUtils.getLoginUser(request);
+		User user = PhoneUtils.getLoginUser(request);	
+
+		String userid = user.getUserid();		
+		String reString = "";
+		if(task.getUserbid().equals(userid)) {   //如果是用户在该任务是放飞者
 			
-		
-		String reString = "已经确认任务";
+			taskServiceImpl.ensureTaskByTask(task,"2");
+			reString = "放飞者确认任务成功";
+		}
+		if(task.getUsercid().equals(userid)) {    //如果是用户在该任务是接收者
+			
+			taskServiceImpl.ensureTaskByTask(task,"3");
+			//如果是接收者确认的话，则在exetask表中加入一条执行任务数据
+			reString = "接收者确认任务成功";				
+		}
 		return JsonView.render(1, reString);
 	}
 	
-	// 查询所有的工作单
+	
+	//退回任务，如果任一角色退回任务的话那该任务直接完成，并且完成结果为失败
+	@RequestMapping(value="/rollbackTask",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String rollbackTask(Task task,HttpServletRequest request) {
+		
+		User user = PhoneUtils.getLoginUser(request);
+		
+		String userid = user.getUserid();
+		//下面开始退回任务	
+		String reString = "";
+		
+		taskServiceImpl.rollbackTaskByTask(task,"0");
+		
+		if(task.getUserbid().equals(userid)) {   //如果是用户在该任务是放飞者							
+				reString = "放飞者退回任务成功";
+		}
+		if(task.getUsercid().equals(userid)) {    //如果是用户在该任务是接收者
+			    reString = "接收者退回任务成功";				
+		}
+		
+		return JsonView.render(1, reString);
+	}
+	
+	// 根据完成状态查询所有的工作单
 	@RequestMapping("/taskList")
-	public String taskList(String flag, HttpSession session, Model model) {
-		Task task = new Task();
-		// 得到用户id
-		// String userid =session.getAttribute("userid").toString();
-		String userId = "1"; // 起飞
-		// 得到用户
-		User user = userServiceImpl.getUserById(userId);
-		// 得到用户角色
-		String role = user.getRole();
+	public String taskList(String flag, Model model,HttpServletRequest request) {
+		
+		Task task = new Task();	
+		User user = PhoneUtils.getLoginUser(request);
+		
 		List<Task> taskList = new ArrayList<Task>();	
 		//判断是哪类查询条件
 		switch (flag) {
@@ -73,9 +102,12 @@ public class TaskController {
 			task.setFinishstatus(null);
 			break;
 		}
-		
+		//设置bid，cid都为对应的
 		task.setUserbid(user.getUserid());
-		taskList = taskServiceImpl.getAllTask(task);
+		task.setUsercid(user.getUserid());
+		
+		taskList = taskServiceImpl.selectAllByTask(task);
+		
 		model.addAttribute("taskList", taskList);
 		
 		return "subtasklist";
@@ -91,4 +123,15 @@ public class TaskController {
 		return Number+"";
 	}
 
+	//跳转到无人机操纵界面，同时选取第一个正在执行的任务显示在界面上
+	@RequestMapping("/toPlane")
+	public String toPlane(HttpServletRequest request)
+	{
+		User user = PhoneUtils.getLoginUser(request);	
+		List<Task> taskList = new ArrayList<Task>();	
+		//taskList = taskServiceImpl.findExeTask();
+		//Exetask exetask = exetaskServiceImpl.findExetaskByTask(taskList.get(0));  //把第一个放入到界面
+		
+		return "fight";
+	}
 }

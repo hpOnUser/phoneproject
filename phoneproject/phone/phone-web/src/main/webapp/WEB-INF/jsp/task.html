@@ -64,7 +64,6 @@
 			$("#tab2").load(url, {
 				'flag' : flag
 			}, function() {
-
 				$("#tab02").addClass('active');
 				$("#tab2").addClass('active');
 			});
@@ -72,7 +71,6 @@
 			$("#tab0").load(url, {
 				'flag' : flag
 			}, function() {
-				
 				$("#tab00").addClass('active');
 				$("#tab0").addClass('active');
 			});
@@ -83,13 +81,17 @@
 	}
 	
 	//ajax请求确认任务，若成功则刷新当前页面
-	function ensureTask(TaskId){	
+	function ensureTask(TaskId,userbid,usercid){	
 		$.confirm('是否确认任务？', function () {
 	 	      //给后台发送请求
 		 	 $.ajax({
 		            type: "post",
 		            url: "${s.base}/ensureTask.action",
-		            data: {'taskid':TaskId,},		         
+		            data: {
+		            	'taskid':TaskId,
+		            	'userbid':userbid,
+		            	'usercid':usercid
+		            },		         
 		            success: function (result) {
 		            if(result.errcode=='1')	{
 			            	$.toast(result.message);
@@ -103,7 +105,30 @@
 		      });			
 	 	});
 	}
-	
+	function rollbackTask(TaskId,userbid,usercid){
+		$.confirm('是否退回任务？', function () {
+	 	      //给后台发送请求
+		 	 $.ajax({
+		            type: "post",
+		            url: "${s.base}/rollbackTask.action",
+		            data: {
+		            	'taskid':TaskId,
+		            	'userbid':userbid,
+		            	'usercid':usercid
+		            },		         
+		            success: function (result) {
+		            if(result.errcode=='1')	{
+			            	$.toast(result.message);
+			            	setTimeout(function(){
+			            		location.reload();	
+			            	}, 3000);
+			            }else{
+			            	$.toast(result.message);
+			            }	            			               
+		           }
+		      });			
+	 	});
+	}
 	//弹出任务详情
 	//function getTaskDetail(TaskId){
 	/* 	var popupHTML = 
