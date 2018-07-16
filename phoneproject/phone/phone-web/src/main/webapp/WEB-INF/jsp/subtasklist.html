@@ -1,0 +1,37 @@
+<!-- 这是C1 放飞者的任务列表  -->
+<#if taskList??>
+    <#list taskList as task>
+        <div class="card">
+            <div class="card-header">
+            <span>飞行任务编号：${task.taskid!}</span>&nbsp;&nbsp;
+            	<#if task.finishstatus=='0'><div >状态：未完成</div>
+				<#elseif task.finishstatus=='1'><div >状态：已完成</div>			
+				</#if>
+					
+            </div>
+            <div class="card-content">
+                <div class="card-content-inner">
+                    	   起飞员编号：${task.userbid!}
+                    <br> 降落员编号：${task.usercid!}
+                    <br> 飞机编号：${task.planeid!}
+                    <br> 飞行路径编号：${task.planepathid!}
+                    <br> 计划时间：${task.plantime?date!}
+                   	<br> 完成时间：${task.realtime?date!}
+                </div>
+            </div>
+            <div class="card-footer">
+            	 <#if task.status?? && task.status!="">           	          	 
+            	        <#if task.status=='1' ><div class="right-fl"><a  class="button button-fill button-warning " id="${task.taskid!}" onclick="ensureTask(${task.taskid!})">放飞者  > 确认</a></div>
+						<#elseif task.status=='2' ><div class="right-fl"><a  class="button button-fill button-warning " id="${task.taskid!}" onclick="ensureTask(${task.taskid!})">接收者  > 确认</a> </div>
+						<#elseif task.status=='3' ><div class="right-fl"><a  class="button button-fill button-warning external" href='${s.base}/toPlane.action'>放飞者  > 执行</a> </div>
+						<#elseif task.status=='4' ><div class="right-fl"><a  class="button button-fill button-warning external" href='${s.base}/toPlane.action'>接收者  > 执行</a> </div>
+						<#elseif task.status=='0' ><div class="right-fl"><a  class="button button-fill disabled" href='${s.base}/toPlane.action'>已退回</a> </div>
+						<#elseif task.status=='-1' ><div class="right-fl"><a  class="button button-fill disabled" href='${s.base}/toPlane.action'>故障</a> </div>
+						<#else><div class="right-fl"><a  class="button button-fill disabled" href='${s.base}/toPlane.action'>成功完成</a></div>			
+					    </#if>
+					<!-- <a onclick="getTaskDetail(${task.taskid!})">任务详情&nbsp;&nbsp;<span class="icon icon-right"></span></a>  -->
+				 </#if> 	
+            </div>
+        </div>
+    </#list>
+</#if>

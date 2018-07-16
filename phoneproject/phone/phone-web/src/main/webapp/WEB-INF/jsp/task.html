@@ -12,11 +12,6 @@
 <link rel="stylesheet" href="light7/css/light7.min.css">
 <link rel="stylesheet" href="light7/css/light7-swiper.min.css">
 <style type="text/css">
-   .right-fl{
-	 positon:relative;
-	 float:right;
-	 padding-right:5px;
-    }
 </style>
 <script type='text/javascript' src='js/jquery-3.3.1.min.js'></script>
 
@@ -27,7 +22,7 @@
 <body >
 	<div class="page-group">
 		<header class="bar bar-nav">
-			<a class="button button-link button-nav pull-left"
+			<a class="button button-link button-nav pull-left external"
 				href="${s.base}/myindex.html" data-transition='slide-out'> <span
 				class="icon icon-left"></span> 返回
 			</a>
@@ -49,6 +44,7 @@
 					<div id="tab2" class="tab"></div>
 				</div>
 			</div>
+			
 		</div>
 	</div>
 	
@@ -85,20 +81,38 @@
 	window.onload=function(){
 		 exData(2);
 	}
-
+	
+	//ajax请求确认任务，若成功则刷新当前页面
 	function ensureTask(TaskId){	
 		$.confirm('是否确认任务？', function () {
 	 	      //给后台发送请求
-		/* 	 $.ajax({
+		 	 $.ajax({
 		            type: "post",
-		            url: "${s.base}/ensureTask",
-		            data: {'taskid':TaskId,},
+		            url: "${s.base}/ensureTask.action",
+		            data: {'taskid':TaskId,},		         
 		            success: function (result) {
-		               //
-		            }
-		      });	 */			
+		            if(result.errcode=='1')	{
+			            	$.toast(result.message);
+			            	setTimeout(function(){
+			            		location.reload();	
+			            	}, 3000);
+			            }else{
+			            	$.toast(result.message);
+			            }	            			               
+		           }
+		      });			
 	 	});
-	} 
+	}
+	
+	//弹出任务详情
+	//function getTaskDetail(TaskId){
+	/* 	var popupHTML = 
+		'<div class="popup">'+
+        '<div class="content-padded">'+
+          '<p>'+TaskId+'</p>'+
+          '<p><a href="#" class="close-popup">关闭</a></p>'+
+        '</div></div>';
+		$.popup(popupHTML);} */
 			
 </script>
 </body>

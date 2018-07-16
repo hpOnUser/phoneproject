@@ -14,376 +14,18 @@
     <link rel="stylesheet" href="../../res/light7/css/light7.min.css">
     <link rel="stylesheet" href="../../res/light7/css/light7-swiper.min.css">
     <script type='text/javascript' src='../../res/js/jquery-3.3.1.min.js'></script>
+     <link rel="stylesheet" href="../../res/css/index.css">
 </head>
-<style>
-    .userTitle {
-        position: absolute;
-        display: block;
-        width: 100%;
-        padding: 0;
-        margin: 0 -.5rem;
-        font-size: .85rem;
-        font-weight: 500;
-        line-height: 2.2rem;
-        color: #fff;
-        background-color: #00A083;
-        text-align: center;
-        white-space: nowrap;
-    }
-
-    .userImg {
-        position: absolute;
-        top: 13px;
-        left: 7px;
-        height: 100px;
-        width: 100px;
-        background-image: url(../../res/img/user.jpg);
-        background-color: aliceblue;
-        border-radius: 9px;
-    }
-
-    .taskImg {
-        position: absolute;
-        left: 0px;
-        height: 36px;
-        width: 36px;
-        background-image: url(../../res/img/task.jpg);
-    }
-
-    .firstBlock {
-        position: absolute;
-        top: 10px;
-        left: 0px;
-        height: 130px;
-        width: 100%;
-        background-color: #fff;
-    }
-
-    .usertop {
-        padding: 20px;
-    }
-
-    .username {
-        position: absolute;
-        display: inline-block;
-        top: 30px;
-        /*偏移*/
-        left: 45%;
-        /*偏移*/
-        font-size: 20px;
-    }
-
-    .userRole {
-        position: absolute;
-        display: inline-block;
-        top: 70px;
-        left: 45%;
-        font-size: 10px;
-    }
-
-    .secondBlock {
-        position: absolute;
-        top: 160px;
-        left: 0px;
-        height: 35px;
-        width: 100%;
-        background: #fff;
-    }
-
-    .taskSpan {
-        position: absolute;
-        left: 60px;
-        font-size: 17px;
-        margin-top: 4px;
-    }
-
-    .rightArr {
-        position: absolute;
-        left: 220px;
-        height: 36px;
-        width: 36px;
-        background-image: url(../../res/img/right.png);
-    }
-
-    .thirdBlock {
-        position: absolute;
-        top: 220px;
-        left: 0px;
-        height: 210px;
-        width: 100%;
-        background: #fff;
-    }
-
-    .taskImg1 {
-        position: absolute;
-        left: 0px;
-        height: 36px;
-        width: 36px;
-    }
-
-    .taskImg2 {
-        position: absolute;
-        left: 0px;
-        top: 35px;
-        height: 36px;
-        width: 36px;
-    }
-
-    .taskImg3 {
-        position: absolute;
-        top: 70px;
-        left: 0px;
-        height: 32px;
-        width: 32px;
-    }
-
-    .taskImg4 {
-        position: absolute;
-        top: 110px;
-        left: 0px;
-        height: 32px;
-        width: 32px;
-    }
-
-    .taskImg5 {
-        position: absolute;
-        left: 0px;
-        top: 145px;
-        height: 36px;
-        width: 36px;
-    }
-
-    .taskImg6 {
-        position: absolute;
-        left: 0px;
-        height: 32px;
-        width: 32px;
-        top: 180px;
-    }
-
-    .thirdBlock .rightArr1 {
-        position: absolute;
-        left: 220px;
-        height: 36px;
-        width: 36px;
-        background-image: url(../../res/img/right.png);
-    }
-
-    .thirdBlock .rightArr2 {
-        position: absolute;
-        top: 35px;
-        left: 220px;
-        height: 36px;
-        width: 36px;
-        background-image: url(../../res/img/right.png);
-    }
-
-    .thirdBlock .rightArr3 {
-        position: absolute;
-        top: 70px;
-        left: 220px;
-        height: 36px;
-        width: 36px;
-        background-image: url(../../res/img/right.png);
-    }
-
-    .thirdBlock .rightArr4 {
-        position: absolute;
-        top: 105px;
-        left: 220px;
-        height: 36px;
-        width: 36px;
-        background-image: url(../../res/img/right.png);
-    }
-
-    .thirdBlock .rightArr5 {
-        position: absolute;
-        top: 140px;
-        left: 220px;
-        height: 36px;
-        width: 36px;
-        background-image: url(../../res/img/right.png);
-    }
-
-    .thirdBlock .rightArr6 {
-        position: absolute;
-        top: 175px;
-        left: 220px;
-        height: 36px;
-        width: 36px;
-        background-image: url(../../res/img/right.png);
-    }
-
-    .thirdBlock .thirdSpan1 {
-        position: absolute;
-        height: 35px;
-        width: 100%;
-        border-bottom-style: solid;
-        border-bottom-color: #EFF0FF;
-        border-bottom-width: 1px;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-    }
-
-    .thirdBlock .thirdSpan2 {
-        position: absolute;
-        height: 70px;
-        width: 100%;
-        border-bottom-style: solid;
-        border-bottom-color: #EFF0FF;
-        border-bottom-width: 1px;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-    }
-
-    .thirdBlock .thirdSpan3 {
-        position: absolute;
-        height: 105px;
-        width: 100%;
-        border-bottom-style: solid;
-        border-bottom-color: #EFF0FF;
-        border-bottom-width: 1px;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-    }
-
-    .thirdBlock .thirdSpan4 {
-        position: absolute;
-        height: 140px;
-        width: 100%;
-        border-bottom-style: solid;
-        border-bottom-color: #EFF0FF;
-        border-bottom-width: 1px;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-    }
-
-    .thirdBlock .thirdSpan5 {
-        position: absolute;
-        height: 170px;
-        width: 100%;
-        border-bottom-style: solid;
-        border-bottom-color: #EFF0FF;
-        border-bottom-width: 1px;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-    }
-
-    .thirdBlock .taskSpan1 {
-        position: absolute;
-        height: 35px;
-        left: 60px;
-        font-size: 17px;
-        margin-top: 4px;
-    }
-
-    .thirdBlock .taskSpan2 {
-        position: absolute;
-        top: 35px;
-        height: 35px;
-        left: 60px;
-        font-size: 17px;
-        margin-top: 4px;
-    }
-
-    .thirdBlock .taskSpan3 {
-        position: absolute;
-        top: 70px;
-        height: 35px;
-        left: 60px;
-        font-size: 17px;
-        margin-top: 4px;
-    }
-
-    .thirdBlock .taskSpan4 {
-        position: absolute;
-        top: 105px;
-        height: 35px;
-        left: 60px;
-        font-size: 17px;
-        margin-top: 4px;
-    }
-
-    .thirdBlock .taskSpan5 {
-        position: absolute;
-        top: 140px;
-        height: 35px;
-        left: 60px;
-        font-size: 17px;
-        margin-top: 4px;
-    }
-
-    .thirdBlock .taskSpan6 {
-        position: absolute;
-        top: 175px;
-        height: 35px;
-        left: 60px;
-        font-size: 17px;
-        margin-top: 4px;
-    }
-
-    .logout {
-        position: absolute;
-        top: 460px;
-        left: 0px;
-        height: 40px;
-        width: 100%;
-        background: #fff;
-    }
-
-    .userLogout {
-        font-size: .85rem;
-        background-color: red;
-        color: #fff;
-        width: 100%;
-        height: 40px;
-        justify-content: center;
-        padding-left: 40px;
-        padding-right: 40px;
-    }
-
-    .userFooter {
-        position: absolute;
-        top: 633px;
-        left: 0px;
-        height: 50px;
-        width: 100%;
-        background: #00A083;
-        color: #fff;
-        font-family: fantasy;
-        text-align: center;
-        font-size: .85rem;
-        padding-top: 10px;
-        display: block;
-    }
+<style>  
 </style>
  <script>
- /*    setTimeout(function () {
-        push();
-    }, 400);
-    setInterval(function () {
-        push();
-    }, 2000);
-
-    function push() {
-        $.ajax({
-            type: "post",
-            url: "${s.base}/getTaskNumber.action",
-            data: {
-                "userid": '1',
-            },
-            success: function (data) {
-                var str = '<span class="badge" >' + data.tasknum + '</span>';
-                //$("#waittasknum").appendChild(str);
-            }
-        });
-    } */
+  
+ 
 </script>
 
 <body>
 <div class="page-group">
 
-    <!-- 你的html代码 -->
     <div class="page">
         <header class="bar bar-nav">
             <a class="icon icon-me pull-left open-panel"></a>
@@ -402,12 +44,18 @@
             <a class="tab-item active" href="#"> <span
                     class="icon icon-home"></span> <span class="tab-label">首页</span>
             </a>
-            <a class="tab-item external" href="${s.base}/toTask.action" id="waittasknum"><span
-                    class="icon icon-menu "></span> <span class="tab-label">工单处理</span>
+            <a class="tab-item external" href="${s.base}/toTask.action"><span
+                    class="icon icon-menu "></span><span class="tab-label" >工单处理
+                    </span><span class="badge" id="waittasknum" style="display:none;"></span>
 
-            </a> <a class="tab-item external" href="${s.base}/toPlane.action"> <span
+            </a> 
+            <a class="tab-item external" href="${s.base}/toPlane.action"> <span
                 class="icon icon-app "></span> <span class="tab-label">无人机操控</span>
-        </a>
+                </a>
+                <a class="tab-item external" href="${s.base}/alermList.action"> <span
+                class="icon icon-picture "></span> <span class="tab-label">告警信息</span>
+               
+                </a>
         </nav>
         <div class="content">
             <div class="content-block-title">无人机危险检测</div>
@@ -552,6 +200,28 @@
     $(".thirdSpan6").click(function () {
         window.location.href = "toPlane";
     });
+    
+  //轮询工单列表
+    $(function () {
+    	
+          window.setInterval(function () {  
+        	 	push();	 
+         		}, 60000);   //设置1分钟刷新一次   
+    		});
+
+         function push() {
+            $.ajax({
+                type: "post",
+                url: "${s.base}/getTaskNumber.action",           
+                success: function (data) {
+                	if(Number(data)>0){
+                		console.log(data);
+                		$('#waittasknum').css('display','');
+                	    $('#waittasknum').text(data);                               	 
+                	}                	           	
+                }
+            });
+        } 
 </script>
 </body>
 
