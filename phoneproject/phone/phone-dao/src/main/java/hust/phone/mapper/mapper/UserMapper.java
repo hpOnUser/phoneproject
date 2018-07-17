@@ -28,5 +28,5 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
     //根据用户名和身份查询
-    int selectByUsernameAndRole(String username, String identity);
+    int selectByUsername(String username);
 }

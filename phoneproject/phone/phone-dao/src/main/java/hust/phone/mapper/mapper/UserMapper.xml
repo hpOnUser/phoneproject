@@ -256,10 +256,9 @@
     where userid = #{userid,jdbcType=VARCHAR}
   </update>
 
-  <select id="selectByUsernameAndRole" resultType="java.lang.Integer" parameterType="java.lang.String">
+  <select id="selectByUsername" resultType="java.lang.Integer" parameterType="java.lang.String">
     select count(1)
     from user
     where username = #{param1}
-    and role = #{param2}
   </select>
 </mapper>

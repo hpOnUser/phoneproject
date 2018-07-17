@@ -29,14 +29,14 @@ public class UserServiceimpl implements UserService {
     }
 
     @Override
-    public User login(String username, String password, String identity) {
-        if (StringUtils.isBlank(username) || StringUtils.isBlank(password) || StringUtils.isBlank(identity)) {
+    public User login(String username, String password) {
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
             throw new TipException("用户名、密码和身份不能为空");
         }
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andUsernameEqualTo(username);
-        criteria.andRoleEqualTo(identity);
+        //criteria.andRoleEqualTo(identity);
         int count = userMapper.countByExample(example);
         if (count < 1) {
             throw new TipException("没有该用户");
@@ -51,21 +51,21 @@ public class UserServiceimpl implements UserService {
     }
 
     @Override
-    public int register(String username, String password, String role) {
-        if (StringUtils.isBlank(username) || StringUtils.isBlank(password) || StringUtils.isBlank(role)) {
-            throw new TipException("用户名、密码和身份不能为空");
+    public int register(String username, String password) {
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password) ) {
+            throw new TipException("用户名、密码不能为空");
         }
-        int userCount = userMapper.selectByUsernameAndRole(username, role);
+        int userCount = userMapper.selectByUsername(username);
         if(userCount==1){
             throw new TipException("该用户已经存在");
         }
         User user = new User();
         user.setUsername(username);
         user.setPassword(PhoneUtils.MD5encode(username+password));
-        user.setRole(role);
+        //user.setRole(role);
         user.setCreatetime(DateKit.getNowTime());
-        String description = role.equals("1")?"起飞员":"降落员";
-        user.setDescripte(description);
+        //String description = role.equals("1")?"起飞员":"降落员";
+        //user.setDescripte(description);
         user.setUserid(UUID.UU32());
         int count = userMapper.insertSelective(user);
         return count;

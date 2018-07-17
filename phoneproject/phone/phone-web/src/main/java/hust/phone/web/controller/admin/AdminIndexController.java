@@ -37,11 +37,11 @@ public class AdminIndexController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String doLogin(@RequestParam String role, @RequestParam String username, @RequestParam String password,
+    public String doLogin(@RequestParam String username, @RequestParam String password,
                           @RequestParam(required = false) String remeber_me, HttpServletRequest request, HttpServletResponse response) {
         Integer error_count = cache.get("login_error_count");
         try {
-            User user = userService.login(username, password, role);
+            User user = userService.login(username, password);
             request.getSession().setAttribute(WebConst.LOGIN_SESSION_KEY, user);
             if (StringUtils.isNotBlank(remeber_me)) {
                 PhoneUtils.setCookie(response, user.getUserid());
@@ -70,13 +70,13 @@ public class AdminIndexController {
 
     @RequestMapping(value = "admin/register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String doRegister(@RequestParam String role, @RequestParam String username, @RequestParam String password
+    public String doRegister(@RequestParam String username, @RequestParam String password
             , @RequestParam(required = false) String agree_me) {
         try {
             if (StringUtils.isBlank(agree_me)) {
                 throw new TipException("请同意注册条款");
             }
-            int count = userService.register(username, password, role);
+            int count = userService.register(username, password);
             if (count < 0){
                 return JsonView.render(1,"注册失败，请重新注册");
             }

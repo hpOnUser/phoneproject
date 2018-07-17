@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,11 +33,11 @@
 		</div>
 		<header class="bar bar-nav">
 			<a class="button button-link button-nav pull-left"
-				href="${s.base}/myindex.html" data-transition='slide-out'> <span
+				href="${s.base}/myindex.html extend" data-transition='slide-out'> <span
 				class="icon icon-left"></span>返回
 			</a>
 			<h1 class='title'>
-				<span>任务编号：001</span><span class="icon icon-down"></span>
+				<span>任务编号：${task.taskid!}</span>&nbsp;&nbsp;<span class="icon icon-down"></span>
 			</h1>
 			<a class="button button-link button-nav pull-right"
 				href="${s.base}/toPlane.action" data-transition='slide-out'> <span
@@ -98,16 +97,29 @@
 		</div>
 		<div id="optionArea">
 			<div class="content-block" style="margin-top: 0; padding-top: 0;">
+			<#if task.role?? && task.role!="">
+			<#if task.role == "1">
 				<p class="buttons-row">
-					<a href="checkself(${task.taskid!})" class="button">自检完成</a> 
+					<a href="checkself(${task.taskid!})" class="button">自检</a> 
 					<a href="takeoff(${task.taskid!})" class="button">起飞</a> 
 					<a href="${s.base}/imageOnline?taskid=${task.taskid!}" class="button">实时影像</a>
 				</p>
 				<p class="buttons-row">
 					<a href="emergencyload(${task.taskid!})" class="button">紧急迫降</a> 
 					<a href="emergencyback(${task.taskid!})" class="button">紧急返航</a> 
-					<a href="reportNotconnet(${task.taskid!})" class="button">报告失联</a>
+					<a href="reportNotconnet(${task.taskid!})" class="button">报告失联</a> 
 				</p>
+			<#elseif task.role == "2">
+				<p class="buttons-row">
+					<a href="reportNotconnet(${task.taskid!})" class="button">任务完成</a> 
+					<a href="${s.base}/imageOnline?taskid=${task.taskid!}" class="button">实时影像</a>
+				</p>
+				<p class="buttons-row">
+					<a href="emergencyload(${task.taskid!})" class="button">紧急迫降</a> 					 
+					<a href="reportNotconnet(${task.taskid!})" class="button">报告失联</a> 			
+				</p>			
+			</#if>
+			</#if>						
 			</div>
 		</div>
 	</div>
@@ -117,7 +129,7 @@
 	<script type='text/javascript' src='light7/js/light7-swiper.js'
 		charset='utf-8'></script>
 	<script>
-		var exeid = ${exetask.exeid!};
+	
 		
 		function checkself(taskid) {
 			if(exeid!=0){
@@ -208,24 +220,28 @@
 			});	
 			
 		}
+		
+		
+		//短轮询数据库获取飞机的位置
 		function push() {
 		        $.ajax({
 		            type: "post",
-		            url: "${s.base}/getlocation.action",           
+		            url: "${s.base}/getlocation.action",
+		            data:{
+		            	'planeId':'2',
+		            },
 		            success: function (data) {
 		            	//获取数据然后放置飞机
-		            	
-		            	
+		            	console.log(data.flongda);		         	
 		            }
 		        });
-			  } 
+		} 
 		  
 		 $(function () {		   
 		     window.setInterval(function () {  
 		    	 push();	 
-		     }, 1000);    //轮询 1s一次    
-		 });
-		
+		     }, 3000);    //轮询 1s一次    
+		 });		
 	</script>
 </body>
 </html>

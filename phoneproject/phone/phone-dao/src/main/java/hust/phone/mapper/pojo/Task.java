@@ -29,7 +29,17 @@ public class Task {
 
     private String finishstatus;
 
-    public String getTaskid() {
+    private String role;
+		  
+    public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getTaskid() {
         return taskid;
     }
 
