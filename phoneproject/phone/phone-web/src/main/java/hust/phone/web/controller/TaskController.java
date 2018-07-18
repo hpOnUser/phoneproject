@@ -119,8 +119,9 @@ public class TaskController {
 	}
 
 	private int Number = -2;
+
 	// 轮询新的工单数目
-	@RequestMapping(value="getTaskNumber", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "getTaskNumber", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getTaskNumber() {
 		// 在这里查询最新的工单数目
@@ -130,8 +131,8 @@ public class TaskController {
 
 	// 跳转到无人机操纵界面，同时选取第一个正在执行的任务显示在界面上
 	@RequestMapping("/toPlane")
-	public String toPlane(Task task, HttpServletRequest request,Model model) {
-			
+	public String toPlane(Task task, HttpServletRequest request, Model model) {
+
 		User user = PhoneUtils.getLoginUser(request);
 		Task task2 = taskServiceImpl.getTaskByTask(task);
 		String role = user.getUserid().equals(task2.getUserbid()) ? "1" : "2";
@@ -140,48 +141,79 @@ public class TaskController {
 		PlanePath planePath = new PlanePath();
 		planePath.setPlanepathid(task2.getPlanepathid());
 		PlanePathVo planePathVo = new PlanePathVo(planePath);
-		
-		model.addAttribute("planepath",planePathVo);
-		model.addAttribute("task",task2);
-		
+
+		model.addAttribute("planepath", planePathVo);
+		model.addAttribute("task", task2);
+
 		return "fight";
 	}
 
 	@RequestMapping(value = "/exeTask", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String exeTask(Task task){
-		
+	public String exeTask(Task task) {
+
 		taskServiceImpl.setStatusTaskByTask(task, "4");
 		return JsonView.render(1, "任务开始执行！");
-		
+
 	}
+
 	@RequestMapping("/toPlaneControl")
-	public String toPlaneControl(HttpServletRequest request,Model model){
-		
+	public String toPlaneControl(HttpServletRequest request, Model model) {
+
 		Task task = new Task();
 		User user = PhoneUtils.getLoginUser(request);
 		String userid = user.getUserid();
 
-		task.setFinishstatus("0");		
+		task.setFinishstatus("0");
 		task.setUserbid(userid);
 		task.setUsercid(userid);
 
-		Task task2 = taskServiceImpl.selectOneExeTask(task);    //查找一个正在执行的任务
-		if(task2 == null) {
-			model.addAttribute("tip","您暂无正在执行的任务！");
+		Task task2 = taskServiceImpl.selectOneExeTask(task); // 查找一个正在执行的任务
+		if (task2 == null) {
+			model.addAttribute("tip", "您暂无正在执行的任务！");
 			return "fight";
 		}
 		String role = userid.equals(task2.getUserbid()) ? "1" : "2";
-		task2.setRole(role);         
+		task2.setRole(role);
 
 		PlanePath planePath = new PlanePath();
 		planePath.setPlanepathid(task2.getPlanepathid());
 		PlanePathVo planePathVo = new PlanePathVo(planePath);
-		
-		model.addAttribute("planepath",planePathVo);
-		model.addAttribute("task",task2);
-		
+
+		model.addAttribute("planepath", planePathVo);
+		model.addAttribute("task", task2);
+
 		return "fight";
-			
+
+	}
+
+	@RequestMapping(value = "/emergencyload", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String emergencyload() {
+
+		return JsonView.render(1, "执行紧急成功！");
+	}
+
+	@RequestMapping(value = "/emergencyback", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String emergencyback() {
+		return JsonView.render(1, "执行紧急返航成功！");
+
+	}
+
+	@RequestMapping(value = "/reportNotconnet", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String reportNotconnet() {
+
+		return JsonView.render(1, "报告失联成功！");
+
+	}
+
+	@RequestMapping(value = "/checkself", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String checkself() {
+
+		return JsonView.render(1, "自检成功！");
+
 	}
 }

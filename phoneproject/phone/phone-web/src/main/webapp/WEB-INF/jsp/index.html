@@ -191,7 +191,7 @@
     $(".secondBlock").click(function () {
         window.location.href = "toTask";
     });
-    $(".thirdSpan1").click(function () {
+    /* $(".thirdSpan1").click(function () {
         window.location.href = "toPlane";
     });
     $(".thirdSpan2").click(function () {
@@ -208,14 +208,14 @@
     });
     $(".thirdSpan6").click(function () {
         window.location.href = "toPlane";
-    });
-    
-  //轮询工单列表
-    $(function () {
+    }); */
+  
+  		//轮询工单列表
+    	$(function () {
     	
           window.setInterval(function () {  
         	 	push();	 
-         		}, 60000);   //设置1分钟刷新一次   
+         		}, 30000);   //设置半分钟刷新一次   
     		});
 
          function push() {

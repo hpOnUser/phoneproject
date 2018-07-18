@@ -204,7 +204,7 @@
                 url: "${s.base}/emergencyload.action",
                 data: {
                     'taskid': taskid,
-                    'exeid': exeid
+                  
                 },
                 success: function (result) {
                     if (result.errcode == '1') {
@@ -223,8 +223,7 @@
                 type: "post",
                 url: "${s.base}/emergencyback.action",
                 data: {
-                    'taskid': taskid,
-                    'exeid': exeid
+                    'taskid': taskid,              
                 },
                 success: function (result) {
                     if (result.errcode == '1') {
