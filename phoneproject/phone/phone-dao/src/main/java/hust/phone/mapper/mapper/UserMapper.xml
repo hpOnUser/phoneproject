@@ -261,4 +261,10 @@
     from user
     where username = #{param1}
   </select>
+  
+   <select id="getTaskNumByUser" resultType="java.lang.Integer" parameterType="hust.phone.mapper.pojo.User">
+    select tasknum
+    from user
+    where userid = #{userid}
+  </select>
 </mapper>

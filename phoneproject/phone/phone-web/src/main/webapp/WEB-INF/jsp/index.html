@@ -46,7 +46,7 @@
             </a>
             <a class="tab-item external" href="${s.base}/toTask.action"><span
                     class="icon icon-menu "></span><span class="tab-label" >工单处理
-                    </span><span class="badge" id="waittasknum" style="display:none;"></span>
+                    </span><span class="badge" id="waittasknum" style=""></span>
 
             </a> 
             <a class="tab-item external" href="${s.base}/toPlaneControl.action"> <span
@@ -215,7 +215,7 @@
     	
           window.setInterval(function () {  
         	 	push();	 
-         		}, 30000);   //设置半分钟刷新一次   
+         		}, 3000);   //设置半分钟刷新一次   
     		});
 
          function push() {
@@ -223,11 +223,12 @@
                 type: "post",
                 url: "${s.base}/getTaskNumber.action",           
                 success: function (data) {
+                	console.log(data);
                 	if(Number(data)>0){
-                		console.log(data);
+               		
                 		$('#waittasknum').css('display','');
                 	    $('#waittasknum').text(data);                               	 
-                	}                	           	
+                	}             	           	
                 }
             });
         } 

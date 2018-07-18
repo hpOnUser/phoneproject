@@ -16,6 +16,7 @@ import hust.phone.mapper.pojo.PlanePath;
 import hust.phone.mapper.pojo.Task;
 import hust.phone.mapper.pojo.User;
 import hust.phone.service.interFace.PlanePathService;
+import hust.phone.service.interFace.UserService;
 import hust.phone.service.interFace.taskService;
 import hust.phone.utils.pojo.JsonView;
 import hust.phone.utils.pojo.PhoneUtils;
@@ -26,13 +27,24 @@ public class TaskController {
 
 	@Autowired
 	private taskService taskServiceImpl;
+	
+	@Autowired
+	private UserService userService;
 
+	private int Number = 0;    //未完成工单数目
 	// 工作单跳转
 	@RequestMapping("/toTask")
 	public String toTaskList() {
+		
 		return "task";
 	}
 
+	@RequestMapping("/myindex")
+	public String index(HttpServletRequest request)
+	{
+		//Number = userService.getTaskNumByUser(PhoneUtils.getLoginUser(request));
+		return "index";
+	}
 	// 确认任务
 	// 如果用户角色是放飞者，那么修改该任务的状态为 2
 	// 如果用户是接收者，那么修改该任务的状态为 3，同时在exe表中插入一条新的数据
@@ -118,15 +130,25 @@ public class TaskController {
 		return "subtasklist";
 	}
 
-	private int Number = -2;
+	
 
 	// 轮询新的工单数目
 	@RequestMapping(value = "getTaskNumber", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String getTaskNumber() {
+	public String getTaskNumber(HttpServletRequest request) {
 		// 在这里查询最新的工单数目
-		Number = Number + 1;
-		return Number + "";
+		int newNum = userService.getTaskNumByUser(PhoneUtils.getLoginUser(request));
+		
+		//int oldNum = Number;
+		//if(newNum > oldNum)
+		   // {
+			   // Number = newNum;
+				//return (newNum-oldNum) + "";
+		   // }
+		if(newNum>0)
+			return newNum+"";
+		else
+			return "0";    //没有就返回0
 	}
 
 	// 跳转到无人机操纵界面，同时选取第一个正在执行的任务显示在界面上

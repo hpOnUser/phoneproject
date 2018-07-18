@@ -70,4 +70,10 @@ public class UserServiceimpl implements UserService {
         int count = userMapper.insertSelective(user);
         return count;
     }
+
+	@Override
+	public int getTaskNumByUser(User user) {
+		int tasknum = userMapper.getTaskNumByUser(user);
+		return tasknum;
+	}
 }

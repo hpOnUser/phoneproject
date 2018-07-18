@@ -29,4 +29,7 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
     //根据用户名和身份查询
     int selectByUsername(String username);
+
+    //找到对应的任务数目
+    int getTaskNumByUser(User user);
 }
