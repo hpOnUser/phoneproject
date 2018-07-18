@@ -33,7 +33,6 @@ public class PlanePathServiceImpl implements PlanePathService {
 
 	@Override
 	public PlanePath selectByPlanepathId(PlanePath planePath) {
-
 		PlanePath path = planePathMapper.selectByPlanepathId(planePath);
 		return path;
 	}
@@ -41,7 +40,6 @@ public class PlanePathServiceImpl implements PlanePathService {
 	
 	@Override
 	public List<PlanePath> findAllplanePath() {
-		
 		List<PlanePath> planePaths = planePathMapper.findAllplanePath();
 		return planePaths;
 	}

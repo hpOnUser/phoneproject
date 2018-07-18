@@ -1,256 +1,286 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>无人机操控</title>
-<meta name="viewport" content="initial-scale=1, maximum-scale=1">
-<link rel="shortcut icon" href="/favicon.ico">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-<link rel="stylesheet" href="light7/css/sm.min.css">
-
-<link rel="stylesheet" href="css/phone.css">
-<link rel="stylesheet" href="css/main1119.css" />
-
-<script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
-<script
-	src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
-<style>
-.amap-ui-control-zoom {
-	margin-top: 25px;
-	margin-left: -18px;
-	padding: 0;
-}
-</style>
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>无人机操控</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../res/light7/css/sm.min.css">
+    <link rel="stylesheet" href="../../res/css/phone.css">
+    <link rel="stylesheet" href="../../res/css/main1119.css"/>
+    <link rel="stylesheet" href="../../res/light7/css/light7-swiper.min.css">
+    <script type='text/javascript' src='../../res/light7/js/light7-swiper.min.js' charset='utf-8'></script>
+    <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script
+            src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
+    <style>
+        .amap-ui-control-zoom {
+            margin-top: 25px;
+            margin-left: -18px;
+            padding: 0;
+        }
+    </style>
+    <script>
+        $.init;
+    </script>
 </head>
 <body>
-	<div class="page-group">
-		<div id="locate">
-			<img src="images/lo-34.png" style="transform: rotate(90deg);">
-		</div>
-		<header class="bar bar-nav">
-			<a class="button button-link button-nav pull-left"
-				href="${s.base}/myindex.html extend" data-transition='slide-out'> <span
-				class="icon icon-left"></span>返回
-			</a>
-			<h1 class='title'>
-				<#if tip?? && tip!="">
-					<span>${tip!}</span>
-				<#else>
-					<span>任务编号：${task.taskid!}</span>&nbsp;&nbsp;<span class="icon icon-down"></span>
-				</#if>		
-			</h1>
-			<a class="button button-link button-nav pull-right"
-				href="${s.base}/toPlane.action" data-transition='slide-out'> <span
-				class="icon icon-refresh">&nbsp;</span>
-			</a>
-		</header>
-		<div id="content">
+<div class="page-group">
+    <div id="locate">
+        <img src="images/lo-34.png" style="transform: rotate(90deg);">
+    </div>
+    <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left"
+           href="${s.base}/myindex.html extend" data-transition='slide-out'> <span
+                class="icon icon-left"></span>返回
+        </a>
+        <h1 class='title'>
+            <#if tip?? && tip!="">
+            <span>${tip!}</span>
+            <#else>
+            <span>任务编号：${task.taskid!}</span>&nbsp;&nbsp;<span class="icon icon-down"></span>
+            </#if>
+        </h1>
+        <a class="button button-link button-nav pull-right"
+           href="${s.base}/toPlane.action" data-transition='slide-out'> <span
+                class="icon icon-refresh">&nbsp;</span>
+        </a>
+    </header>
+    <div id="content">
 
-			<div id="container"></div>
-			<script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
-			<script>
-				var map = new AMap.Map('container', {
-					resizeEnable : true,
-					zoom : 16,
-					center : [ 107.79962, 23.06691 ]
-				});
-				AMapUI.loadUI([ 'control/BasicControl' ],
-						function(BasicControl) {
-							//缩放控件，显示Zoom值
-							map.addControl(new BasicControl.Zoom({
-								position : 'lt',
-								showZoomNum : true,
-							}));
+        <div id="container"></div>
+        <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+        <script>
+            var map = new AMap.Map('container', {
+                resizeEnable: true,
+                zoom: 16,
+                center: [107.79962, 23.06691]
+            });
+            AMapUI.loadUI(['control/BasicControl'],
+                function (BasicControl) {
+                    //缩放控件，显示Zoom值
+                    map.addControl(new BasicControl.Zoom({
+                        position: 'lt',
+                        showZoomNum: true,
+                    }));
 
-							var routeList = {
-								routeid : '2',
-								status : '0',
-								routepath : [ [ 107.79962, 23.06691 ], // 2144  起飞点
-								[ 107.79985, 23.06666 ], // 2143
-								[ 107.80006, 23.06645 ], // 2142
-								[ 107.80033, 23.06617 ], // 2141
-								[ 107.80079, 23.06568 ], // 2140
-								[ 107.80103, 23.06544 ], // 2139
-								[ 107.80121, 23.06524 ], // 2138
-								[ 107.80143, 23.06500 ], // 2137
-								[ 107.80164, 23.06481 ], // 2136
-								[ 107.80214, 23.06427 ], // 2135								
-								],
-								descripte : '这是一条一干路由,无人机路过',
-								updatetime : '2018-8-1',
-								type : '1',
-							};
+                    var routeList = {
+                        routeid: '2',
+                        status: '0',
+                        routepath: [[107.79962, 23.06691], // 2144  起飞点
+                            [107.79985, 23.06666], // 2143
+                            [107.80006, 23.06645], // 2142
+                            [107.80033, 23.06617], // 2141
+                            [107.80079, 23.06568], // 2140
+                            [107.80103, 23.06544], // 2139
+                            [107.80121, 23.06524], // 2138
+                            [107.80143, 23.06500], // 2137
+                            [107.80164, 23.06481], // 2136
+                            [107.80214, 23.06427], // 2135
+                        ],
+                        descripte: '这是一条一干路由,无人机路过',
+                        updatetime: '2018-8-1',
+                        type: '1',
+                    };
 
-							var polyline = new AMap.Polyline({
-								map : map,
-								path : routeList.routepath, //设置线覆盖物路径
-								strokeColor : "#FF0000", //线颜色
-								strokeOpacity : 1, //线透明度
-								strokeWeight : 5, //线宽
-								strokeStyle : "solid", //线样式
-								strokeDasharray : [ 10, 5 ]
-							//补充线样式
-							});
+                    var polyline = new AMap.Polyline({
+                        map: map,
+                        path: routeList.routepath, //设置线覆盖物路径
+                        strokeColor: "#FF0000", //线颜色
+                        strokeOpacity: 1, //线透明度
+                        strokeWeight: 5, //线宽
+                        strokeStyle: "solid", //线样式
+                        strokeDasharray: [10, 5]
+                        //补充线样式
+                    });
 
-						});
-			</script>
-		</div>
-		<div id="optionArea">
-		<#if tip??>
-		<#else>
-		
-			<div class="content-block" style="margin-top: 0; padding-top: 0;">
-			<#if task.role?? && task.role!="">
-			<#if task.role == "1">
-				<p class="buttons-row">
-					<a href="checkself(${task.taskid!})" class="button">自检完成</a> 
-					<a href="takeoff(${task.taskid!})" class="button">起飞</a> 
-					<a href="${s.base}/imageOnline?taskid=${task.taskid!}" class="button">实时影像</a>
-				</p>
-				<p class="buttons-row">
-					<a href="emergencyload(${task.taskid!})" class="button">紧急迫降</a> 
-					<a href="emergencyback(${task.taskid!})" class="button">紧急返航</a> 
-					<a href="reportNotconnet(${task.taskid!})" class="button">报告失联</a> 
-				</p>
-			<#elseif task.role == "2">
-				<p class="buttons-row">
-					<a href="reportNotconnet(${task.taskid!})" class="button">任务完成</a> 
-					<a href="${s.base}/imageOnline?taskid=${task.taskid!}" class="button">实时影像</a>
-				</p>
-				<p class="buttons-row">
-					<a href="emergencyload(${task.taskid!})" class="button">紧急迫降</a> 					 
-					<a href="reportNotconnet(${task.taskid!})" class="button">报告失联</a> 			
-				</p>			
-			</#if>
-			</#if>						
-			</div>
-			</#if>
-		</div>
-	</div>
-	<script type='text/javascript' src='js/jquery-3.3.1.min.js'></script>
-	<script type='text/javascript' src='light7/js/light7.js'
-		charset='utf-8'></script>
-	<script type='text/javascript' src='light7/js/light7-swiper.js'
-		charset='utf-8'></script>
-	<script>
-	
-		
-		function checkself(taskid) {
-			
-				$.confirm('是否自检完成？', function () {
-					 $.ajax({
-				            type: "post",
-				            url: "${s.base}/checkself.action",
-				            data: {
-				            	'taskid':taskid,				            	
-				            },		         
-				            success: function (result) {
-				            if(result.errcode=='1')	{
-					            	$.toast(result.message);				            			            				            		                
-					            }else{
-					            	$.toast(result.message);
-					            }	            			               
-				           }
-				      });		
-				});		
-		}
-		
-		function takeoff(taskid) {
-			
-			
-			
-			
-			
-			
-			
-		}
-		function emergencyload(taskid) {
-			
-			$.confirm('是否紧急着陆？', function () {
-				 $.ajax({
-			            type: "post",
-			            url: "${s.base}/emergencyload.action",
-			            data: {
-			            	'taskid':taskid,
-			            	'exeid':exeid
-			            },		         
-			            success: function (result) {
-			            if(result.errcode=='1')	{
-				            	$.toast(result.message);				            			            				            		                
-				            }else{
-				            	$.toast(result.message);
-				            }	            			               
-			           }
-			      });		
-			});	
-		}
-		function emergencyback(taskid) {			
-			$.confirm('是否紧急返航？', function () {
-				 $.ajax({
-			            type: "post",
-			            url: "${s.base}/emergencyback.action",
-			            data: {
-			            	'taskid':taskid,
-			            	'exeid':exeid
-			            },		         
-			            success: function (result) {
-			            if(result.errcode=='1')	{
-				            	$.toast(result.message);				            			            				            		                
-				            }else{
-				            	$.toast(result.message);
-				            }	            			               
-			           }
-			      });		
-			});	
+                });
+        </script>
+    </div>
+    <div id="optionArea">
+        <#if tip??>
+        <#else>
 
-		}
-		function reportNotconnet(taskid) {
-			
-			$.confirm('是否紧急返航？', function () {
-				 $.ajax({
-			            type: "post",
-			            url: "${s.base}/reportNotconnet.action",
-			            data: {
-			            	'taskid':taskid,
-			            	'exeid':exeid
-			            },		         
-			            success: function (result) {
-			            if(result.errcode=='1')	{
-				            	$.toast(result.message);				            			            				            		                
-				            }else{
-				            	$.toast(result.message);
-				            }	            			               
-			           }
-			      });		
-			});	
-			
-		}
-		
-		
-		//短轮询数据库获取飞机的位置
-		function push() {
-		        $.ajax({
-		            type: "post",
-		            url: "${s.base}/getlocation.action",
-		            data:{
-		            	'planeId':'2',
-		            },
-		            success: function (data) {
-		            	//获取数据然后放置飞机
-		            	console.log(data.flongda);		         	
-		            }
-		        });
-		} 
-		  
-		 $(function () {		   
-		     window.setInterval(function () {  
-		    	 push();	 
-		     }, 3000);    //轮询 1s一次    
-		 });		
-	</script>
+        <div class="content-block" style="margin-top: 0; padding-top: 0;">
+            <#if task.role?? && task.role!="">
+            <#if task.role == "1">
+            <p class="buttons-row">
+                <a href="checkself(${task.taskid!})" class="button">自检完成</a>
+                <a href="takeoff(${task.taskid!})" class="button">起飞</a>
+                <!--<a href="${s.base}/imageOnline?taskid=${task.taskid!}" class="button">实时影像</a>-->
+                <a  id="realTimePic" class="button pb-standalone">实时影像</a>
+            </p>
+            <p class="buttons-row">
+                <a href="emergencyload(${task.taskid!})" class="button">紧急迫降</a>
+                <a href="emergencyback(${task.taskid!})" class="button">紧急返航</a>
+                <a href="reportNotconnet(${task.taskid!})" class="button">报告失联</a>
+            </p>
+            <#elseif task.role == "2">
+            <p class="buttons-row">
+                <a href="reportNotconnet(${task.taskid!})" class="button">任务完成</a>
+                <!--<a href="${s.base}/imageOnline?taskid=${task.taskid!}" class="button">实时影像</a>-->
+                <a  id="realTimePic2" class="button pb-standalone">实时影像</a>
+            </p>
+            <p class="buttons-row">
+                <a href="emergencyload(${task.taskid!})" class="button">紧急迫降</a>
+                <a href="reportNotconnet(${task.taskid!})" class="button">报告失联</a>
+            </p>
+        </#if>
+    </#if>
+</div>
+</#if>
+</div>
+</div>
+<script type='text/javascript' src='js/jquery-3.3.1.min.js'></script>
+<script type='text/javascript' src='light7/js/light7.js'
+        charset='utf-8'></script>
+<script type='text/javascript' src='light7/js/light7-swiper.js'
+        charset='utf-8'></script>
+<script>
+    $("#realTimePic").click(function () {
+       $.ajax({
+           url:"getRealTimePic",
+           type:"POST",
+           data:{
+               'taskid':'1'
+           },
+           success:function(result){
+               if(result.errcode==0&&result.message=="SUCCESS"){
+                   var array = new Array();
+                   array = result.data;
+                   alertpic(array);
+               }
+           }
+       });
+    })
+    /*=== 默认为 standalone ===*/
+    function alertpic(array){
+    $(function(){
+        var myPhotoBrowserStandalone = $.photoBrowser({
+            photos : array
+        });
+        //点击时打开图片浏览器
+        $(document).on('click','.pb-standalone',function () {
+            myPhotoBrowserStandalone.open();
+        });
+    });
+}
+
+
+
+    function checkself(taskid) {
+
+        $.confirm('是否自检完成？', function () {
+            $.ajax({
+                type: "post",
+                url: "${s.base}/checkself.action",
+                data: {
+                    'taskid': taskid,
+                },
+                success: function (result) {
+                    if (result.errcode == '1') {
+                        $.toast(result.message);
+                    } else {
+                        $.toast(result.message);
+                    }
+                }
+            });
+        });
+    }
+
+    function takeoff(taskid) {
+
+
+    }
+
+    function emergencyload(taskid) {
+
+        $.confirm('是否紧急着陆？', function () {
+            $.ajax({
+                type: "post",
+                url: "${s.base}/emergencyload.action",
+                data: {
+                    'taskid': taskid,
+                    'exeid': exeid
+                },
+                success: function (result) {
+                    if (result.errcode == '1') {
+                        $.toast(result.message);
+                    } else {
+                        $.toast(result.message);
+                    }
+                }
+            });
+        });
+    }
+
+    function emergencyback(taskid) {
+        $.confirm('是否紧急返航？', function () {
+            $.ajax({
+                type: "post",
+                url: "${s.base}/emergencyback.action",
+                data: {
+                    'taskid': taskid,
+                    'exeid': exeid
+                },
+                success: function (result) {
+                    if (result.errcode == '1') {
+                        $.toast(result.message);
+                    } else {
+                        $.toast(result.message);
+                    }
+                }
+            });
+        });
+
+    }
+
+    function reportNotconnet(taskid) {
+
+        $.confirm('是否紧急返航？', function () {
+            $.ajax({
+                type: "post",
+                url: "${s.base}/reportNotconnet.action",
+                data: {
+                    'taskid': taskid,
+                    'exeid': exeid
+                },
+                success: function (result) {
+                    if (result.errcode == '1') {
+                        $.toast(result.message);
+                    } else {
+                        $.toast(result.message);
+                    }
+                }
+            });
+        });
+
+    }
+
+
+    //短轮询数据库获取飞机的位置
+    function push() {
+        $.ajax({
+            type: "post",
+            url: "${s.base}/getlocation.action",
+            data: {
+                'planeId': '2',
+            },
+            success: function (data) {
+                //获取数据然后放置飞机
+                console.log(data.flongda);
+            }
+        });
+    }
+
+    $(function () {
+        window.setInterval(function () {
+            push();
+        }, 3000);    //轮询 1s一次
+    });
+</script>
 </body>
 </html>

@@ -17,7 +17,12 @@
 
 <script type='text/javascript' src='light7/js/light7.js' charset='utf-8'></script>
 <script type='text/javascript' src='light7/js/light7-swiper.js'	charset='utf-8'></script>
-
+<script>
+	$.init;
+	$.config={
+	    router:false
+	};
+</script>
 </head>
 <body >
 	<div class="page-group">
@@ -136,7 +141,7 @@
 		            type: "post",
 		            url: "${s.base}/exeTask.action",
 		            data: {
-		            	'taskid':TaskId,	            	
+		            	'taskid':taskid
 		            },		         
 		            success: function (result) {
 		            if(result.errcode=='1')	{

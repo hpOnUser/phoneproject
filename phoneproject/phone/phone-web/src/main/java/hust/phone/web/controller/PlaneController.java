@@ -1,9 +1,13 @@
 package hust.phone.web.controller;
 
+import hust.phone.constant.WebConst;
+import hust.phone.utils.pojo.JsonView;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import hust.phone.mapper.pojo.Plane;
@@ -11,24 +15,35 @@ import hust.phone.service.interFace.planeService;
 import hust.phone.utils.JsonUtils;
 import hust.phone.web.controller.vo.PlaneVo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class PlaneController {
-	
-	@Autowired
-	planeService planeServiceImpl;
-	
-	//获取无人机实时位置
-	@RequestMapping(value="/getlocation",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String getlocation(Plane plane) {
-		
-		Plane plane2 = planeServiceImpl.getPlaneByPlane(plane);
-		PlaneVo planevo = new PlaneVo(plane2);
-		
-		return JsonUtils.objectToJson(planevo);	
-	}
-	
-	
-	
+
+    @Autowired
+    planeService planeServiceImpl;
+
+    //获取无人机实时位置
+    @RequestMapping(value = "/getlocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String getlocation(Plane plane) {
+
+        Plane plane2 = planeServiceImpl.getPlaneByPlane(plane);
+        PlaneVo planevo = new PlaneVo(plane2);
+
+        return JsonUtils.objectToJson(planevo);
+    }
+
+    @RequestMapping(value = "getRealTimePic", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String getRealtimePic(@RequestParam(value = "taskid", required = false) String taskId) {
+        List<String> testList = new ArrayList<>();
+        testList.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531915145246&di=2d9496c9c1c0fdd4b58f009ee2c3ecc3&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F3ac79f3df8dcd100f40ca602788b4710b9122f04.jpg");
+        testList.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531915145417&di=51170bd836e7b94b3c6dd8edbf244894&imgtype=0&src=http%3A%2F%2Fupbbsimg.cehome.com%2Fforum%2F201606%2F10%2F163716ql7ig69jqd6ykq19.jpg");
+        testList.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531915145415&di=47cd1cfe383e09cc56249a25462d6859&imgtype=0&src=http%3A%2F%2Fphoto.go007.com%2F2014%2F01%2F20140114%2F635253046484697262.JPG");
+        return JsonView.render(0, WebConst.SUCCESS_RESULT,testList);
+    }
+
 
 }

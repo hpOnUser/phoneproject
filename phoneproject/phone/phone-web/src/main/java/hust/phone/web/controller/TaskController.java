@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import hust.phone.mapper.pojo.PlanePath;
 import hust.phone.mapper.pojo.Task;
 import hust.phone.mapper.pojo.User;
-import hust.phone.service.impl.planeServiceImpl;
 import hust.phone.service.interFace.PlanePathService;
-import hust.phone.service.interFace.UserService;
-import hust.phone.service.interFace.planeService;
 import hust.phone.service.interFace.taskService;
 import hust.phone.utils.pojo.JsonView;
 import hust.phone.utils.pojo.PhoneUtils;
@@ -152,6 +149,7 @@ public class TaskController {
 		return "fight";
 	}
 	@RequestMapping("/exeTask")
+	@ResponseBody
 	public String exeTask(Task task){
 		
 		taskServiceImpl.setStatusTaskByTask(task, "4");
@@ -185,6 +183,7 @@ public class TaskController {
 		model.addAttribute("task",task2);
 		
 		return "fight";
-			
 	}
+
+
 }
