@@ -43,45 +43,32 @@
 			</div>
 		</div>
 		<div class="content">
-			
-			<div class="content-block-title">第一个告警点</div>
-			<div class="card demo-card-header-pic">
-				<div valign="bottom"
-					class="card-header color-white no-border no-padding">
-					<img class='card-cover'
-						src="http://s7d2.scene7.com/is/image/Caterpillar/C10602924?$cc-s$"
-						alt="图片太大无法显示">
-				</div>
-				<div class="card-content">
-					<div class="card-content-inner">
-						<p class="color-gray">告警时间： 2015/01/15</p>
-						<p>描述：这儿有挖掘机</p>
-						<p>地点：[123,456]</p>
+			<#if alarmlist??>
+				<#list alarmlist as alarm>
+				<div class="card demo-card-header-pic">
+					<div valign="bottom" class="card-header color-white no-border no-padding">
+					<img class='card-cover'	src="${alarm.image!}"
+						alt="图片太大无法显示"></div>
+					<div class="card-content">
+						<div class="card-content-inner">
+							<p>告警编号：${alarm.alarmid!}</p>
+							<p>无人机编号：${alarm.planeid!}
+							<p>描述：${alarm.descripte}</p>
+							<p>地点：${alarm.alongda!}</p>
+							<p class="color-gray">告警时间： ${alarm.createTime?date!}</p>
+						</div>
 					</div>
-				</div>
-				<div class="card-footer">
-					<a href="#" class="link">告警确认</a> <a href="#" class="link">详情</a>
-				</div>
-			</div>
-			<div class="content-block-title">第二个告警点</div>
-			<div class="card demo-card-header-pic">
-				<div valign="bottom"
-					class="card-header color-white no-border no-padding">
-					<img class='card-cover'
-						src='http://s7d2.scene7.com/is/image/Caterpillar/C10602924?$cc-s$'
-						alt="图片太大无法显示">
-				</div>
-				<div class="card-content">
-					<div class="card-content-inner">
-						<p class="color-gray">告警时间： 2015/01/15</p>
-						<p>描述：这儿有推土机</p>
-						<p>地点：[123,456]</p>
+					<div class="card-footer">
+						<#if alarm.status??>
+							<#if alarm.status == '1'><a onclick="ensureAlarm(${alarm.alarmid!})" class="link">告警处理确认</a>
+							<#elseif  alarm.status == '0'><a class="link">已解决</a>
+							</#if>
+						</#if>					
+						<!-- <a href="#" class="link">详情</a> -->
 					</div>
-				</div>
-				<div class="card-footer">
-					<a href="#" class="link">告警确认</a> <a href="#" class="link">详情</a>
-				</div>
-			</div>
+			    </div>								
+				</#list>
+			</#if>
 		</div>
 	</div>
 	<script type='text/javascript' src='js/jquery-3.3.1.min.js'></script>
@@ -90,7 +77,29 @@
 	<script type='text/javascript' src='light7/js/light7-swiper.js'
 		charset='utf-8'></script>
 	<script>
-	
+		function ensureAlarm(alarmid){
+			
+			$.confirm('告警是否处理成功？', function () {
+		 	      //给后台发送请求
+			 	 $.ajax({
+			            type: "post",
+			            url: "${s.base}/ensureAlarm.action",
+			            data: {
+			            	'alarmid':alarmid,			       	
+			            },		         
+			            success: function (result) {
+			            if(result.errcode=='1')	{
+				            	$.toast(result.message);
+				            	setTimeout(function(){
+				            		location.reload();
+				            	}, 1500);
+				            }else{
+				            	$.toast(result.message);
+				            }	            			               
+			           }
+			      });			
+		 	});
+		}
 	</script>
 </body>
 </html>
