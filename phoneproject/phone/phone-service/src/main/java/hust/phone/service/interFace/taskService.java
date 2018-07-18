@@ -12,6 +12,8 @@ public interface taskService {
 
 	boolean rollbackTaskByTask(Task task,String status);
 
-	boolean ensureTaskByTask(Task task, String string);
+	boolean setStatusTaskByTask(Task task, String string);
+
+	Task selectOneExeTask(Task task);
 
 }

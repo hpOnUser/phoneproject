@@ -96,8 +96,8 @@
 		            if(result.errcode=='1')	{
 			            	$.toast(result.message);
 			            	setTimeout(function(){
-			            		location.reload();	
-			            	}, 3000);
+			            		exData(0);
+			            	}, 1500);
 			            }else{
 			            	$.toast(result.message);
 			            }	            			               
@@ -120,14 +120,42 @@
 		            if(result.errcode=='1')	{
 			            	$.toast(result.message);
 			            	setTimeout(function(){
-			            		location.reload();	
-			            	}, 3000);
+			            		exData(0);				            				            		
+			            	}, 1500);
 			            }else{
 			            	$.toast(result.message);
 			            }	            			               
 		           }
 		      });			
 	 	});
+	}
+	function exeTask(taskid){
+		$.confirm('是否开始执行任务？', function () {
+	 	      //给后台发送请求
+		 	 $.ajax({
+		            type: "post",
+		            url: "${s.base}/exeTask.action",
+		            data: {
+		            	'taskid':TaskId,	            	
+		            },		         
+		            success: function (result) {
+		            if(result.errcode=='1')	{
+			            	$.toast(result.message);
+			            	setTimeout(function(){
+			            				            		
+			            		windows.location.href = "${s.base}/toPlane.action?taskid="+taskid;	
+			            		
+			            	}, 1500);
+			            }else{
+			            	$.toast(result.message);
+			            }	            			               
+		           }
+		      });			
+	 	});
+		
+		
+		
+		
 	}
 	//弹出任务详情
 	//function getTaskDetail(TaskId){

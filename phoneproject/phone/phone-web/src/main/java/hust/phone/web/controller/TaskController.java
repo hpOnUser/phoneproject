@@ -51,12 +51,12 @@ public class TaskController {
 		String reString = "";
 		if (task.getUserbid().equals(userid)) { // 如果是用户在该任务是放飞者
 
-			taskServiceImpl.ensureTaskByTask(task, "2");
+			taskServiceImpl.setStatusTaskByTask(task, "2");
 			reString = "放飞员确认任务成功";
 		}
 		if (task.getUsercid().equals(userid)) { // 如果是用户在该任务是接收者
 
-			taskServiceImpl.ensureTaskByTask(task, "3");
+			taskServiceImpl.setStatusTaskByTask(task, "3");
 			reString = "接收员确认任务成功";
 		}
 		return JsonView.render(1, reString);
@@ -124,7 +124,6 @@ public class TaskController {
 	}
 
 	private int Number = -2;
-
 	// 轮询新的工单数目
 	@RequestMapping("getTaskNumber")
 	@ResponseBody
@@ -137,7 +136,7 @@ public class TaskController {
 	// 跳转到无人机操纵界面，同时选取第一个正在执行的任务显示在界面上
 	@RequestMapping("/toPlane")
 	public String toPlane(Task task, HttpServletRequest request,Model model) {
-		
+			
 		User user = PhoneUtils.getLoginUser(request);
 		Task task2 = taskServiceImpl.getTaskByTask(task);
 		String role = user.getUserid().equals(task2.getUserbid()) ? "1" : "2";
@@ -151,5 +150,41 @@ public class TaskController {
 		model.addAttribute("task",task2);
 		
 		return "fight";
+	}
+	@RequestMapping("/exeTask")
+	public String exeTask(Task task){
+		
+		taskServiceImpl.setStatusTaskByTask(task, "4");
+		return JsonView.render(1, "任务开始执行！");
+		
+	}
+	@RequestMapping("/toPlaneControl")
+	public String toPlaneControl(HttpServletRequest request,Model model){
+		
+		Task task = new Task();
+		User user = PhoneUtils.getLoginUser(request);
+		String userid = user.getUserid();
+
+		task.setFinishstatus("0");		
+		task.setUserbid(userid);
+		task.setUsercid(userid);
+
+		Task task2 = taskServiceImpl.selectOneExeTask(task);    //查找一个正在执行的任务
+		if(task2 == null) {
+			model.addAttribute("tip","您暂无正在执行的任务！");
+			return "fight";
+		}
+		String role = userid.equals(task2.getUserbid()) ? "1" : "2";
+		task2.setRole(role);         
+
+		PlanePath planePath = new PlanePath();
+		planePath.setPlanepathid(task2.getPlanepathid());
+		PlanePathVo planePathVo = new PlanePathVo(planePath);
+		
+		model.addAttribute("planepath",planePathVo);
+		model.addAttribute("task",task2);
+		
+		return "fight";
+			
 	}
 }
