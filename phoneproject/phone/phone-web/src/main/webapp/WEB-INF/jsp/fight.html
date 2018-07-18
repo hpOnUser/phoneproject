@@ -28,28 +28,28 @@
     </script>
 </head>
 <body>
-<div class="page-group">
-    <div id="locate">
-        <img src="images/lo-34.png" style="transform: rotate(90deg);">
-    </div>
-    <header class="bar bar-nav">
-        <a class="button button-link button-nav pull-left"
-           href="${s.base}/myindex.html extend" data-transition='slide-out'> <span
-                class="icon icon-left"></span>返回
-        </a>
-        <h1 class='title'>
-            <#if tip?? && tip!="">
-            <span>${tip!}</span>
-            <#else>
-            <span>任务编号：${task.taskid!}</span>&nbsp;&nbsp;<span class="icon icon-down"></span>
-            </#if>
-        </h1>
-        <a class="button button-link button-nav pull-right"
-           href="${s.base}/toPlane.action" data-transition='slide-out'> <span
-                class="icon icon-refresh">&nbsp;</span>
-        </a>
-    </header>
-    <div id="content">
+	<div class="page-group">
+		<div id="locate">
+			<img src="images/lo-34.png" style="transform: rotate(90deg);">
+		</div>
+		<header class="bar bar-nav">
+			<a class="button button-link button-nav pull-left"
+				href="${s.base}/myindex.html extend" data-transition='slide-out'> <span
+				class="icon icon-left"></span>返回
+			</a>
+			<h1 class='title'>
+				<#if tip?? && tip!="">
+					<span>${tip!}</span>
+				<#else>
+					<span>任务编号：${task.taskid!}</span>&nbsp;&nbsp;<span class="icon icon-down"></span>
+				</#if>		
+			</h1>
+			<a class="button button-link button-nav pull-right extend"
+				href="${s.base}/toPlaneControl.action" data-transition='slide-out'> <span
+				class="icon icon-refresh">&nbsp;</span>
+			</a>
+		</header>
+		<div id="content">
 
         <div id="container"></div>
         <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
@@ -236,51 +236,50 @@
             });
         });
 
-    }
+		}
+		function reportNotconnet(taskid) {
+			
+			$.confirm('是否紧急返航？', function () {
+				 $.ajax({
+			            type: "post",
+			            url: "${s.base}/reportNotconnet.action",
+			            data: {
+			            	'taskid':taskid,
 
-    function reportNotconnet(taskid) {
-
-        $.confirm('是否紧急返航？', function () {
-            $.ajax({
-                type: "post",
-                url: "${s.base}/reportNotconnet.action",
-                data: {
-                    'taskid': taskid,
-                    'exeid': exeid
-                },
-                success: function (result) {
-                    if (result.errcode == '1') {
-                        $.toast(result.message);
-                    } else {
-                        $.toast(result.message);
-                    }
-                }
-            });
-        });
-
-    }
-
-
-    //短轮询数据库获取飞机的位置
-    function push() {
-        $.ajax({
-            type: "post",
-            url: "${s.base}/getlocation.action",
-            data: {
-                'planeId': '2',
-            },
-            success: function (data) {
-                //获取数据然后放置飞机
-                console.log(data.flongda);
-            }
-        });
-    }
-
-    $(function () {
-        window.setInterval(function () {
-            push();
-        }, 3000);    //轮询 1s一次
-    });
-</script>
+			            },		         
+			            success: function (result) {
+			            if(result.errcode=='1')	{
+				            	$.toast(result.message);				            			            				            		                
+				            }else{
+				            	$.toast(result.message);
+				            }	            			               
+			           }
+			      });		
+			});	
+			
+		}
+		
+		
+		//短轮询数据库获取飞机的位置
+		function push() {
+		        $.ajax({
+		            type: "post",
+		            url: "${s.base}/getlocation.action",
+		            data:{
+		            	'planeId':'2',
+		            },
+		            success: function (data) {
+		            	//获取数据然后放置飞机
+		            	console.log(data.flongda);		         	
+		            }
+		        });
+		} 
+		  
+		 $(function () {		   
+		     window.setInterval(function () {  
+		    	 push();	 
+		     }, 3000);    //轮询 1s一次    
+		 });		
+	</script>
 </body>
 </html>

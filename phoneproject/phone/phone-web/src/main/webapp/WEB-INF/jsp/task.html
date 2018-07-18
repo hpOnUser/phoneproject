@@ -141,13 +141,12 @@
 		            type: "post",
 		            url: "${s.base}/exeTask.action",
 		            data: {
-		            	'taskid':taskid
+		            	'taskid':taskid,
 		            },		         
 		            success: function (result) {
 		            if(result.errcode=='1')	{
 			            	$.toast(result.message);
 			            	setTimeout(function(){
-			            				            		
 			            		windows.location.href = "${s.base}/toPlane.action?taskid="+taskid;	
 			            		
 			            	}, 1500);

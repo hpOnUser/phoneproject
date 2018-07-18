@@ -27,8 +27,6 @@ public class TaskController {
 	@Autowired
 	private taskService taskServiceImpl;
 
-	@Autowired
-	private PlanePathService planeServiceImpl;
 	// 工作单跳转
 	@RequestMapping("/toTask")
 	public String toTaskList() {
@@ -122,7 +120,7 @@ public class TaskController {
 
 	private int Number = -2;
 	// 轮询新的工单数目
-	@RequestMapping("getTaskNumber")
+	@RequestMapping(value="getTaskNumber", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getTaskNumber() {
 		// 在这里查询最新的工单数目
@@ -148,7 +146,8 @@ public class TaskController {
 		
 		return "fight";
 	}
-	@RequestMapping("/exeTask")
+
+	@RequestMapping(value = "/exeTask", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String exeTask(Task task){
 		
@@ -183,7 +182,6 @@ public class TaskController {
 		model.addAttribute("task",task2);
 		
 		return "fight";
+			
 	}
-
-
 }

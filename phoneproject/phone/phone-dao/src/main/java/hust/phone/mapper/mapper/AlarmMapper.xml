@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hust.phone.mapper.mapper.AlarmMapper" >
+<resultMap id="BaseResultMap" type="hust.phone.mapper.pojo.Alarm" >
+    <id column="alarmid" property="alarmid" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="planeid" property="planeid" jdbcType="VARCHAR" />
+    <result column="descripte" property="descripte" jdbcType="VARCHAR" />
+    <result column="alongda" property="alongda" jdbcType="VARCHAR" />
+     <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="createtime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updatetime" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+    <sql id="Base_Column_List" >
+    alarmid,image,planeid,AsText(alongda) as alongda,descripte,status,createtime,updatetime
+  </sql>
+
+    <sql id="Info_Column_List">
+        alarmid,image,descripte
+    </sql>
+	<select id="selectALLAlarm" resultMap="BaseResultMap">
+		select alarmid,image,planeid,AsText(alongda) as alongda,descripte,createtime,updatetime,status
+		from alarm where status ="1" or status ="0"
+	</select>
+
+    <select id="selectAllAlarmByCreateTimeDesc" resultMap="BaseResultMap">
+        select alarmid,image,planeid,AsText(alongda) as alongda,descripte,status,createtime,updatetime
+		from alarm order by createtime DESC
+    </select>
+
+    <select id="alarmCount" resultType="java.lang.Integer" parameterType="hust.phone.mapper.pojo.Alarm">
+        select count(1) from alarm  
+        WHERE 1=1 
+		<if test="alarmid != null">
+		AND alarmid = #{alarmid}
+		</if>
+		<if test="status != null">
+		AND status = #{status}
+		</if>
+    </select>
+
+    <select id="queryAlarmPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM alarm
+        WHERE 1=1 
+		<if test="param1.alarmid != null">
+		AND alarmid = #{param1.alarmid}
+		</if>
+		<if test="param1.status != null">
+		AND status = #{param1.status }
+		</if>
+        ORDER BY createtime DESC
+        LIMIT #{param2.startIndex, jdbcType=INTEGER} , #{param2.pageSize, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectInfoById" resultType="hust.phone.mapper.pojo.Alarm" parameterType="java.lang.String">
+        select
+        <include refid="Info_Column_List" />
+        from alarm
+        where alarmid=#{id}
+    </select>
+    
+    <update id="updateByAlarmId" parameterType="java.lang.String">
+    	update alarm set status="0" where alarmid=#{alarmid}
+    </update>
+</mapper>
