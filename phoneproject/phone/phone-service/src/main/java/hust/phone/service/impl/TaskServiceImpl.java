@@ -51,7 +51,7 @@ public class TaskServiceImpl implements taskService {
 
 	//根据task更改任务状态，状态标识为status,可复用
 	@Override
-	public boolean ensureTaskByTask(Task task, String status) {
+	public boolean setStatusTaskByTask(Task task, String status) {
 		
 		Task task2 = getTaskByTask(task);
 		
@@ -65,6 +65,17 @@ public class TaskServiceImpl implements taskService {
 			
 		return true;
 	}
+
+	@Override
+	public Task selectOneExeTask(Task task) {
+		
+		List<Task> taskList = taskMapper.selectByTaskOptions(task);
+		if(taskList.size()>0)
+			return taskList.get(0);
+		else
+			return null;
+	}
+
 	
 	
 	

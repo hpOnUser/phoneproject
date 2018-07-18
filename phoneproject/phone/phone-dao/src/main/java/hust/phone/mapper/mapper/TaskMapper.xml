@@ -331,5 +331,18 @@
 		</if>	
 		and (userBid = #{userbid} or userCid = #{usercid})	
 	</select>
+	 <select id="selectByTaskOptions" parameterType="hust.phone.mapper.pojo.Task" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		FROM task
+		WHERE 1=1 
+		<if test="finishstatus != null">
+		and finishstatus = #{finishstatus}
+		</if>
+		<if test="userbid != null">
+		and (userBid = #{userbid} or userCid = #{usercid})
+		</if>
+		and (status="4" or status="5" or status="6" or status="7" or status="8")
+	</select>
   
 </mapper>

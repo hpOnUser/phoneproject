@@ -37,7 +37,11 @@
 				class="icon icon-left"></span>返回
 			</a>
 			<h1 class='title'>
-				<span>任务编号：${task.taskid!}</span>&nbsp;&nbsp;<span class="icon icon-down"></span>
+				<#if tip?? && tip!="">
+					<span>${tip!}</span>
+				<#else>
+					<span>任务编号：${task.taskid!}</span>&nbsp;&nbsp;<span class="icon icon-down"></span>
+				</#if>		
 			</h1>
 			<a class="button button-link button-nav pull-right"
 				href="${s.base}/toPlane.action" data-transition='slide-out'> <span
@@ -96,11 +100,14 @@
 			</script>
 		</div>
 		<div id="optionArea">
+		<#if tip??>
+		<#else>
+		
 			<div class="content-block" style="margin-top: 0; padding-top: 0;">
 			<#if task.role?? && task.role!="">
 			<#if task.role == "1">
 				<p class="buttons-row">
-					<a href="checkself(${task.taskid!})" class="button">自检</a> 
+					<a href="checkself(${task.taskid!})" class="button">自检完成</a> 
 					<a href="takeoff(${task.taskid!})" class="button">起飞</a> 
 					<a href="${s.base}/imageOnline?taskid=${task.taskid!}" class="button">实时影像</a>
 				</p>
@@ -121,6 +128,7 @@
 			</#if>
 			</#if>						
 			</div>
+			</#if>
 		</div>
 	</div>
 	<script type='text/javascript' src='js/jquery-3.3.1.min.js'></script>
@@ -132,16 +140,13 @@
 	
 		
 		function checkself(taskid) {
-			if(exeid!=0){
-				$.toast('您已经自检完成！');	
-			}else{
+			
 				$.confirm('是否自检完成？', function () {
 					 $.ajax({
 				            type: "post",
-				            url: "${s.base}/ensureTask.action",
+				            url: "${s.base}/checkself.action",
 				            data: {
-				            	'taskid':taskid,
-				            	'exeid':exeid
+				            	'taskid':taskid,				            	
 				            },		         
 				            success: function (result) {
 				            if(result.errcode=='1')	{
@@ -152,10 +157,14 @@
 				           }
 				      });		
 				});		
-			}		
 		}
 		
 		function takeoff(taskid) {
+			
+			
+			
+			
+			
 			
 			
 		}
