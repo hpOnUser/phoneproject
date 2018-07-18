@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import hust.phone.mapper.pojo.User;
 
 /**
  * 系统登录验证

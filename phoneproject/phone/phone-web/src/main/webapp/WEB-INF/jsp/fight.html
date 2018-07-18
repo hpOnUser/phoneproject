@@ -10,13 +10,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 <link rel="stylesheet" href="light7/css/sm.min.css">
-
 <link rel="stylesheet" href="css/phone.css">
 <link rel="stylesheet" href="css/main1119.css" />
-
 <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
-<script
-	src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
+<script	src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
 <style>
 .amap-ui-control-zoom {
 	margin-top: 25px;
@@ -43,8 +40,8 @@
 					<span>任务编号：${task.taskid!}</span>&nbsp;&nbsp;<span class="icon icon-down"></span>
 				</#if>		
 			</h1>
-			<a class="button button-link button-nav pull-right"
-				href="${s.base}/toPlane.action" data-transition='slide-out'> <span
+			<a class="button button-link button-nav pull-right extend"
+				href="${s.base}/toPlaneControl.action" data-transition='slide-out'> <span
 				class="icon icon-refresh">&nbsp;</span>
 			</a>
 		</header>
@@ -176,11 +173,6 @@
 			           }
 			      });		
 			});	
-			
-			
-			
-			
-			
 			
 		}
 		function emergencyload(taskid) {

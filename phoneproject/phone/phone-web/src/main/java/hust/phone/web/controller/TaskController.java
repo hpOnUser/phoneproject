@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import hust.phone.mapper.pojo.PlanePath;
 import hust.phone.mapper.pojo.Task;
 import hust.phone.mapper.pojo.User;
-import hust.phone.service.interFace.PlanePathService;
 import hust.phone.service.interFace.taskService;
 import hust.phone.utils.pojo.JsonView;
 import hust.phone.utils.pojo.PhoneUtils;
@@ -27,8 +26,6 @@ public class TaskController {
 	@Autowired
 	private taskService taskServiceImpl;
 
-	@Autowired
-	private PlanePathService planeServiceImpl;
 	// 工作单跳转
 	@RequestMapping("/toTask")
 	public String toTaskList() {
