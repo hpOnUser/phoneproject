@@ -140,7 +140,9 @@
 <script type='text/javascript' src='light7/js/light7-swiper.js'
         charset='utf-8'></script>
 <script>
-    $("#realTimePic").click(function () {
+    window.array = new Array();
+    var myPhotoBrowserStandalone = "";
+    function getAlarm(){
        $.ajax({
            url:"getRealTimePic",
            type:"POST",
@@ -149,29 +151,42 @@
            },
            success:function(result){
                if(result.errcode==0&&result.message=="SUCCESS"){
-                   var array = new Array();
-                   array = result.data;
-                   alertpic(array);
+                   window.array = result.data;
+                   myPhotoBrowserStandalone = $.photoBrowser({
+                       photos : window.array
+                   });
                }
            }
        });
+
+    }
+    $(function () {
+        window.setInterval(function () {
+            getAlarm();
+        }, 3000);    //轮询 1s一次
     });
-    /*=== 默认为 standalone ===*/
-    function alertpic(array){
-    $(function(){
-        var myPhotoBrowserStandalone = $.photoBrowser({
-            photos : array
-        });
-        //点击时打开图片浏览器
-        $(document).on('click','.pb-standalone',function () {
-            myPhotoBrowserStandalone.open();
-        });
+
+    $(document).on('click', '.pb-standalone', function () {
+        myPhotoBrowserStandalone.open();
     });
-	}
- 
 
 
-     function checkself(taskid) {
+// $(function() {
+//     /*=== 默认为 standalone ===*/
+//     var myPhotoBrowserStandalone = $.photoBrowser({
+//         photos: [
+//             '//img.alicdn.com/tps/i3/TB1kt4wHVXXXXb_XVXX0HY8HXXX-1024-1024.jpeg',
+//             '//img.alicdn.com/tps/i1/TB1SKhUHVXXXXb7XXXX0HY8HXXX-1024-1024.jpeg',
+//             '//img.alicdn.com/tps/i4/TB1AdxNHVXXXXasXpXX0HY8HXXX-1024-1024.jpeg',
+//         ]
+//     });
+//     //点击时打开图片浏览器
+//     $(document).on('click', '.pb-standalone', function () {
+//         myPhotoBrowserStandalone.open();
+//     });
+// });
+
+    function checkself(taskid) {
 
         $.confirm('是否自检完成？', function () {
             $.ajax({

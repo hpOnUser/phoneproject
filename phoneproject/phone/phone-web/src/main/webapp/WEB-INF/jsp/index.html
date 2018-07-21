@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -223,8 +222,9 @@
                 type: "post",
                 url: "${s.base}/getTaskNumber.action",           
                 success: function (data) {
-              	
-                	if(Number(data)>0){             		
+                	console.log(data);
+                	if(Number(data)>0){
+               		
                 		$('#waittasknum').css('display','');
                 	    $('#waittasknum').text(data);                               	 
                 	}             	           	
@@ -233,5 +233,5 @@
         } 
 </script>
 </body>
-
 </html>
+
