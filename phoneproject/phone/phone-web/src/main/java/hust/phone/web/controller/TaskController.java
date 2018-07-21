@@ -252,7 +252,7 @@ public class TaskController {
 		//测试****把任务状态设为自检成功，然后再设为待放飞
 		taskServiceImpl.setStatusTaskByTask(task, "6");
 		taskServiceImpl.setStatusTaskByTask(task, "7");
-		return JsonView.render(1, "自检成功！");
+		return JsonView.render(1, "无人机自检成功！");
 
 	}
 	
@@ -263,7 +263,7 @@ public class TaskController {
 
 		//测试****把任务状态设为飞行中
 		taskServiceImpl.setStatusTaskByTask(task, "8");
-		return JsonView.render(1, "无人机成功！");
+		return JsonView.render(1, "无人机放飞成功！");
 
 	}
 	@RequestMapping(value = "/reportFinish", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

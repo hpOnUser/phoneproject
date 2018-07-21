@@ -124,7 +124,7 @@
                 <a  id="realTimePic2" class="button pb-standalone">实时影像</a>
             </p>
             <p class="buttons-row">
-                <a onclick="emergencyload(${task.taskid!})" class="button">紧急迫降</a>
+               <!--  <a onclick="emergencyload(${task.taskid!})" class="button">紧急迫降</a> -->
                 <a onclick="reportNotconnet(${task.taskid!})" class="button">报告失联</a>
             </p>
         </#if>
@@ -207,7 +207,7 @@
     }
 
     function takeoff(taskid) {
-    	 $.confirm('是否起飞？', function () {
+    	 $.confirm('是否起飞无人机？', function () {
              $.ajax({
                  type: "post",
                  url: "${s.base}/takeoff.action",
