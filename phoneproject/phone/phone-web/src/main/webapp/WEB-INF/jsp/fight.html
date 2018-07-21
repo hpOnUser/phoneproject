@@ -12,10 +12,9 @@
     <link rel="stylesheet" href="../../res/css/phone.css">
     <link rel="stylesheet" href="../../res/css/main1119.css"/>
     <link rel="stylesheet" href="../../res/light7/css/light7-swiper.min.css">
-    <script type='text/javascript' src='../../res/light7/js/light7-swiper.min.js' charset='utf-8'></script>
+    
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
-    <script
-            src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
+    <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
     <style>
         .amap-ui-control-zoom {
             margin-top: 25px;
@@ -23,9 +22,9 @@
             padding: 0;
         }
     </style>
-    <script>
+   <!--  <script>
         $.init;
-    </script>
+    </script> -->
 </head>
 <body>
 	<div class="page-group">
@@ -108,25 +107,25 @@
             <#if task.role?? && task.role!="">
             <#if task.role == "1">
             <p class="buttons-row">
-                <a href="checkself(${task.taskid!})" class="button">自检完成</a>
-                <a href="takeoff(${task.taskid!})" class="button">起飞</a>
+                <a onclick="checkself(${task.taskid!})" class="button">自检完成</a>
+                <a onclick="takeoff(${task.taskid!})" class="button">起飞</a>
                 <!--<a href="${s.base}/imageOnline?taskid=${task.taskid!}" class="button">实时影像</a>-->
                 <a  id="realTimePic" class="button pb-standalone">实时影像</a>
             </p>
             <p class="buttons-row">
-                <a href="emergencyload(${task.taskid!})" class="button">紧急迫降</a>
-                <a href="emergencyback(${task.taskid!})" class="button">紧急返航</a>
-                <a href="reportNotconnet(${task.taskid!})" class="button">报告失联</a>
+                <a onclick="emergencyload(${task.taskid!})" class="button">紧急迫降</a>
+                <a onclick="emergencyback(${task.taskid!})" class="button">紧急返航</a>
+                <a onclick="reportNotconnet(${task.taskid!})" class="button">报告失联</a>
             </p>
             <#elseif task.role == "2">
             <p class="buttons-row">
-                <a href="reportNotconnet(${task.taskid!})" class="button">任务完成</a>
+                <a onclick="reportFinish(${task.taskid!})" class="button">任务完成</a>
                 <!--<a href="${s.base}/imageOnline?taskid=${task.taskid!}" class="button">实时影像</a>-->
                 <a  id="realTimePic2" class="button pb-standalone">实时影像</a>
             </p>
             <p class="buttons-row">
-                <a href="emergencyload(${task.taskid!})" class="button">紧急迫降</a>
-                <a href="reportNotconnet(${task.taskid!})" class="button">报告失联</a>
+                <a onclick="emergencyload(${task.taskid!})" class="button">紧急迫降</a>
+                <a onclick="reportNotconnet(${task.taskid!})" class="button">报告失联</a>
             </p>
         </#if>
     </#if>
@@ -134,6 +133,7 @@
 </#if>
 </div>
 </div>
+<script type='text/javascript' src='../../res/light7/js/light7-swiper.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='js/jquery-3.3.1.min.js'></script>
 <script type='text/javascript' src='light7/js/light7.js'
         charset='utf-8'></script>
@@ -155,7 +155,7 @@
                }
            }
        });
-    })
+    });
     /*=== 默认为 standalone ===*/
     function alertpic(array){
     $(function(){
@@ -167,11 +167,11 @@
             myPhotoBrowserStandalone.open();
         });
     });
-}
+	}
+ 
 
 
-
-    function checkself(taskid) {
+     function checkself(taskid) {
 
         $.confirm('是否自检完成？', function () {
             $.ajax({
@@ -192,8 +192,22 @@
     }
 
     function takeoff(taskid) {
-
-
+    	 $.confirm('是否起飞？', function () {
+             $.ajax({
+                 type: "post",
+                 url: "${s.base}/takeoff.action",
+                 data: {
+                     'taskid': taskid,
+                 },
+                 success: function (result) {
+                     if (result.errcode == '1') {
+                         $.toast(result.message);
+                     } else {
+                         $.toast(result.message);
+                     }
+                 }
+             });
+         });
     }
 
     function emergencyload(taskid) {
@@ -217,6 +231,7 @@
         });
     }
 
+    //确认飞机紧急返航
     function emergencyback(taskid) {
         $.confirm('是否紧急返航？', function () {
             $.ajax({
@@ -235,10 +250,12 @@
             });
         });
 
-		}
+	}
+	    
+	    //报告飞机失联
 		function reportNotconnet(taskid) {
 			
-			$.confirm('是否紧急返航？', function () {
+			$.confirm('是否报告失联？', function () {
 				 $.ajax({
 			            type: "post",
 			            url: "${s.base}/reportNotconnet.action",
@@ -255,9 +272,28 @@
 			           }
 			      });		
 			});	
-			
-		}
+		} 
 		
+		//飞行任务完成确认
+		function reportFinish(taskid) {
+			
+		 	$.confirm('是否完成飞行任务？', function () {
+				 $.ajax({
+			            type: "post",
+			            url: "${s.base}/reportFinish.action",
+			            data: {
+			            	'taskid':taskid,
+			            },		         
+			            success: function (result) {
+			            if(result.errcode=='1')	{
+				            	$.toast(result.message);				            			            				            		                
+				            }else{
+				            	$.toast(result.message);
+				            }	            			               
+			           }
+			      });		
+			}); 	
+		}
 		
 		//短轮询数据库获取飞机的位置
 		function push() {
@@ -277,8 +313,8 @@
 		 $(function () {		   
 		     window.setInterval(function () {  
 		    	 push();	 
-		     }, 3000);    //轮询 1s一次    
-		 });		
+		     }, 30000);    //轮询 1s一次    
+		 }); 	
 	</script>
 </body>
 </html>

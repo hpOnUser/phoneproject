@@ -223,9 +223,8 @@
                 type: "post",
                 url: "${s.base}/getTaskNumber.action",           
                 success: function (data) {
-                	console.log(data);
-                	if(Number(data)>0){
-               		
+              	
+                	if(Number(data)>0){             		
                 		$('#waittasknum').css('display','');
                 	    $('#waittasknum').text(data);                               	 
                 	}             	           	

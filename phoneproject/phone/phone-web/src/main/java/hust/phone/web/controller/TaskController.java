@@ -151,7 +151,7 @@ public class TaskController {
 			return "0";    //没有就返回0
 	}
 
-	// 跳转到无人机操纵界面，同时选取第一个正在执行的任务显示在界面上
+	// 跳转到无人机操纵界面
 	@RequestMapping("/toPlane")
 	public String toPlane(Task task, HttpServletRequest request, Model model) {
 
@@ -160,6 +160,10 @@ public class TaskController {
 		String role = user.getUserid().equals(task2.getUserbid()) ? "1" : "2";
 		task2.setRole(role);
 
+		//测试****把任务的状态设为自检中
+		//taskServiceImpl.setStatusTaskByTask(task, "4");
+		//taskServiceImpl.setStatusTaskByTask(task, "5");
+		
 		PlanePath planePath = new PlanePath();
 		planePath.setPlanepathid(task2.getPlanepathid());
 		PlanePathVo planePathVo = new PlanePathVo(planePath);
@@ -175,6 +179,9 @@ public class TaskController {
 	public String exeTask(Task task) {
 
 		taskServiceImpl.setStatusTaskByTask(task, "4");
+		
+		//测试****把任务的状态设为自检中
+		taskServiceImpl.setStatusTaskByTask(task, "5");
 		return JsonView.render(1, "任务开始执行！");
 
 	}
@@ -211,31 +218,61 @@ public class TaskController {
 
 	@RequestMapping(value = "/emergencyload", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String emergencyload() {
+	public String emergencyload(Task task) {
 
-		return JsonView.render(1, "执行紧急成功！");
+		//测试****把任务状态设为故障
+		taskServiceImpl.setStatusTaskByTask(task, "-1");
+		return JsonView.render(1, "执行紧急降落成功！");
 	}
 
 	@RequestMapping(value = "/emergencyback", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String emergencyback() {
+	public String emergencyback(Task task) {
+		
+		//测试****把任务状态设为故障
+		taskServiceImpl.setStatusTaskByTask(task, "-1");
 		return JsonView.render(1, "执行紧急返航成功！");
 
 	}
 
 	@RequestMapping(value = "/reportNotconnet", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String reportNotconnet() {
+	public String reportNotconnet(Task task) {
 
+		//测试****把任务状态设为故障
+		taskServiceImpl.setStatusTaskByTask(task, "-1");
 		return JsonView.render(1, "报告失联成功！");
 
 	}
 
 	@RequestMapping(value = "/checkself", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String checkself() {
+	public String checkself(Task task) {
 
+		//测试****把任务状态设为自检成功，然后再设为待放飞
+		taskServiceImpl.setStatusTaskByTask(task, "6");
+		taskServiceImpl.setStatusTaskByTask(task, "7");
 		return JsonView.render(1, "自检成功！");
 
 	}
+	
+	//无人机起飞
+	@RequestMapping(value = "/takeoff", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String takeoff(Task task) {
+
+		//测试****把任务状态设为飞行中
+		taskServiceImpl.setStatusTaskByTask(task, "8");
+		return JsonView.render(1, "无人机成功！");
+
+	}
+	@RequestMapping(value = "/reportFinish", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String reportFinish(Task task) {
+
+		//测试****把任务状态设为飞行中
+		taskServiceImpl.setStatusTaskByTask(task, "9");
+		return JsonView.render(1, "飞行任务完成！");
+	}
+	
 }
