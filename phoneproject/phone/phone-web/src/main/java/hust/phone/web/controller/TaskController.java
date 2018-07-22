@@ -17,10 +17,13 @@ import hust.phone.mapper.pojo.Task;
 import hust.phone.mapper.pojo.User;
 import hust.phone.service.interFace.PlanePathService;
 import hust.phone.service.interFace.UserService;
+import hust.phone.service.interFace.planeService;
 import hust.phone.service.interFace.taskService;
+import hust.phone.utils.JsonUtils;
 import hust.phone.utils.pojo.JsonView;
 import hust.phone.utils.pojo.PhoneUtils;
 import hust.phone.web.controller.vo.PlanePathVo;
+
 
 @Controller
 public class TaskController {
@@ -30,6 +33,9 @@ public class TaskController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PlanePathService planePathService;
 
 	private int Number = 0;    //未完成工单数目
 	// 工作单跳转
@@ -166,9 +172,11 @@ public class TaskController {
 		
 		PlanePath planePath = new PlanePath();
 		planePath.setPlanepathid(task2.getPlanepathid());
-		PlanePathVo planePathVo = new PlanePathVo(planePath);
+		PlanePath planePath2 = planePathService.selectByPlanepathId(planePath);
 
-		model.addAttribute("planepath", planePathVo);
+		PlanePathVo planePathVo = new PlanePathVo(planePath2);
+
+		model.addAttribute("planepath", JsonUtils.objectToJson(planePathVo));
 		model.addAttribute("task", task2);
 
 		return "fight";
@@ -207,9 +215,10 @@ public class TaskController {
 
 		PlanePath planePath = new PlanePath();
 		planePath.setPlanepathid(task2.getPlanepathid());
-		PlanePathVo planePathVo = new PlanePathVo(planePath);
+		PlanePath planePath2 = planePathService.selectByPlanepathId(planePath);
+		PlanePathVo planePathVo = new PlanePathVo(planePath2);
 
-		model.addAttribute("planepath", planePathVo);
+		model.addAttribute("planepath", JsonUtils.objectToJson(planePathVo));
 		model.addAttribute("task", task2);
 
 		return "fight";
@@ -251,8 +260,8 @@ public class TaskController {
 
 		//测试****把任务状态设为自检成功，然后再设为待放飞
 		taskServiceImpl.setStatusTaskByTask(task, "6");
-		taskServiceImpl.setStatusTaskByTask(task, "7");
-		return JsonView.render(1, "无人机自检成功！");
+		//taskServiceImpl.setStatusTaskByTask(task, "7");
+		return JsonView.render(1, "无人机自检成功，等待放飞确认。");
 
 	}
 	

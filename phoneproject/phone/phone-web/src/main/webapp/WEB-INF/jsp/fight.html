@@ -53,41 +53,27 @@
         <div id="container"></div>
         <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
         <script>
+        
+        	var  planePath =${planepath};
+        	var  planeMarker;
+        	var  pointlen = 0;
+        	
             var map = new AMap.Map('container', {
                 resizeEnable: true,
                 zoom: 16,
-                center: [107.79962, 23.06691]
+                center: planePath.plongda[0],
             });
             AMapUI.loadUI(['control/BasicControl'],
                 function (BasicControl) {
                     //缩放控件，显示Zoom值
-                    map.addControl(new BasicControl.Zoom({
+                     map.addControl(new BasicControl.Zoom({
                         position: 'lt',
                         showZoomNum: true,
                     }));
-
-                    var routeList = {
-                        routeid: '2',
-                        status: '0',
-                        routepath: [[107.79962, 23.06691], // 2144  起飞点
-                            [107.79985, 23.06666], // 2143
-                            [107.80006, 23.06645], // 2142
-                            [107.80033, 23.06617], // 2141
-                            [107.80079, 23.06568], // 2140
-                            [107.80103, 23.06544], // 2139
-                            [107.80121, 23.06524], // 2138
-                            [107.80143, 23.06500], // 2137
-                            [107.80164, 23.06481], // 2136
-                            [107.80214, 23.06427], // 2135
-                        ],
-                        descripte: '这是一条一干路由,无人机路过',
-                        updatetime: '2018-8-1',
-                        type: '1',
-                    };
-
+              
                     var polyline = new AMap.Polyline({
                         map: map,
-                        path: routeList.routepath, //设置线覆盖物路径
+                        path: planePath.plongda, //设置线覆盖物路径
                         strokeColor: "#FF0000", //线颜色
                         strokeOpacity: 1, //线透明度
                         strokeWeight: 5, //线宽
@@ -95,8 +81,57 @@
                         strokeDasharray: [10, 5]
                         //补充线样式
                     });
+                    planeMarker = new AMap.Marker({
+	                    //map: map,
+	                    position: planePath.plongda[pointlen],
+	                    icon: new AMap.Icon({
+	                        size: new AMap.Size(32, 32), //图标大小
+	                        image: "images/warn-32.png",
+	                        offset: new AMap.Pixel(-30, -40) ,// 相对于基点的偏移位置
+	                    }),
+	                });
+		    	    map.add(planeMarker);  
+                    start();
 
                 });
+            
+          //短轮询数据库获取飞机的位置
+    		function push() {
+    		      /*   $.ajax({
+    		            type: "post",
+    		            url: "${s.base}/getlocation.action",
+    		            data:{
+    		            	'planeId':'2',
+    		            },
+    		            success: function (data) {
+    		            	//获取数据然后放置飞机
+    		            	console.log(data.flongda);		         	
+    		            }
+    		        }); */
+    		       if(pointlen < planePath.plongda.length){
+    		    	   
+    		    	   map.remove(planeMarker);
+    		    	   planeMarker = new AMap.Marker({
+    	                    //map: map,
+    	                    position: planePath.plongda[pointlen],
+    	                    icon: new AMap.Icon({
+    	                        size: new AMap.Size(32, 32), //图标大小
+    	                        image: "images/warn-32.png",
+    	                        offset: new AMap.Pixel(-32,32) ,// 相对于基点的偏移位置
+    	                    }),
+    	                });
+    		    	   map.setCenter(planePath.plongda[pointlen]); 
+    		    	    map.add(planeMarker);  		    	   
+    		    	    pointlen = pointlen + 2;
+    		       }      
+    		} 
+    		  
+    		 function start(){	
+    			
+    		     window.setInterval(function () {  
+    		    	 push();	 
+    		     }, 1000);    //轮询 1s一次    
+    		 }	
         </script>
     </div>
     <div id="optionArea">
@@ -107,25 +142,25 @@
             <#if task.role?? && task.role!="">
             <#if task.role == "1">
             <p class="buttons-row">
-                <a onclick="checkself(${task.taskid!})" class="button">自检完成</a>
-                <a onclick="takeoff(${task.taskid!})" class="button">起飞</a>
+                <a onclick="checkself('${task.taskid!}')" class="button">自检完成</a>
+                <a onclick="takeoff('${task.taskid!}')" class="button">起飞</a>
                 <!--<a href="${s.base}/imageOnline?taskid=${task.taskid!}" class="button">实时影像</a>-->
                 <a  id="realTimePic" class="button pb-standalone">实时影像</a>
             </p>
             <p class="buttons-row">
-                <a onclick="emergencyload(${task.taskid!})" class="button">紧急迫降</a>
-                <a onclick="emergencyback(${task.taskid!})" class="button">紧急返航</a>
-                <a onclick="reportNotconnet(${task.taskid!})" class="button">报告失联</a>
+                <a onclick="emergencyload('${task.taskid!}')" class="button">紧急迫降</a>
+                <a onclick="emergencyback('${task.taskid!}')" class="button">紧急返航</a>
+                <a onclick="reportNotconnet('${task.taskid!}')" class="button">报告失联</a>
             </p>
             <#elseif task.role == "2">
             <p class="buttons-row">
-                <a onclick="reportFinish(${task.taskid!})" class="button">任务完成</a>
+                <a onclick="reportFinish('${task.taskid!}')" class="button">任务完成</a>
                 <!--<a href="${s.base}/imageOnline?taskid=${task.taskid!}" class="button">实时影像</a>-->
                 <a  id="realTimePic2" class="button pb-standalone">实时影像</a>
             </p>
             <p class="buttons-row">
                <!--  <a onclick="emergencyload(${task.taskid!})" class="button">紧急迫降</a> -->
-                <a onclick="reportNotconnet(${task.taskid!})" class="button">报告失联</a>
+                <a onclick="reportNotconnet('${task.taskid!}')" class="button">报告失联</a>
             </p>
         </#if>
     </#if>
@@ -309,27 +344,6 @@
 			      });		
 			}); 	
 		}
-		
-		//短轮询数据库获取飞机的位置
-		function push() {
-		        $.ajax({
-		            type: "post",
-		            url: "${s.base}/getlocation.action",
-		            data:{
-		            	'planeId':'2',
-		            },
-		            success: function (data) {
-		            	//获取数据然后放置飞机
-		            	console.log(data.flongda);		         	
-		            }
-		        });
-		} 
-		  
-		 $(function () {		   
-		     window.setInterval(function () {  
-		    	 push();	 
-		     }, 30000);    //轮询 1s一次    
-		 }); 	
 	</script>
 </body>
 </html>

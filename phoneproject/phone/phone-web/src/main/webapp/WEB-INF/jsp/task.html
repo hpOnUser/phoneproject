@@ -11,18 +11,10 @@
 
 <link rel="stylesheet" href="light7/css/light7.min.css">
 <link rel="stylesheet" href="light7/css/light7-swiper.min.css">
-<style type="text/css">
-</style>
 <script type='text/javascript' src='js/jquery-3.3.1.min.js'></script>
-
 <script type='text/javascript' src='light7/js/light7.js' charset='utf-8'></script>
 <script type='text/javascript' src='light7/js/light7-swiper.js'	charset='utf-8'></script>
-<script>
-	$.init;
-	$.config={
-	    router:false
-	};
-</script>
+
 </head>
 <body >
 	<div class="page-group">
@@ -52,7 +44,7 @@
 			
 		</div>
 	</div>
-	
+
 	<script>
 	function exData(flag) {
 		var url = '${s.base}/taskList.action';
@@ -86,12 +78,13 @@
 	}
 	
 	//ajax请求确认任务，若成功则刷新当前页面
-	function ensureTask(TaskId,userbid,usercid){	
-		$.confirm('是否确认任务？', function () {
-	 	      //给后台发送请求
+	function ensureTask(TaskId,userbid,usercid){
+		
+		$.confirm('是否确认任务？', function () {	
+	 	      //给后台发送请求	 	 
 		 	 $.ajax({
 		            type: "post",
-		            url: "${s.base}/ensureTask.action",
+		            url: "${s.base}/ensureTask.action",		       
 		            data: {
 		            	'taskid':TaskId,
 		            	'userbid':userbid,
@@ -156,21 +149,8 @@
 		           }
 		      });			
 	 	});
-		
-		
-		
-		
 	}
-	//弹出任务详情
-	//function getTaskDetail(TaskId){
-	/* 	var popupHTML = 
-		'<div class="popup">'+
-        '<div class="content-padded">'+
-          '<p>'+TaskId+'</p>'+
-          '<p><a href="#" class="close-popup">关闭</a></p>'+
-        '</div></div>';
-		$.popup(popupHTML);} */
-			
+				
 </script>
 </body>
 </html>

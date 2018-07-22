@@ -2,7 +2,7 @@
     <#list taskList as task>
         <div class="card">
             <div class="card-header">
-            <span>飞行任务编号：${task.taskid!}</span>&nbsp;&nbsp;
+            <span>任务编号：${task.taskid!}</span>&nbsp;&nbsp;
             	<#if task.finishstatus=='0'><div >状态：未完成</div>
 				<#elseif task.finishstatus=='1'><div >状态：已完成</div>			
 				</#if>					
@@ -21,19 +21,19 @@
             	<#if task.role?? && task.role!="">
             	<#if task.role == "1">
             	 <#if task.status?? && task.status!="">           	          	 
-            	        <#if task.status=='1' ><div><a  class="button button-fill  " id="${task.taskid!}" onclick="rollbackTask(${task.taskid!},${task.userbid!},${task.usercid!})">退回任务</a>
-            	         </div><div><a  class="button button-fill  " id="${task.taskid!}" onclick="ensureTask(${task.taskid!},${task.userbid!},${task.usercid!})">放飞员  > 确认</a>
+            	        <#if task.status=='1' ><div><a  class="button button-fill  "  onclick="rollbackTask('${task.taskid!}',${task.userbid!},${task.usercid!})">退回任务</a>
+            	         </div><div><a  class="button button-fill"  onclick="ensureTask('${task.taskid!}',${task.userbid!},${task.usercid!})">放飞员  > 确认</a>
             	        </div>
             	        <#elseif task.status=='-1' ><div ><a  class="button button-fill button-warning">故障</a> </div>
             	        <#elseif task.status=='0' ><div><a  class="button button-fill disabled button-warning" >已退回</a> </div>
             	        <#elseif task.status=='2' ><div><a  class="button button-fill disabled" >等待接收员确认</a> </div>
-						<#elseif task.status=='3' ><div><a  class="button button-fill external" onclick="exeTask(${task.taskid!})">放飞员开始执行</a> </div>
+						<#elseif task.status=='3' ><div><a  class="button button-fill external" onclick="exeTask('${task.taskid!}')">放飞员开始执行</a> </div>
 						<#elseif task.status=='4' ><div><a  class="button button-fill external" href='${s.base}/toPlane.action?taskid=${task.taskid!}'>任务执行中</a> </div>
 						<#elseif task.status=='5' ><div><a  class="button button-fill external" href='${s.base}/toPlane.action?taskid=${task.taskid!}'>自检中</a> </div>
 						<#elseif task.status=='6' ><div><a  class="button button-fill external" href='${s.base}/toPlane.action?taskid=${task.taskid!}'>自检完成</a> </div>
 						<#elseif task.status=='7' ><div><a  class="button button-fill external" href='${s.base}/toPlane.action?taskid=${task.taskid!}'>待放飞</a> </div>
 						<#elseif task.status=='8' ><div><a  class="button button-fill external" href='${s.base}/toPlane.action?taskid=${task.taskid!}'>飞行中</a> </div>
-						<#elseif task.status=='9' ><div><a  class="button button-fill disabled button-success" >接收者已接收</a> </div>						
+						<#elseif task.status=='9' ><div><a  class="button button-fill disabled button-success" >接收者已接收，待归档</a> </div>						
 					    <#else><div><a  class="button button-fill disabled button-success" >错误</a> </div>	
 					    </#if>
 						<!--<a onclick="getTaskDetail(${task.taskid!})">任务详情&nbsp;&nbsp;<span class="icon icon-right"></span></a>  -->
@@ -41,8 +41,8 @@
             	<#elseif task.role == "2">
             	  <#if task.status?? && task.status!="">           	          	 
             	        <#if task.status=='1' ><div ><a  class="button button-fill disabled">等待放飞员确认</a> </div>
-						<#elseif task.status=='2' ><div><a  class="button button-fill " id="${task.taskid!}" onclick="rollbackTask(${task.taskid!},${task.userbid!},${task.usercid!})">退回任务</a>
-						</div><div style="white-spacing:nowrap;"><a  class="button button-fill  " id="${task.taskid!}" onclick="ensureTask(${task.taskid!},${task.userbid!},${task.usercid!})">接收员  > 确认</a> 
+						<#elseif task.status=='2' ><div><a  class="button button-fill "  onclick="rollbackTask('${task.taskid!}',${task.userbid!},${task.usercid!})">退回任务</a>
+						</div><div style="white-spacing:nowrap;"><a  class="button button-fill  "  onclick="ensureTask('${task.taskid!}',${task.userbid!},${task.usercid!})">接收员  > 确认</a> 
             	        </div>
             	        <#elseif task.status=='-1' ><div ><a  class="button button-fill button-warning">故障</a> </div>
             	        <#elseif task.status=='0' ><div><a  class="button button-fill disabled button-warning" >已退回</a> </div>
@@ -52,7 +52,7 @@
 						<#elseif task.status=='6' ><div><a  class="button button-fill external" href='${s.base}/toPlane.action?taskid=${task.taskid!}'>自检完成</a> </div>
 						<#elseif task.status=='7' ><div><a  class="button button-fill external" href='${s.base}/toPlane.action?taskid=${task.taskid!}'>待放飞</a> </div>
 						<#elseif task.status=='8' ><div><a  class="button button-fill external" href='${s.base}/toPlane.action?taskid=${task.taskid!}'>飞行中</a> </div>
-						<#elseif task.status=='9' ><div><a  class="button button-fill disabled button-success" >接收员已接收</a> </div>						
+						<#elseif task.status=='9' ><div><a  class="button button-fill disabled button-success" >接收者已接收，待归档</a> </div>						
 					     <#else><div><a  class="button button-fill disabled button-success" >错误</a> </div>
 					    </#if>
 						<!--<a onclick="getTaskDetail(${task.taskid!})">任务详情&nbsp;&nbsp;<span class="icon icon-right"></span></a>  -->
