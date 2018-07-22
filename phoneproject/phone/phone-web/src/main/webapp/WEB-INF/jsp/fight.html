@@ -87,11 +87,13 @@
 	                    icon: new AMap.Icon({
 	                        size: new AMap.Size(32, 32), //图标大小
 	                        image: "images/warn-32.png",
-	                        offset: new AMap.Pixel(-30, -40) ,// 相对于基点的偏移位置
+	                        offset: new AMap.Pixel(0, -40) ,// 相对于基点的偏移位置
 	                    }),
 	                });
 		    	    map.add(planeMarker);  
-                    start();
+                  	if(${task.role}=="2"){
+                  		start();
+                  	}
 
                 });
             
@@ -122,7 +124,7 @@
     	                });
     		    	   map.setCenter(planePath.plongda[pointlen]); 
     		    	    map.add(planeMarker);  		    	   
-    		    	    pointlen = pointlen + 2;
+    		    	    pointlen = pointlen + 1;
     		       }      
     		} 
     		  
@@ -252,6 +254,7 @@
                  success: function (result) {
                      if (result.errcode == '1') {
                          $.toast(result.message);
+                         start();
                      } else {
                          $.toast(result.message);
                      }
