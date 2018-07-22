@@ -58,12 +58,15 @@ public class TaskController {
 	@RequestMapping(value = "/getlocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getlocation(Plane plane) {
+		exeindex ++;   //下一个点
+		if(exeindex>exePlanePathVo.getPlongda().size()) {
+			return "";   //如果超出了范围则返回空
+		}
 		//在这里应该获取飞机位置
 		Plane plane2 = planeServiceImpl.getPlaneByPlane(plane);
 		//plane2.set这里暂时不写逻辑，，
 		List<Double> location = exePlanePathVo.getPlongda().get(exeindex);
-		exeindex ++;   //下一个点
-		
+				
 		return JsonUtils.objectToJson(location);
 		
 	}
