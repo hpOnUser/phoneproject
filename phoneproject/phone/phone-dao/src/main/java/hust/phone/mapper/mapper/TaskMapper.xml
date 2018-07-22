@@ -344,5 +344,11 @@
 		</if>
 		and (status="4" or status="5" or status="6" or status="7" or status="8")
 	</select>
+	<select id="getTaskStatus" parameterType="hust.phone.mapper.pojo.Task" resultType="java.lang.String">
+		SELECT status		
+		FROM task
+		WHERE 
+		taskid = #{taskid,jdbcType=VARCHAR}
+	</select>
   
 </mapper>

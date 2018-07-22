@@ -15,5 +15,7 @@ public interface taskService {
 	boolean setStatusTaskByTask(Task task, String string);
 
 	Task selectOneExeTask(Task task);
+	
+	String getTaskStatus(Task task);
 
 }

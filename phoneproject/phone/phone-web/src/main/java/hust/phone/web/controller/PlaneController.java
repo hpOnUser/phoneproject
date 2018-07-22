@@ -25,7 +25,7 @@ public class PlaneController {
     planeService planeServiceImpl;
 
     //获取无人机实时位置
-    @RequestMapping(value = "/getlocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+/*    @RequestMapping(value = "/getlocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getlocation(Plane plane) {
 
@@ -33,7 +33,7 @@ public class PlaneController {
         PlaneVo planevo = new PlaneVo(plane2);
 
         return JsonUtils.objectToJson(planevo);
-    }
+    }*/
 
     @RequestMapping(value = "getRealTimePic", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody

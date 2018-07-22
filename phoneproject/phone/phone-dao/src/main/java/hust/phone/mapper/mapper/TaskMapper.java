@@ -31,5 +31,7 @@ public interface TaskMapper {
 	List<Task> selectByTask(Task task);
 
 	List<Task> selectByTaskOptions(Task task);
+
+	String getTaskStatus(Task task);
 	
 }

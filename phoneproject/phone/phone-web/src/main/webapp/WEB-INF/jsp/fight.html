@@ -44,7 +44,7 @@
 				</#if>		
 			</h1>
 			<a class="button button-link button-nav pull-right extend"
-				href="${s.base}/toPlaneControl.action" data-transition='slide-out'> <span
+				href="javascript:location.reload();"  data-transition='slide-out'> <span
 				class="icon icon-refresh">&nbsp;</span>
 			</a>
 		</header>
@@ -91,48 +91,40 @@
 	                    }),
 	                });
 		    	    map.add(planeMarker);  
-                  	if(${task.role}=="2"){
-                  		start();
-                  	}
-
+		    	   
                 });
             
           //短轮询数据库获取飞机的位置
     		function push() {
-    		      /*   $.ajax({
+    		      $.ajax({
     		            type: "post",
     		            url: "${s.base}/getlocation.action",
     		            data:{
-    		            	'planeId':'2',
+    		            	'planeId':${task.planeid},
     		            },
     		            success: function (data) {
-    		            	//获取数据然后放置飞机
-    		            	console.log(data.flongda);		         	
+    		            	//获取数据然后放置飞机    		         	
+    		            		map.remove(planeMarker);
+    	   	    		    	   planeMarker = new AMap.Marker({
+    	   	    	                    //map: map,
+    	   	    	                    position: data,
+    	   	    	                    icon: new AMap.Icon({
+    	   	    	                        size: new AMap.Size(32, 32), //图标大小
+    	   	    	                        image: "images/warn-32.png",
+    	   	    	                        offset: new AMap.Pixel(-32,32) ,// 相对于基点的偏移位置
+    	   	    	                    }),
+    	   	    	                });
+    	   	    		    	   map.setCenter(data); 
+    	   	    		    	   map.add(planeMarker);	    	                      		                        	
     		            }
-    		        }); */
-    		       if(pointlen < planePath.plongda.length){
-    		    	   
-    		    	   map.remove(planeMarker);
-    		    	   planeMarker = new AMap.Marker({
-    	                    //map: map,
-    	                    position: planePath.plongda[pointlen],
-    	                    icon: new AMap.Icon({
-    	                        size: new AMap.Size(32, 32), //图标大小
-    	                        image: "images/warn-32.png",
-    	                        offset: new AMap.Pixel(-32,32) ,// 相对于基点的偏移位置
-    	                    }),
-    	                });
-    		    	   map.setCenter(planePath.plongda[pointlen]); 
-    		    	    map.add(planeMarker);  		    	   
-    		    	    pointlen = pointlen + 1;
-    		       }      
+    		        });   		         
     		} 
     		  
     		 function start(){	
     			
     		     window.setInterval(function () {  
     		    	 push();	 
-    		     }, 1000);    //轮询 1s一次    
+    		     }, 2000);    //轮询 1s一次    
     		 }	
         </script>
     </div>
@@ -141,8 +133,7 @@
         <#else>
 
         <div class="content-block" style="margin-top: 0; padding-top: 0;">
-            <#if task.role?? && task.role!="">
-            <#if task.role == "1">
+            <#if task.role?? && task.role!="">          
             <p class="buttons-row">
                 <a onclick="checkself('${task.taskid!}')" class="button">自检完成</a>
                 <a onclick="takeoff('${task.taskid!}')" class="button">起飞</a>
@@ -153,19 +144,8 @@
                 <a onclick="emergencyload('${task.taskid!}')" class="button">紧急迫降</a>
                 <a onclick="emergencyback('${task.taskid!}')" class="button">紧急返航</a>
                 <a onclick="reportNotconnet('${task.taskid!}')" class="button">报告失联</a>
-            </p>
-            <#elseif task.role == "2">
-            <p class="buttons-row">
-                <a onclick="reportFinish('${task.taskid!}')" class="button">任务完成</a>
-                <!--<a href="${s.base}/imageOnline?taskid=${task.taskid!}" class="button">实时影像</a>-->
-                <a  id="realTimePic2" class="button pb-standalone">实时影像</a>
-            </p>
-            <p class="buttons-row">
-               <!--  <a onclick="emergencyload(${task.taskid!})" class="button">紧急迫降</a> -->
-                <a onclick="reportNotconnet('${task.taskid!}')" class="button">报告失联</a>
-            </p>
-        </#if>
-    </#if>
+            </p>                 
+    		</#if>
 </div>
 </#if>
 </div>
@@ -254,6 +234,7 @@
                  success: function (result) {
                      if (result.errcode == '1') {
                          $.toast(result.message);
+                          //开始轮询无人机位置
                          start();
                      } else {
                          $.toast(result.message);
