@@ -58,7 +58,7 @@ public class TaskController {
 	@RequestMapping(value = "/getlocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String getlocation(Plane plane) {
-		exeindex ++;   //下一个点
+		exeindex  = exeindex +  2;   //下一个点
 		if(exeindex>exePlanePathVo.getPlongda().size()) {
 			return "";   //如果超出了范围则返回空
 		}
@@ -203,6 +203,7 @@ public class TaskController {
 		PlanePathVo planePathVo = new PlanePathVo(planePath2);
 
 		exePlanePathVo = planePathVo;
+		exeindex = 0;
 		
 		model.addAttribute("planepath", JsonUtils.objectToJson(planePathVo));
 		model.addAttribute("task", task2);
@@ -253,6 +254,7 @@ public class TaskController {
 		PlanePathVo planePathVo = new PlanePathVo(planePath2);
 
 		exePlanePathVo = planePathVo;
+		exeindex = 0;
 		
 		model.addAttribute("planepath", JsonUtils.objectToJson(planePathVo));
 		model.addAttribute("task", task2);
