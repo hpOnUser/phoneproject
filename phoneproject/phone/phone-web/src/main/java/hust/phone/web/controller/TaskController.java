@@ -314,7 +314,7 @@ public class TaskController {
 			taskServiceImpl.setStatusTaskByTask(task, "8");
 			return JsonView.render(1, "无人机放飞成功！");
 		}else {
-			return JsonView.render(1, "任务管理员未确认，不可放飞！");
+			return JsonView.render(0, "任务管理员未确认，不可放飞！");
 		}
 		
 		

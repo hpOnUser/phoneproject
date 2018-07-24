@@ -34,7 +34,7 @@
 						<#elseif task.status=='7' ><div><a  class="button button-fill external" href='${s.base}/toPlane.action?taskid=${task.taskid!}'>待放飞</a> </div>
 						<#elseif task.status=='8' ><div><a  class="button button-fill external" href='${s.base}/toPlane.action?taskid=${task.taskid!}'>飞行中</a> </div>
 						<#elseif task.status=='9' ><div><a  class="button button-fill disabled button-success" >接收者已接收，待归档</a> </div>						
-					    <#else><div><a  class="button button-fill disabled button-success" >错误</a> </div>	
+					    <#else><div><a  class="button button-fill disabled button-success" >已归档</a> </div>	
 					    </#if>
 						<!--<a onclick="getTaskDetail(${task.taskid!})">任务详情&nbsp;&nbsp;<span class="icon icon-right"></span></a>  -->
 				 </#if> 
@@ -53,7 +53,7 @@
 						<#elseif task.status=='7' ><div><a  class="button button-fill external" href='${s.base}/toPlane.action?taskid=${task.taskid!}'>待放飞</a> </div>
 						<#elseif task.status=='8' ><div><a  class="button button-fill external" href='${s.base}/toPlane.action?taskid=${task.taskid!}'>飞行中</a> </div>
 						<#elseif task.status=='9' ><div><a  class="button button-fill disabled button-success" >接收者已接收，待归档</a> </div>						
-					     <#else><div><a  class="button button-fill disabled button-success" >错误</a> </div>
+					     <#else><div><a  class="button button-fill disabled button-success" >已完成</a> </div>
 					    </#if>
 						<!--<a onclick="getTaskDetail(${task.taskid!})">任务详情&nbsp;&nbsp;<span class="icon icon-right"></span></a>  -->
 				 </#if> 
