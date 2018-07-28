@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>无人机指派系统</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <link rel="shortcut icon" href="../../res/images/icons/favicon.ico">
+    <link rel="shortcut icon" href="${s.base}/res/images/icons/favicon.ico">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet"
           href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
-    <link rel="stylesheet" href="../../res/light7/css/light7.min.css">
-    <link rel="stylesheet" href="../../res/light7/css/light7-swiper.min.css">
-    <script type='text/javascript' src='../../res/js/jquery-3.3.1.min.js'></script>
-     <link rel="stylesheet" href="../../res/css/index.css">
+    <link rel="stylesheet" href="${s.base}/light7/css/light7.min.css">
+    <link rel="stylesheet" href="${s.base}/res/light7/css/light7-swiper.min.css">
+    <script type='text/javascript' src='${s.base}/res/js/jquery-3.3.1.min.js'></script>
+     <link rel="stylesheet" href="${s.base}/res/css/index.css">
 </head>
 <style>  
 </style>
@@ -48,7 +48,8 @@
                     </span><span class="badge" id="waittasknum" style="display:none;"></span>
 
             </a> 
-            <a class="tab-item external" href="${s.base}/toPlaneControl.action"> <span
+            <!-- href="${s.base}/toPlaneControl.action"-->
+            <a class="tab-item external" > <span
                 class="icon icon-app "></span> <span class="tab-label">无人机操控</span>
                 </a>
                 <a class="tab-item external" href="${s.base}/alermList.action"> <span
@@ -117,9 +118,9 @@
                             <#if Session["login_user"].role=='0'>
                              管理员
                             <#elseif Session["login_user"].role=='1'>
-                             起飞员
+                            巡检员
                             <#else>
-                             降落员
+                             巡检员
                             </#if>
                          </#if>
                     </#if></b></span>
@@ -128,40 +129,40 @@
 
             <div class="secondBlock">
                 <div class="taskImg"></div>
-                <span class="taskSpan"><b>我的工单</b></span>
+                <span class="taskSpan">我的工单</span>
                 <!--<div class="rightArr"></div>-->
             </div>
 
             <div class="thirdBlock">
                 <div class="thirdSpan1">
-                    <img class="taskImg1" src="../../res/img/fly.png">
-                    <span class="taskSpan1"><b>无人机起飞</b></span>
+                    <img class="taskImg1" src="${s.base}/res/img/fly.png">
+                    <span class="taskSpan1">无人机起飞</span>
                     <!--<div class="rightArr1"></div>-->
                 </div>
 
                 <div class="thirdSpan2">
-                    <img class="taskImg2" src="../../res/img/down.png">
-                    <span class="taskSpan2"><b>紧急迫降</b></span>
+                    <img class="taskImg2" src="${s.base}/res/img/down.png">
+                    <span class="taskSpan2">紧急迫降</span>
                     <!--<div class="rightArr2"></div>-->
                 </div>
                 <div class="thirdSpan3">
-                    <img class="taskImg3" src="../../res/img/disconnect.png">
-                    <span class="taskSpan3"><b>报告失联</b></span>
+                    <img class="taskImg3" src="${s.base}/res/img/disconnect.png">
+                    <span class="taskSpan3">报告失联</span>
                     <!--<div class="rightArr3"></div>-->
                 </div>
                 <div class="thirdSpan4">
-                    <img class="taskImg4" src="../../res/img/video.png">
-                    <span class="taskSpan4"><b>实时影像</b></span>
+                    <img class="taskImg4" src="${s.base}/res/img/video.png">
+                    <span class="taskSpan4">实时影像</span>
                     <!--<div class="rightArr4"></div>-->
                 </div>
                 <div class="thirdSpan5">
-                    <img src="../../res/img/location.png" class="taskImg5">
-                    <span class="taskSpan5"><b>实时位置</b></span>
+                    <img src="${s.base}/res/img/location.png" class="taskImg5">
+                    <span class="taskSpan5">实时位置</span>
                     <!--<div class="rightArr5"></div>-->
                 </div>
                 <div>
-                    <img src="../../res/img/voyage.png" class="taskImg6"></src>
-                    <span class="taskSpan6"><b>紧急返航</b></span>
+                    <img src="${s.base}/res/img/voyage.png" class="taskImg6"></src>
+                    <span class="taskSpan6">紧急返航</span>
                         <!--<div class="rightArr6"></div>-->
                 </div>
             </div>
@@ -176,11 +177,10 @@
     </div>
 </div>
 
-<script type='text/javascript' src='../../res/light7/js/light7.min.js'
+<script type='text/javascript' src='${s.base}/res/light7/js/light7.min.js'
         charset='utf-8'></script>
-<script type='text/javascript' src='../../res/light7/js/light7-swiper.min.js'
+<script type='text/javascript' src='${s.base}/res/light7/js/light7-swiper.min.js'
         charset='utf-8'></script>
-<script src="http://code.jquery.com/jquery-1.8.0.min.js" charset='utf-8'></script>
 
 
 <script type="text/javascript">

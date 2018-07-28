@@ -2,10 +2,11 @@
     <#list taskList as task>
         <div class="card">
             <div class="card-header">
-            <span>任务编号：${task.taskid!}</span>&nbsp;&nbsp;
-            	<#if task.finishstatus=='0'><div >状态：未完成</div>
-				<#elseif task.finishstatus=='1'><div >状态：已完成</div>			
-				</#if>					
+            <span style="width:100%;">任务编号：${task.taskid!}<br>
+            	<#if task.finishstatus=='0'>状态：未完成
+				<#elseif task.finishstatus=='1'>状态：已完成		
+				</#if>	
+			</span>
             </div>
             <div class="card-content">
                 <div class="card-content-inner">
