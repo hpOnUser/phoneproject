@@ -269,6 +269,8 @@ public class TaskController {
 
 		//测试****把任务状态设为故障
 		taskServiceImpl.setStatusTaskByTask(task, "-1");
+		//降落指令
+		planeServiceImpl.planeLand(task.getPlaneid());
 		return JsonView.render(1, "执行紧急降落成功！");
 	}
 
@@ -278,6 +280,8 @@ public class TaskController {
 		
 		//测试****把任务状态设为故障
 		taskServiceImpl.setStatusTaskByTask(task, "-1");
+		//返航指令
+		planeServiceImpl.planeReturn(task.getPlaneid());
 		return JsonView.render(1, "执行紧急返航成功！");
 
 	}
@@ -312,13 +316,12 @@ public class TaskController {
 		String oldStatus = taskServiceImpl.getTaskStatus(task);
 		if(oldStatus.equals("7")) {
 			taskServiceImpl.setStatusTaskByTask(task, "8");
+			//放飞指令
+			planeServiceImpl.takeoff(task.getPlaneid());
 			return JsonView.render(1, "无人机放飞成功！");
 		}else {
 			return JsonView.render(0, "任务管理员未确认，不可放飞！");
 		}
-		
-		
-
 	}
 	@RequestMapping(value = "/reportFinish", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
