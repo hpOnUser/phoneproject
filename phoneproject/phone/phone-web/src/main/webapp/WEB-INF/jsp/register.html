@@ -7,10 +7,10 @@
     <meta name="viewport" media="(device-height: 568px)" content="initial-scale=1.0,user-scalable=no,maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="stylesheet" href="../../res/css/gongyong.css">
-    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="../../res/js/jquery-1.11.3.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="../../res/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="${s.base}/res/css/gongyong.css">
+    <link href="${s.base}/res/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="${s.base}/res/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="${s.base}/res/js/bootstrap.min.js"></script>
     <style>
         #alertDiv {
             display: none;
@@ -68,7 +68,7 @@
             setTimeout("closeAlert()",3000);
         } else {
             $.ajax({
-                url: "register",
+                url: "${s.base}/register.action",
                 type: "POST",
                 async: true,
                 data: $("#registerForm").serialize(),

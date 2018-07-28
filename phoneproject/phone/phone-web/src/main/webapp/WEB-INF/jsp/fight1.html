@@ -8,10 +8,10 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="stylesheet" href="../../res/light7/css/sm.min.css">
-    <link rel="stylesheet" href="../../res/css/phone.css">
-    <link rel="stylesheet" href="../../res/css/main1119.css"/>
-    <link rel="stylesheet" href="../../res/light7/css/light7-swiper.min.css">
+    <link rel="stylesheet" href="${s.base}/res/light7/css/sm.min.css">
+    <link rel="stylesheet" href="${s.base}/res/css/phone.css">
+    <link rel="stylesheet" href="${s.base}/res/css/main1119.css"/>
+    <link rel="stylesheet" href="${s.base}/res/light7/css/light7-swiper.min.css">
     
     <script src="http://cache.amap.com/lbs/static/es5.min.js"></script>
     <script src="http://webapi.amap.com/maps?v=1.4.6&key=82f9e75505b649be9ab81a45ae34aa14"></script>
@@ -25,6 +25,7 @@
    <!--  <script>
         $.init;
     </script> -->
+    <!-- 这是接收员界面 -->
 </head>
 <body>
 	<div class="page-group">
@@ -153,18 +154,18 @@
 		</#if>
 </div>
 </div>
-<script type='text/javascript' src='../../res/light7/js/light7-swiper.min.js' charset='utf-8'></script>
-<script type='text/javascript' src='js/jquery-3.3.1.min.js'></script>
-<script type='text/javascript' src='light7/js/light7.js'
+<script type='text/javascript' src='${s.base}/res/light7/js/light7-swiper.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='${s.base}/js/jquery-3.3.1.min.js'></script>
+<script type='text/javascript' src='${s.base}/light7/js/light7.js'
         charset='utf-8'></script>
-<script type='text/javascript' src='light7/js/light7-swiper.js'
+<script type='text/javascript' src='${s.base}/light7/js/light7-swiper.js'
         charset='utf-8'></script>
 <script>
     window.array = new Array();
     var myPhotoBrowserStandalone = "";
     function getAlarm(){
        $.ajax({
-           url:"getRealTimePic",
+           url:"${s.base}/getRealTimePic.action",
            type:"POST",
            data:{
                'taskid':'1'

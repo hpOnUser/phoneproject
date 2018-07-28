@@ -8,12 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <!-- 引入资源文件 -->
-    <link href="../../res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${s.base}/res/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 
-    <script type="text/javascript" src="../../res/js/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="../../res/js/jquery.form.js"></script>
-    <script type="text/javascript" src="../../res/js/bootstrap.min.js"></script>
-    <link rel="icon" type="image/png" href="../../res/images/icons/favicon.ico" sizes="16x16">
+    <script type="text/javascript" src="${s.base}/res/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="${s.base}/res/js/jquery.form.js"></script>
+    <script type="text/javascript" src="${s.base}/res/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/png" href="${s.base}/res/images/icons/favicon.ico" sizes="16x16">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <style>
         .main {
@@ -201,7 +201,7 @@
 </head>
 
 <body>
-<div class="main" style="position:absolute;z-index:-1;width:100%;height:100%;"><img src="../../res/images/bg-02.png"
+<div class="main" style="position:absolute;z-index:-1;width:100%;height:100%;"><img src="${s.base}/res/images/bg-02.png"
                                                                                     width="100%" height="100%"/>
 </div>
 <div class="container">
@@ -245,11 +245,11 @@
     $("#login").click(function () {
         $.ajax({
             type: "post",
-            url: "${s.base}/login",
+            url: "${s.base}/login.action",
             data: $("#loginForm").serialize(),
             success: function (result) {
                 if (result.errcode == 0 && result.message == "success") {
-                    window.location.href = '/myindex';
+                    window.location = '${s.base}/myindex.action';
                 } else {
                     showAlert(result.message);
                 }
@@ -258,7 +258,7 @@
     })
 
     $("#register").click(function () {
-        window.location.href = '/admin/register';
+        window.location.href = '${s.base}/admin/register.action';
     })
 
     function showAlert(message) {

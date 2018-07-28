@@ -75,7 +75,7 @@ public class TaskController {
 	public String index(HttpServletRequest request)
 	{
 		//Number = userService.getTaskNumByUser(PhoneUtils.getLoginUser(request));
-		return "index";
+		return "home";
 	}
 	// 确认任务
 	// 如果用户角色是放飞者，那么修改该任务的状态为 2
