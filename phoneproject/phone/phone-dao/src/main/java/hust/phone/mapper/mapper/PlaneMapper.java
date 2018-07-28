@@ -4,5 +4,10 @@ import hust.phone.mapper.pojo.Plane;
 
 public interface PlaneMapper {
 
-	Plane selectPlaneByPlane(Plane plane); 
+	Plane selectPlaneByPlane(Plane plane);
+
+	void updateByPlane(Plane p);
+
+	
+	
 }

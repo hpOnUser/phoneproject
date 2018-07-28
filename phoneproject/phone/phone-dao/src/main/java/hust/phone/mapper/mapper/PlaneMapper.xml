@@ -35,4 +35,12 @@
 		from plane
 		where planeId=#{planeId}
 	</select>
+	
+	<update id="updateByPlane" parameterType="hust.phone.mapper.pojo.Plane">
+		update plane set
+		flongda =GeomFromText(#{flongda,jdbcType=VARCHAR}),
+		height = #{height},
+		updateTime = #{updateTime},
+		where planeid =#{planeId}
+	</update>
 </mapper>
