@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta http-equiv="refresh" content="4;URL=${s.base}/myindex">
+    <meta http-equiv="refresh" content="4;URL=${s.base}/myindex.action">
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <style>
         html,body {
@@ -16,7 +16,7 @@
             height: 100%
         }
         body {
-            background: url("images/welcome.png") no-repeat;
+            background: url("${s.base}/images/welcome.png") no-repeat;
             background-size: 100%;
         }
         #timecount {
@@ -42,7 +42,7 @@
             $("#displayu").html(wait);
             wait--;
             if (wait <= 0) {
-                window.location = "${s.base}/myindex";
+                window.location = "${s.base}/myindex.action";
             } else {
                 setTimeout(function() {
                     time(wait);
