@@ -58,7 +58,7 @@ public class planeServiceImpl implements planeService {
             msg.target_system=sysid;//无人机编号
             msg.custom_mode=67371008;
             int j=80;
-            int i=1;
+            int i=2;
             while(i>0)
             {
             	MAVLinkPacket pack3 = msg3.pack();
@@ -75,16 +75,16 @@ public class planeServiceImpl implements planeService {
             	j++;
             	Thread.sleep(1000);
             }
-            //一键起飞后顺便接收经纬度数据
+//            //一键起飞后顺便接收经纬度数据
 //    		socket.setSoTimeout(5000);
 //    		  while (true) {
 //              	 	input = socket.getInputStream();
 //                   ObjectInputStream ois = new ObjectInputStream(input);
 //                   Plane p = (Plane) ois.readObject();
 //                    Date updateTime =new Date();
-//			            p.setUpdateTime(updateTime);
-//			           //将无人机的数据插入到数据库中
-//			           planeCommandImpl.updateById(p);
+//			        p.setUpdateTime(updateTime);
+//		           //将无人机的数据插入到数据库中
+//		           planeCommandImpl.updateById(p);
 //               	if(socket.isClosed())
 //      			{
 //      				System.out.println("手机端已经关闭");
@@ -119,14 +119,12 @@ public class planeServiceImpl implements planeService {
 	public void showData(String planeid) {
 		short sysid=(short) Integer.parseInt(planeid);
 		try {
-			msg_heartbeat msg=new msg_heartbeat();
+			msg_command_long msg=new msg_command_long();
 			MAVLinkPacket pack = msg.pack();
-			//设置无人机编号
 			pack.sysid =sysid;
 			byte[] encodePacket = pack.encodePacket();
 			OutputStream out=socket.getOutputStream();
 			out.write(encodePacket);
-			
    			//设置socket的为收到信息的接收时间
    			socket.setSoTimeout(3000);
    			while (true) {

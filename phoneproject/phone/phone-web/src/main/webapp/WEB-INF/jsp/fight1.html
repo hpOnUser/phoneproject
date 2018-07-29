@@ -216,7 +216,7 @@
 			            type: "post",
 			            url: "${s.base}/reportNotconnet.action",
 			            data: {
-			            	'taskid':taskid,
+			            	'taskid':taskid,'planeid':${task.planeid}
 
 			            },		         
 			            success: function (result) {
@@ -238,7 +238,7 @@
 			            type: "post",
 			            url: "${s.base}/reportFinish.action",
 			            data: {
-			            	'taskid':taskid,
+			            	'taskid':taskid,'planeid':${task.planeid}
 			            },		         
 			            success: function (result) {
 			            if(result.errcode=='1')	{

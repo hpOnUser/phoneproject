@@ -40,7 +40,7 @@
 		update plane set
 		flongda =GeomFromText(#{flongda,jdbcType=VARCHAR}),
 		height = #{height},
-		updateTime = #{updateTime},
-		where planeid =#{planeId}
+		updatetime = #{updatetime}
+		where planeid =#{planeid}
 	</update>
 </mapper>

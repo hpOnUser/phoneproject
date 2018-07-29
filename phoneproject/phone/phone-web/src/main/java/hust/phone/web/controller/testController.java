@@ -13,12 +13,18 @@ public class testController {
 	private testService testServiceimpl;
 	
 	//产生任务提示模态框
-	@RequestMapping("/index")
+	@RequestMapping("/indextest")
 	public String testindex(Model model)
 	{
-		String testCon = testServiceimpl.testCon();
-		model.addAttribute("sname",testCon);
+//		String testCon = testServiceimpl.testCon();
+//		model.addAttribute("sname",testCon);
 		return "test";
+	}
+	
+	@RequestMapping("/testUpdate")
+	public void testUpdate()
+	{
+		testServiceimpl.updateTest();
 	}
 
 }
