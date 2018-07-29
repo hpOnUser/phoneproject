@@ -318,9 +318,24 @@ public class TaskController {
 			taskServiceImpl.setStatusTaskByTask(task, "8");
 			//放飞指令
 			planeServiceImpl.takeoff(task.getPlaneid());
-			return JsonView.render(1, "无人机放飞成功！");
+			return JsonView.render(1, "无人机起飞！");
 		}else {
 			return JsonView.render(0, "任务管理员未确认，不可放飞！");
+		}
+	}
+	//无人机实时位置
+	@RequestMapping(value = "/showPosition", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String showPosition(Task task) {
+
+		//测试****把任务状态设为飞行中
+		String oldStatus = taskServiceImpl.getTaskStatus(task);
+		if(oldStatus.equals("8")) {
+			//实时位置指令
+			planeServiceImpl.showData(task.getPlaneid());
+			return JsonView.render(1, "飞机已经断开连接");
+		}else {
+			return JsonView.render(0, "无人机未起飞，不可放飞！");
 		}
 	}
 	@RequestMapping(value = "/reportFinish", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")

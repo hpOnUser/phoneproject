@@ -5,16 +5,24 @@ import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Date;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Parser;
 import com.MAVLink.common.msg_global_position_int;
 
 import hust.phone.mapper.pojo.Plane;
+import hust.phone.service.impl.PlaneCommandImpl;
 
 
 public class MavLinkHandler extends Thread{
+	
+	@Autowired 
+	PlaneCommandImpl planeCommandImpl;
+	
 	 Socket socket = null;
 	 Map<Integer, Socket> phonesessionMap = null;//手机
 	 Map<Integer, Socket> planesessionMap = null;//无人机
@@ -54,18 +62,14 @@ public class MavLinkHandler extends Thread{
 					 if(m.msgid==33)
 					 {
 						 //无人机发过来的消息 ，来自无人机端的信息放入到planesessionMap中
-						 if(!planesessionMap.containsKey(toclientid))
-						 {
-							 
-							 planesessionMap.put(toclientid, socket);
-							 System.out.println("将无人机客户端"+toclientid+"放入到了planesessionMap中");
-						 }
+						planesessionMap.put(toclientid, socket);
+						//System.out.println("将无人机客户端"+toclientid+"放入到了planesessionMap中");
 					 }
 					 else if(m.msgid==11||m.msgid==76)
 					 {
 						 //来自手机端的信息放入到phonesessionMap中
 						 phonesessionMap.put(toclientid, socket);
-						 System.out.println("将手机客户端"+toclientid+"放入到了phonesessionMap中");
+						 //System.out.println("将手机客户端"+toclientid+"放入到了phonesessionMap中");
 						 
 					 }
 					 //发送数据
@@ -80,7 +84,7 @@ public class MavLinkHandler extends Thread{
 	                			 //将数据包发送
 	                			 OutputStream out = targetSocket.getOutputStream();
 	                			 out.write(lenbuf);
-	                			 System.out.println("服务端已转发给无人机端"); 
+	                			// System.out.println("服务端已转发给无人机端"); 
 	                		 }
 	                	}
 	                	else if(m.msgid==33){
@@ -103,7 +107,7 @@ public class MavLinkHandler extends Thread{
 	                			 OutputStream out = targetSocket.getOutputStream();
 	                			 ObjectOutputStream oos = new ObjectOutputStream(out);
 	                			 oos.writeObject(p);
-	                			 System.out.println("服务端已转发手机端");
+	                			// System.out.println("服务端已转发手机端");
 	                			 //控制接收无人机数据的时间
 	                			 Thread.sleep(2000);
 	                		 }
