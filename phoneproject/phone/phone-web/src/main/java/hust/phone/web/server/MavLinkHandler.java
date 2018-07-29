@@ -67,7 +67,8 @@ public class MavLinkHandler extends Thread{
 					 }
 					 else if(m.msgid==11||m.msgid==76)
 					 {
-						 //来自手机端的信息放入到phonesessionMap中
+						 //来自手机端的信息放入到phonesessionMap中,用于获取地理位置
+						 
 						 phonesessionMap.put(toclientid, socket);
 						 //System.out.println("将手机客户端"+toclientid+"放入到了phonesessionMap中");
 						 
@@ -109,7 +110,7 @@ public class MavLinkHandler extends Thread{
 	                			 oos.writeObject(p);
 	                			// System.out.println("服务端已转发手机端");
 	                			 //控制接收无人机数据的时间
-	                			 Thread.sleep(2000);
+	                			 Thread.sleep(1000);
 	                		 }
 	                	}
 				 }

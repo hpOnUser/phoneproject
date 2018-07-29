@@ -119,9 +119,8 @@ public class planeServiceImpl implements planeService {
 	public void showData(String planeid) {
 		short sysid=(short) Integer.parseInt(planeid);
 		try {
-			msg_heartbeat msg=new msg_heartbeat();
+			msg_command_long msg=new msg_command_long();
 			MAVLinkPacket pack = msg.pack();
-			//设置无人机编号
 			pack.sysid =sysid;
 			byte[] encodePacket = pack.encodePacket();
 			OutputStream out=socket.getOutputStream();

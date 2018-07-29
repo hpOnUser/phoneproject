@@ -7,5 +7,7 @@ public interface testService {
 	
 	public String testCon();
 	
+	public void updateTest();
+	
 
 }
