@@ -17,7 +17,7 @@ public class User {
 
     private String descripte;
 
-    private Integer tasknum;
+    private Integer tasknum=0;
 
     public String getUserid() {
         return userid;
@@ -80,6 +80,6 @@ public class User {
     }
 
     public void setTasknum(Integer tasknum) {
-        this.tasknum = tasknum;
+        this.tasknum = tasknum==null ? 0:tasknum;
     }
 }
