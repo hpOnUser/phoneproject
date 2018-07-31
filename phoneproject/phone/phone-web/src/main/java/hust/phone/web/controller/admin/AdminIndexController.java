@@ -68,7 +68,7 @@ public class AdminIndexController {
         return "register";
     }
 
-    @RequestMapping(value = "admin/register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "register", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String doRegister(@RequestParam String username, @RequestParam String password
             , @RequestParam(required = false) String agree_me) {
