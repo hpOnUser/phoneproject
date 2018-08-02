@@ -72,9 +72,10 @@ public class TaskController {
 //	}
 	
 	@RequestMapping("/myindex")
-	public String index(HttpServletRequest request)
+	public String index(HttpServletRequest request,Model model)
 	{
-		//Number = userService.getTaskNumByUser(PhoneUtils.getLoginUser(request));
+		Number = userService.getTaskNumByUser(PhoneUtils.getLoginUser(request));   //进入主页面的时候初始化
+		model.addAttribute("tasknum", Number);
 		return "home";
 	}
 	// 确认任务
@@ -169,18 +170,25 @@ public class TaskController {
 	@ResponseBody
 	public String getTaskNumber(HttpServletRequest request) {
 		// 在这里查询最新的工单数目
-		int newNum = userService.getTaskNumByUser(PhoneUtils.getLoginUser(request));
-		
-		//int oldNum = Number;
-		//if(newNum > oldNum)
-		   // {
-			   // Number = newNum;
-				//return (newNum-oldNum) + "";
-		   // }
-		if(newNum>0)
-			return newNum+"";
-		else
-			return "0";    //没有就返回0
+		User user = PhoneUtils.getLoginUser(request);
+		int newNum = 0;
+		while(true){
+			 
+			    newNum = userService.getTaskNumByUser(user);
+		        //数据发生改变 将数据响应客户端
+		        if(newNum != Number){
+		        	break;	           
+		        }else{
+		            //没有新的数据 保持住连接
+		            try {
+		                Thread.sleep(2000);
+		            } catch (InterruptedException e) {
+		                e.printStackTrace();
+		            }
+		        }
+		}
+		Number = newNum;
+		return newNum+"";
 	}
 
 	// 跳转到无人机操纵界面

@@ -33,15 +33,15 @@
 			<img src="images/lo-34.png" style="transform: rotate(90deg);">
 		</div>
 		<header class="bar bar-nav">
-			<a class="button button-link button-nav pull-left"
-				href="${s.base}/myindex.html extend" data-transition='slide-out'> <span
+			<a class="button button-link button-nav pull-left extend"
+				href="${s.base}/myindex.html" data-transition='slide-out'> <span
 				class="icon icon-left"></span>返回
 			</a>
 			<h1 class='title'>
 				<#if tip?? && tip!="">
 					<span>${tip!}</span>
 				<#else>
-					<span>任务编号：${task.taskid!}</span>&nbsp;&nbsp;<span class="icon icon-down"></span>
+					<span>任务编号：${task.taskid!}</span>
 				</#if>		
 			</h1>
 			<a class="button button-link button-nav pull-right extend"
@@ -236,7 +236,7 @@
                      if (result.errcode == '1') {
                          $.toast(result.message);
                           //开始轮询无人机位置                       
-                         start();
+                        // start();
                      } else {
                          $.toast(result.message);
                      }

@@ -74,6 +74,7 @@ public class MavLinkHandler extends Thread{
 						 phonesessionMap.put(toclientid, socket);
 						 System.out.println("将手机客户端"+toclientid+"放入到了phonesessionMap中");
 						 System.err.println(Arrays.toString(lenbuf));
+
 						 
 					 }
 					 //发送数据
@@ -89,6 +90,8 @@ public class MavLinkHandler extends Thread{
 	                			 OutputStream out = targetSocket.getOutputStream();
 	                			 System.err.println(Arrays.toString(lenbuf));
 	                			 out.write(lenbuf);
+
+	                			 System.err.println(Arrays.toString(lenbuf));
 	                			 System.out.println("服务端已转发给无人机端"); 
 	                		 }
 	                	}

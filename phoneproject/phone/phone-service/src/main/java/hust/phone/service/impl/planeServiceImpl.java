@@ -237,6 +237,7 @@ public class planeServiceImpl implements planeService {
             	
             	MAVLinkPacket pack = msg.pack();
             	pack.sysid =sysid;
+
             	byte[] encodePacket = pack.encodePacket();
             	out.write(encodePacket);
             	i--;

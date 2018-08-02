@@ -208,28 +208,40 @@
     $(".thirdSpan6").click(function () {
         window.location.href = "toPlane";
     }); */
-  	//轮询工单列表
-    	$(function () {
-    	
-          window.setInterval(function () {  
-        	 	push();	 
-         		}, 3000);   //设置半分钟刷新一次   
-    		});
 
+  		//轮询工单列表
+   $(function () {
+
+    	
+    	 tasknum=${tasknum};
+    	
+    	 
+    	 if(Number(tasknum)>0){
+    		$('#waittasknum').css('display','');
+     	    $('#waittasknum').text(tasknum);
+    	 }
+    	 push();
+    	
          function push() {
             $.ajax({
                 type: "post",
-                url: "${s.base}/getTaskNumber.action",           
+                url: "${s.base}/getTaskNumber.action", 
+                timeout:6000,
                 success: function (data) {
                 	console.log(data);
-                	if(Number(data)>0){
-               		
+                	if(Number(data)>0){              		
                 		$('#waittasknum').css('display','');
-                	    $('#waittasknum').text(data);                               	 
-                	}             	           	
-                }
+                	    $('#waittasknum').text(data);
+                	}
+                	push();
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                		push();
+                },
+                
             });
-        } 
+        }
+    }); 
 </script>
 </body>
 </html>
