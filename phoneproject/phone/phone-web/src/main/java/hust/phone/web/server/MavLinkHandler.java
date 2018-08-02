@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 
@@ -63,14 +64,14 @@ public class MavLinkHandler extends Thread{
 					 {
 						 //无人机发过来的消息 ，来自无人机端的信息放入到planesessionMap中
 						planesessionMap.put(toclientid, socket);
-						//System.out.println("将无人机客户端"+toclientid+"放入到了planesessionMap中");
+						System.out.println("将无人机客户端"+toclientid+"放入到了planesessionMap中");
 					 }
 					 else if(m.msgid==11||m.msgid==76)
 					 {
 						 //来自手机端的信息放入到phonesessionMap中,用于获取地理位置
 						 
 						 phonesessionMap.put(toclientid, socket);
-						 //System.out.println("将手机客户端"+toclientid+"放入到了phonesessionMap中");
+						 System.out.println("将手机客户端"+toclientid+"放入到了phonesessionMap中");
 						 
 					 }
 					 //发送数据
@@ -85,7 +86,8 @@ public class MavLinkHandler extends Thread{
 	                			 //将数据包发送
 	                			 OutputStream out = targetSocket.getOutputStream();
 	                			 out.write(lenbuf);
-	                			// System.out.println("服务端已转发给无人机端"); 
+	                			 System.err.println(Arrays.toString(lenbuf));
+	                			 System.out.println("服务端已转发给无人机端"); 
 	                		 }
 	                	}
 	                	else if(m.msgid==33){
