@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import hust.phone.mapper.pojo.Plane;
 import hust.phone.mapper.pojo.PlanePath;
 import hust.phone.mapper.pojo.Task;
 import hust.phone.mapper.pojo.User;
@@ -42,10 +41,7 @@ public class TaskController {
 	private planeService planeServiceImpl;
 
 	private int Number = 0;    //未完成工单数目
-	
-	
-	private PlanePathVo exePlanePathVo;    //模拟正在执行的飞行任务
-	private int exeindex=0;
+		
 	
 	// 工作单跳转
 	@RequestMapping("/toTask")
@@ -54,23 +50,7 @@ public class TaskController {
 		return "task";
 	}
 
-	//返回飞机地点  模拟用
-	@RequestMapping(value = "/getlocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String getlocation(Plane plane) {
-		exeindex  = exeindex +  2;   //下一个点
-		if(exeindex>exePlanePathVo.getPlongda().size()) {
-			return "";   //如果超出了范围则返回空
-		}
-		//在这里应该获取飞机位置
-		Plane plane2 = planeServiceImpl.getPlaneByPlane(plane);
-		//plane2.set这里暂时不写逻辑，，
-		List<Double> location = exePlanePathVo.getPlongda().get(exeindex);
-				
-		return JsonUtils.objectToJson(location);
-		
-	}
-	
+
 	@RequestMapping("/myindex")
 	public String index(HttpServletRequest request,Model model)
 	{
@@ -80,7 +60,7 @@ public class TaskController {
 	}
 	// 确认任务
 	// 如果用户角色是放飞者，那么修改该任务的状态为 2
-	// 如果用户是接收者，那么修改该任务的状态为 3，同时在exe表中插入一条新的数据
+	// 如果用户是接收者，那么修改该任务的状态为 3，
 	@RequestMapping(value = "/ensureTask", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String ensureTask(Task task, HttpServletRequest request) {
@@ -200,9 +180,6 @@ public class TaskController {
 		String role = user.getUserid().equals(task2.getUserbid()) ? "1" : "2";
 		task2.setRole(role);
 
-		//测试****把任务的状态设为自检中
-		//taskServiceImpl.setStatusTaskByTask(task, "4");
-		//taskServiceImpl.setStatusTaskByTask(task, "5");
 		
 		PlanePath planePath = new PlanePath();
 		planePath.setPlanepathid(task2.getPlanepathid());
@@ -210,9 +187,6 @@ public class TaskController {
 
 		PlanePathVo planePathVo = new PlanePathVo(planePath2);
 
-		exePlanePathVo = planePathVo;
-		exeindex = 0;
-		
 		model.addAttribute("planepath", JsonUtils.objectToJson(planePathVo));
 		model.addAttribute("task", task2);
 
@@ -237,6 +211,8 @@ public class TaskController {
 
 	}
 
+	
+	//此处为首页无人机跳转页面的控制方法
 	@RequestMapping("/toPlaneControl")
 	public String toPlaneControl(HttpServletRequest request, Model model) {
 
@@ -261,13 +237,15 @@ public class TaskController {
 		PlanePath planePath2 = planePathService.selectByPlanepathId(planePath);
 		PlanePathVo planePathVo = new PlanePathVo(planePath2);
 
-		exePlanePathVo = planePathVo;
-		exeindex = 0;
-		
 		model.addAttribute("planepath", JsonUtils.objectToJson(planePathVo));
 		model.addAttribute("task", task2);
 
-		return "fight";
+		if(role.equals("1")) {
+			return "fight";
+		}else {
+			return "fight1";
+		}
+		
 
 	}
 
@@ -331,6 +309,7 @@ public class TaskController {
 			return JsonView.render(0, "任务管理员未确认，不可放飞！");
 		}
 	}
+	
 	//无人机实时位置
 	@RequestMapping(value = "/showPosition", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -346,11 +325,11 @@ public class TaskController {
 			return JsonView.render(0, "无人机未起飞，不可放飞！");
 		}
 	}
+	
 	@RequestMapping(value = "/reportFinish", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String reportFinish(Task task) {
 
-		//测试****
 		String oldStatus = taskServiceImpl.getTaskStatus(task);
 		if(oldStatus.equals("8")) {
 			taskServiceImpl.setStatusTaskByTask(task, "9");

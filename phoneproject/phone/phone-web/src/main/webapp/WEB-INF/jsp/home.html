@@ -49,7 +49,7 @@
 
             </a> 
             <!-- href="${s.base}/toPlaneControl.action"-->
-            <a class="tab-item external" > <span
+                <a class="tab-item external" href="${s.base}/toPlaneControl.action"> <span
                 class="icon icon-app "></span> <span class="tab-label">无人机操控</span>
                 </a>
                 <a class="tab-item external" href="${s.base}/alermList.action"> <span
@@ -209,11 +209,9 @@
         window.location.href = "toPlane";
     }); */
   
-  		//轮询工单列表
-   /*  $(function () {
-    	
+  	//轮询工单列表
+     $(function () {
     	 tasknum=${tasknum};
-    	
     	 
     	 if(Number(tasknum)>0){
     		$('#waittasknum').css('display','');
@@ -225,7 +223,7 @@
             $.ajax({
                 type: "post",
                 url: "${s.base}/getTaskNumber.action", 
-                timeout:6000,
+                timeout:5000,
                 success: function (data) {
                 	console.log(data);
                 	if(Number(data)>0){              		
@@ -240,7 +238,7 @@
                 
             });
         }
-    }); */
+    });
 </script>
 </body>
 </html>

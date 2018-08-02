@@ -57,7 +57,6 @@
         
         	var  planePath =${planepath};
         	var  planeMarker;
-        	var  pointlen = 0;
         	
             var map = new AMap.Map('container', {
                 resizeEnable: true,
@@ -77,18 +76,18 @@
                         path: planePath.plongda, //设置线覆盖物路径
                         strokeColor: "#FF0000", //线颜色
                         strokeOpacity: 1, //线透明度
-                        strokeWeight: 5, //线宽
+                        strokeWeight: 3, //线宽
                         strokeStyle: "solid", //线样式
                         strokeDasharray: [10, 5]
                         //补充线样式
                     });
                     planeMarker = new AMap.Marker({
 	                    //map: map,
-	                    position: planePath.plongda[pointlen],
+	                    position:  planePath.plongda[0],
 	                    icon: new AMap.Icon({
-	                        size: new AMap.Size(32, 32), //图标大小
-	                        image: "images/warn-32.png",
-	                        offset: new AMap.Pixel(0, -40) ,// 相对于基点的偏移位置
+	                        size: new AMap.Size(30, 30), //图标大小
+	                        image: "images/locate.png",
+	                        offset: new AMap.Pixel(-15, -15) ,// 相对于基点的偏移位置
 	                    }),
 	                });
 		    	    map.add(planeMarker);  
@@ -105,14 +104,14 @@
     		            },
     		            success: function (data) {
     		            	//获取数据然后放置飞机    		         	
-    		            		map.remove(planeMarker);
+    		            		   map.remove(planeMarker);
     	   	    		    	   planeMarker = new AMap.Marker({
     	   	    	                    //map: map,
-    	   	    	                    position: data,
+    	   	    	                    position:  data,
     	   	    	                    icon: new AMap.Icon({
-    	   	    	                        size: new AMap.Size(32, 32), //图标大小
-    	   	    	                        image: "images/warn-32.png",
-    	   	    	                        offset: new AMap.Pixel(-32,32) ,// 相对于基点的偏移位置
+    	   	    	                    size: new AMap.Size(30, 30), //图标大小
+    	   	    	                    image: "images/locate.png",
+    	   	    	                    offset: new AMap.Pixel(-15,-15) ,// 相对于基点的偏移位置
     	   	    	                    }),
     	   	    	                });
     	   	    		    	   map.setCenter(data); 
@@ -125,7 +124,7 @@
     			
     		     window.setInterval(function () {  
     		    	 push();	 
-    		     }, 2000);    //轮询 1s一次    
+    		     }, 2000);    //轮询 2s一次    
     		 }	
         </script>
     </div>

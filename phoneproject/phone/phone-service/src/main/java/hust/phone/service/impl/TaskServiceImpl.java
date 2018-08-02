@@ -78,7 +78,6 @@ public class TaskServiceImpl implements taskService {
 
 	@Override
 	public String getTaskStatus(Task task) {
-		// TODO Auto-generated method stub
 		
 		return taskMapper.getTaskStatus(task);
 	}

@@ -2,7 +2,6 @@ package hust.phone.web.controller;
 
 import hust.phone.constant.WebConst;
 import hust.phone.utils.pojo.JsonView;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,15 +24,17 @@ public class PlaneController {
     planeService planeServiceImpl;
 
     //获取无人机实时位置
-/*    @RequestMapping(value = "/getlocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/getlocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String getlocation(Plane plane) {
 
         Plane plane2 = planeServiceImpl.getPlaneByPlane(plane);
         PlaneVo planevo = new PlaneVo(plane2);
-
-        return JsonUtils.objectToJson(planevo);
-    }*/
+        List<Double> location = planevo.getFlongda();
+        
+        return JsonUtils.objectToJson(location);
+        
+    }
 
     @RequestMapping(value = "getRealTimePic", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
@@ -47,6 +48,5 @@ public class PlaneController {
         testList.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532400442692&di=02c1f4e8b6f9b5bdcb2b153363cc69d3&imgtype=0&src=http%3A%2F%2Fnews.xinhuanet.com%2Fpolitics%2F2016-11%2F09%2F129356800_14786507875911n.gif");
         return JsonView.render(0, WebConst.SUCCESS_RESULT,testList);
     }
-
 
 }

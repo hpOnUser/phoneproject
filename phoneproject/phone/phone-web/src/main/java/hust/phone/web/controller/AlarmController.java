@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import hust.phone.mapper.pojo.Alarm;
-import hust.phone.mapper.pojo.User;
 import hust.phone.service.interFace.AlarmService;
 import hust.phone.utils.pojo.JsonView;
-import hust.phone.utils.pojo.PhoneUtils;
 
 @Controller
 public class AlarmController {
@@ -25,8 +23,7 @@ public class AlarmController {
 
 	@RequestMapping("/alermList")
 	public String toTaskList(HttpServletRequest request,Model model) {
-		User user = PhoneUtils.getLoginUser(request);
-		String userid = user.getUserid();
+		//User user = PhoneUtils.getLoginUser(request);
 		
 		List<Alarm> alarmlist = alarmServiceImpl.getAllAlarm();
 			
@@ -41,7 +38,7 @@ public class AlarmController {
 	public String ensureAlarm(Alarm alarm) {
 		
 		alarmServiceImpl.updateAlarmStatus(alarm.getAlarmid());
-		return JsonView.render(1, "处理告警地方成功！");
+		return JsonView.render(1, "处理告警成功！");
 	}
 	
 }
