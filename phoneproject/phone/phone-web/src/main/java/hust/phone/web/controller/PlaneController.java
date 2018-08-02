@@ -30,10 +30,11 @@ public class PlaneController {
 
         Plane plane2 = planeServiceImpl.getPlaneByPlane(plane);
         PlaneVo planevo = new PlaneVo(plane2);
-        List<Double> location = planevo.getFlongda();
-        
+
+        List<Double> location = planevo.getFlongda();      
         return JsonUtils.objectToJson(location);
         
+
     }
 
     @RequestMapping(value = "getRealTimePic", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
@@ -45,7 +46,9 @@ public class PlaneController {
         testList.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1531915145415&di=47cd1cfe383e09cc56249a25462d6859&imgtype=0&src=http%3A%2F%2Fphoto.go007.com%2F2014%2F01%2F20140114%2F635253046484697262.JPG");
         testList.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532400442694&di=ad1d0cebdccc653c57b09e69e8cdc066&imgtype=0&src=http%3A%2F%2Fwww.hinews.cn%2Fpic%2F0%2F10%2F74%2F58%2F10745858_871615.jpg");
         testList.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532400442692&di=b95dcac597261474d41ca661e72face6&imgtype=0&src=http%3A%2F%2Fwww.gov.cn%2Fjrzg%2Fimages%2Fimages%2F001e3741a4060f36e6c602.jpg");
-        testList.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532400442692&di=02c1f4e8b6f9b5bdcb2b153363cc69d3&imgtype=0&src=http%3A%2F%2Fnews.xinhuanet.com%2Fpolitics%2F2016-11%2F09%2F129356800_14786507875911n.gif");
+        testList.add("http://74.82.205.98/images/originalPic/DJI_0042.JPG");
+        testList.add("http://74.82.205.98/images/originalPic/DJI_0050.JPG");
+        testList.add("http://74.82.205.98/images/originalPic/DJI_0060.JPG");
         return JsonView.render(0, WebConst.SUCCESS_RESULT,testList);
     }
 

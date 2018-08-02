@@ -13,6 +13,6 @@ public interface planeService {
 	void planeLand(String planeid);
 	
 	void planeReturn(String planeid);
-
 	
+	void checkConnect(String planeid);
 }

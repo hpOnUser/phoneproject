@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class planeServiceImpl implements planeService {
 		short sysid=(short) Integer.parseInt(planeid);
 		 try {
 			 //发送消息
-			 socket = new Socket("0.0.0.0", 18888);
+			 socket = new Socket("192.168.1.123", 18888);
             //采用打包的方式
             OutputStream out=socket.getOutputStream();
             //起飞类 需要参数
@@ -69,11 +70,12 @@ public class planeServiceImpl implements planeService {
             	pack.sysid=sysid;
             	pack.seq=++j;
             	byte[] encodePacket = pack.encodePacket();
+            	System.err.println(Arrays.toString(encodePacket3));
+            	System.err.println(Arrays.toString(encodePacket));
             	out.write(encodePacket3);
             	out.write(encodePacket);
             	i--;
             	j++;
-            	Thread.sleep(1000);
             }
 //            //一键起飞后顺便接收经纬度数据
 //    		socket.setSoTimeout(5000);
@@ -119,6 +121,8 @@ public class planeServiceImpl implements planeService {
 	public void showData(String planeid) {
 		short sysid=(short) Integer.parseInt(planeid);
 		try {
+			socket = new Socket("192.168.1.123", 18888);
+	        //采用打包的方式
 			msg_command_long msg=new msg_command_long();
 			MAVLinkPacket pack = msg.pack();
 			pack.sysid =sysid;
@@ -126,7 +130,7 @@ public class planeServiceImpl implements planeService {
 			OutputStream out=socket.getOutputStream();
 			out.write(encodePacket);
    			//设置socket的为收到信息的接收时间
-   			socket.setSoTimeout(3000);
+   			socket.setSoTimeout(10000);
    			while (true) {
    				input = socket.getInputStream();
                ObjectInputStream ois = new ObjectInputStream(input);
@@ -135,6 +139,8 @@ public class planeServiceImpl implements planeService {
                p.setUpdateTime(updateTime);
               //将无人机的数据插入到数据库中
               planeCommandImpl.updateById(p);
+              System.err.println("收到飞机的数据");
+              System.err.println("飞机的数据："+p.toString());
            	if(socket.isClosed())
   			{
   				System.out.println("手机端已经关闭");
@@ -142,14 +148,24 @@ public class planeServiceImpl implements planeService {
   			}
 		  }
 		}catch (Exception e) {
-			if(socket!=null)
-			{
-				socket.isClosed();
+			 try {
+				 if(socket!=null)
+				 {
+					 socket.close();
+				 }
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}finally {
-			if(socket!=null)
-			{
-				socket.isClosed();
+			 try {
+				 if(socket!=null)
+				 {
+					 socket.close();
+				 }
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 	}
@@ -159,7 +175,7 @@ public class planeServiceImpl implements planeService {
 		short sysid=(short) Integer.parseInt(planeid);
 		 try {
 			 //发送消息
-			 socket = new Socket("0.0.0.0", 18888);
+			 socket = new Socket("192.168.1.123", 18888);
             //采用打包的方式
             OutputStream out=socket.getOutputStream();
             //准备数据，先模拟只发一次
@@ -177,7 +193,6 @@ public class planeServiceImpl implements planeService {
             	byte[] encodePacket = pack.encodePacket();
             	out.write(encodePacket);
             	i--;
-            	Thread.sleep(1000);
             }
 		 }catch(Exception e){
 			 try {
@@ -207,7 +222,7 @@ public class planeServiceImpl implements planeService {
 		short sysid=(short) Integer.parseInt(planeid);
 		 try {
 			 //发送消息
-			 socket = new Socket("0.0.0.0", 18888);
+			 socket = new Socket("192.168.1.123", 18888);
             //采用打包的方式
             OutputStream out=socket.getOutputStream();
             //准备数据，先模拟只发一次
@@ -221,11 +236,11 @@ public class planeServiceImpl implements planeService {
             {
             	
             	MAVLinkPacket pack = msg.pack();
-            	pack.sysid=sysid;
+            	pack.sysid =sysid;
+
             	byte[] encodePacket = pack.encodePacket();
             	out.write(encodePacket);
             	i--;
-            	Thread.sleep(1000);
             }
 		 }catch(Exception e){
 			 try {
@@ -247,6 +262,53 @@ public class planeServiceImpl implements planeService {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}
+		
+	}
+	@Override
+	public void checkConnect(String planeid) {
+		short sysid=(short) Integer.parseInt(planeid);
+		try {
+			socket = new Socket("192.168.1.123", 18888);
+	        //采用打包的方式
+			msg_command_long msg=new msg_command_long();
+			MAVLinkPacket pack = msg.pack();
+			pack.sysid =sysid;
+			byte[] encodePacket = pack.encodePacket();
+			OutputStream out=socket.getOutputStream();
+			out.write(encodePacket);
+   			//设置socket的为收到信息的接收时间
+   			//socket.setSoTimeout(10000);
+   			while (true) {
+   				input = socket.getInputStream();
+               ObjectInputStream ois = new ObjectInputStream(input);
+               Plane p = (Plane) ois.readObject();
+               if(p!=null)
+               {
+            	   System.err.println("收到飞机的数据连接成功");
+            	   break;
+               }
+   			}
+		}catch (Exception e) {
+			 try {
+				 if(socket!=null)
+				 {
+					 socket.close();
+				 }
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}finally {
+//			 try {
+//				 if(socket!=null)
+//				 {
+//					 socket.close();
+//				 }
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 		}
 		
 	}

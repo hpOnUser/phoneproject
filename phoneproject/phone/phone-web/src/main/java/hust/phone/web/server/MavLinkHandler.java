@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.MAVLink.MAVLinkPacket;
 import com.MAVLink.Parser;
 import com.MAVLink.common.msg_global_position_int;
+import com.MAVLink.common.msg_heartbeat;
 
 import hust.phone.mapper.pojo.Plane;
 import hust.phone.service.impl.PlaneCommandImpl;
@@ -72,6 +73,8 @@ public class MavLinkHandler extends Thread{
 						 
 						 phonesessionMap.put(toclientid, socket);
 						 System.out.println("将手机客户端"+toclientid+"放入到了phonesessionMap中");
+						 System.err.println(Arrays.toString(lenbuf));
+
 						 
 					 }
 					 //发送数据
@@ -85,7 +88,9 @@ public class MavLinkHandler extends Thread{
 	                		 {
 	                			 //将数据包发送
 	                			 OutputStream out = targetSocket.getOutputStream();
+	                			 System.err.println(Arrays.toString(lenbuf));
 	                			 out.write(lenbuf);
+
 	                			 System.err.println(Arrays.toString(lenbuf));
 	                			 System.out.println("服务端已转发给无人机端"); 
 	                		 }
@@ -93,7 +98,11 @@ public class MavLinkHandler extends Thread{
 	                	else if(m.msgid==33){
 	                		//来自无人机的信息，要把信息发给手机，查询phoneSessionMap 中和key=无人机的编号
 	                		targetSocket = phonesessionMap.get(toclientid);
-	                		 if(targetSocket!=null&&(!targetSocket.isClosed()))
+	                		if(targetSocket.isClosed())
+	                		{
+	                			phonesessionMap.remove(toclientid);
+	                		}
+	                		else if(targetSocket!=null&&(!targetSocket.isClosed()))
 	                		 {
 	                			 msg_global_position_int msg=(msg_global_position_int) m.unpack(); 
 	                			 //将解析的数据发送给手机
@@ -110,10 +119,25 @@ public class MavLinkHandler extends Thread{
 	                			 OutputStream out = targetSocket.getOutputStream();
 	                			 ObjectOutputStream oos = new ObjectOutputStream(out);
 	                			 oos.writeObject(p);
-	                			// System.out.println("服务端已转发手机端");
+	                			 System.err.println(p.getHeight());
+	                			 System.out.println("服务端已转发手机端");
 	                			 //控制接收无人机数据的时间
-	                			 Thread.sleep(1000);
+	                			 Thread.sleep(2000);
 	                		 }
+	                	}
+	                	else if(m.msgid==0)
+	                	{
+	                		targetSocket = planesessionMap.get(toclientid);
+	                		if(targetSocket!=null && targetSocket.isClosed())
+	                		{
+	                			OutputStream out = targetSocket.getOutputStream();
+	                			msg_heartbeat msgss = (msg_heartbeat) m.unpack();
+	                			MAVLinkPacket pack = msgss.pack();
+	                			pack.seq=m.seq++;
+	                			byte[] encodePacket = pack.encodePacket();
+	                			out.write(encodePacket);
+	                			out.close();
+	                		}
 	                	}
 				 }
 				 catch(Exception e)
