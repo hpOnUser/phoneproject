@@ -26,7 +26,7 @@ public class TcpServer extends Thread{
 				//创建端口号
 				this.serverSocket = new ServerSocket();
 				//this.serverSocket.bind(new InetSocketAddress("10.233.253.111", 18888));
-				this.serverSocket.bind(new InetSocketAddress("192.168.1.123", 18888));
+				this.serverSocket.bind(new InetSocketAddress("0.0.0.0", 18888));
 				System.err.println("socket start");
 				 exec = Executors.newCachedThreadPool();
 			} catch (Exception e) {

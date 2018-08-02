@@ -44,7 +44,7 @@ public class planeServiceImpl implements planeService {
 		short sysid=(short) Integer.parseInt(planeid);
 		 try {
 			 //发送消息
-			 socket = new Socket("192.168.1.123", 18888);
+			 socket = new Socket("0.0.0.0", 18888);
             //采用打包的方式
             OutputStream out=socket.getOutputStream();
             //起飞类 需要参数
@@ -121,7 +121,7 @@ public class planeServiceImpl implements planeService {
 	public void showData(String planeid) {
 		short sysid=(short) Integer.parseInt(planeid);
 		try {
-			socket = new Socket("192.168.1.123", 18888);
+			socket = new Socket("0.0.0.0", 18888);
 	        //采用打包的方式
 			msg_command_long msg=new msg_command_long();
 			MAVLinkPacket pack = msg.pack();
@@ -130,7 +130,7 @@ public class planeServiceImpl implements planeService {
 			OutputStream out=socket.getOutputStream();
 			out.write(encodePacket);
    			//设置socket的为收到信息的接收时间
-   			socket.setSoTimeout(10000);
+   			socket.setSoTimeout(5000);
    			while (true) {
    				input = socket.getInputStream();
                ObjectInputStream ois = new ObjectInputStream(input);
@@ -269,7 +269,7 @@ public class planeServiceImpl implements planeService {
 	public void checkConnect(String planeid) {
 		short sysid=(short) Integer.parseInt(planeid);
 		try {
-			socket = new Socket("192.168.1.123", 18888);
+			socket = new Socket("0.0.0.0", 18888);
 	        //采用打包的方式
 			msg_command_long msg=new msg_command_long();
 			MAVLinkPacket pack = msg.pack();

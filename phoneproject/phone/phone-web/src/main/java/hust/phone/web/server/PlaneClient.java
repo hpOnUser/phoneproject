@@ -6,9 +6,7 @@ import java.net.Socket;
 import java.util.Arrays;
 
 import com.MAVLink.MAVLinkPacket;
-import com.MAVLink.Parser;
 import com.MAVLink.common.msg_global_position_int;
-import com.MAVLink.common.msg_heartbeat;
 
 
 

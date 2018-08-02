@@ -286,8 +286,8 @@ public class TaskController {
 	public String checkself(Task task) {
 
 		//测试****把任务状态设为自检成功，然后再设为待放飞
-		taskServiceImpl.setStatusTaskByTask(task, "7");
-		planeServiceImpl.checkConnect(task.getPlaneid());
+		taskServiceImpl.setStatusTaskByTask(task, "6");
+		//planeServiceImpl.checkConnect(task.getPlaneid());
 		return JsonView.render(1, "无人机连接成功，等待放飞确认。");
 
 	}
