@@ -54,22 +54,22 @@ public class TaskController {
 		return "task";
 	}
 
-	//返回飞机地点  模拟用
-	@RequestMapping(value = "/getlocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String getlocation(Plane plane) {
-		exeindex  = exeindex +  2;   //下一个点
-		if(exeindex>exePlanePathVo.getPlongda().size()) {
-			return "";   //如果超出了范围则返回空
-		}
-		//在这里应该获取飞机位置
-		Plane plane2 = planeServiceImpl.getPlaneByPlane(plane);
-		//plane2.set这里暂时不写逻辑，，
-		List<Double> location = exePlanePathVo.getPlongda().get(exeindex);
-				
-		return JsonUtils.objectToJson(location);
-		
-	}
+//	//返回飞机地点  模拟用
+//	@RequestMapping(value = "/getlocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+//	@ResponseBody
+//	public String getlocation(Plane plane) {
+//		exeindex  = exeindex +  2;   //下一个点
+//		if(exeindex>exePlanePathVo.getPlongda().size()) {
+//			return "";   //如果超出了范围则返回空
+//		}
+//		//在这里应该获取飞机位置
+//		Plane plane2 = planeServiceImpl.getPlaneByPlane(plane);
+//		//plane2.set这里暂时不写逻辑，，
+//		List<Double> location = exePlanePathVo.getPlongda().get(exeindex);
+//				
+//		return JsonUtils.objectToJson(location);
+//		
+//	}
 	
 	@RequestMapping("/myindex")
 	public String index(HttpServletRequest request)
@@ -301,9 +301,9 @@ public class TaskController {
 	public String checkself(Task task) {
 
 		//测试****把任务状态设为自检成功，然后再设为待放飞
-		taskServiceImpl.setStatusTaskByTask(task, "6");
-		//taskServiceImpl.setStatusTaskByTask(task, "7");
-		return JsonView.render(1, "无人机自检成功，等待放飞确认。");
+		taskServiceImpl.setStatusTaskByTask(task, "7");
+		planeServiceImpl.checkConnect(task.getPlaneid());
+		return JsonView.render(1, "无人机连接成功，等待放飞确认。");
 
 	}
 	

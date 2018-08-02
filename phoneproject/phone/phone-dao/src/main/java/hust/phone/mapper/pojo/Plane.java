@@ -1,10 +1,13 @@
 package hust.phone.mapper.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class Plane {
+public class Plane implements Serializable{
+	// @Fields serialVersionUID : TODO
+	private static final long serialVersionUID = 4907958386968399675L;
 	private String planeid;
 	private String planename;
 	private String userid;
