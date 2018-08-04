@@ -15,7 +15,13 @@
     <script type='text/javascript' src='${s.base}/res/js/jquery-3.3.1.min.js'></script>
      <link rel="stylesheet" href="${s.base}/res/css/index.css">
 </head>
-<style>  
+<style>
+    .weather {
+        background: url(../../res/images/weather.jpg) no-repeat;width:250px;
+        height: 88px;
+        margin: 10px 2px 10px 6px;
+        padding: 20px 2px 2px 65px;
+    }
 </style>
  <script>
   
@@ -58,11 +64,13 @@
                 </a>
         </nav>
         <div class="content">
-            <div class="content-block-title">无人机危险检测</div>
+            <div class="content-block-title">今日天气预报</div>
             <div class="card">
                 <div class="card-content">
                     <div class="card-content-inner">
-                        无人机，就是无人驾驶飞机，他们一般个子较小，经常被用作一些危险、愚钝的工作。无人机的应用广泛，最早被用于军事领域，慢慢的演变为各行各业，例如：警用、城市管理、农业、气象、电力、抢险救灾、视频拍摄等行业。。
+                        <!--无人机，就是无人驾驶飞机，他们一般个子较小，经常被用作一些危险、愚钝的工作。无人机的应用广泛，最早被用于军事领域，慢慢的演变为各行各业，例如：警用、城市管理、农业、气象、电力、抢险救灾、视频拍摄等行业。。-->
+                        <!--<iframe width="130" scrolling="no" height="120" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=4&icon=1&wind=1&num=1&site=12"></iframe>-->
+                        <iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=64" width="360" height="291" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
                     </div>
                 </div>
             </div>
