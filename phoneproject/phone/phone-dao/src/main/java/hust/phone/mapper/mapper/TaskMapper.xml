@@ -329,7 +329,8 @@
 		<if test="finishstatus != null">
 		and finishstatus = #{finishstatus}
 		</if>	
-		and (userBid = #{userbid} or userCid = #{usercid})	
+		and (userBid = #{userbid} or userCid = #{usercid})
+		order by createtime desc
 	</select>
 	 <select id="selectByTaskOptions" parameterType="hust.phone.mapper.pojo.Task" resultMap="BaseResultMap">
 		SELECT 

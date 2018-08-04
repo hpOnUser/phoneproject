@@ -175,7 +175,7 @@ public class planeServiceImpl implements planeService {
 		short sysid=(short) Integer.parseInt(planeid);
 		 try {
 			 //发送消息
-			 socket = new Socket("192.168.1.123", 18888);
+			 socket = new Socket("0.0.0.0", 18888);
             //采用打包的方式
             OutputStream out=socket.getOutputStream();
             //准备数据，先模拟只发一次
@@ -222,7 +222,7 @@ public class planeServiceImpl implements planeService {
 		short sysid=(short) Integer.parseInt(planeid);
 		 try {
 			 //发送消息
-			 socket = new Socket("192.168.1.123", 18888);
+			 socket = new Socket("0.0.0.0", 18888);
             //采用打包的方式
             OutputStream out=socket.getOutputStream();
             //准备数据，先模拟只发一次
